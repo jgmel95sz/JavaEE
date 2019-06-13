@@ -1,0 +1,326 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28-jun-2018, 11:21:33
+    Author     : Melvin
+*/
+
+
+/*PARA EL MODAL SALGA SU BARRITA AL COSTADO*/
+
+.modal-scroll{
+    overflow-y: scroll;
+}
+
+
+
+/*cambiando css*/
+.btn-group-sm>.btn, .btn-sm {
+    padding: .25rem .5rem;
+    font-size: .78rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+
+
+/*********sirve para el mensajito growl y tambien para la seleccion cuando se usa primefaces*****/
+/* .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    color: #3b89ef;
+    box-shadow: rgb(197, 190, 190) 0px 0px 1px 0px inset;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ababab59;
+    border-image: initial;
+    background: #ababab59;
+    
+}*/
+
+/***********************data table Primefaces 6.2-****************/
+
+  
+  .ui-datatable {
+      margin-bottom:20px;
+  }
+ 
+  .ui-datatable-frozenlayout-left {
+      width:20%;
+  }
+ 
+  .ui-datatable-frozenlayout-right {
+      width:80%;
+  }
+  /***********************Fin data table Primefaces 6.2-*/   
+      
+      
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #ffffff;
+    background: #fbf8ee url(/WebCecompInHouse/faces/javax.faces.resource/images/ui-bg_glass_55_fbf8ee_1x400.png?ln=primefaces-blitzer) 50% 50% repeat-x;
+    color: #444444;
+}
+
+/*tamaño de las letaras-*/
+.ui-widget {
+    font-size: 0.95em;
+    font-weight: normal;
+}
+
+.ui-widget {
+    font-family: inherit;
+  
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+
+/*
+cambiando css del boostrap
+*/
+a#inver {
+    background: rgba(0, 0, 0, 0);
+}
+
+/*Pone el bloqueo del modal mas atrasito para que agarre el SelectOneMenu del Primfaces*/
+.modal-backdrop {  
+    z-index: 999;
+}
+
+/* pone al moda mas abajito porque los componentes del primafacaes estan en z-index = 1001*/
+.modal {
+    z-index: 1000;
+}
+
+/* pone mejor el selectchekmenu en un modal lo acomoda */
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger {
+    padding: 15px;
+}
+
+/* pone mejor el icono del selectchekmenu en un modal lo acomoda */
+
+.ui-selectcheckboxmenu-multiple .ui-selectcheckboxmenu-trigger .ui-icon {
+    margin-left: -8px;
+}
+
+/* modifica los defectos de los selectonemenu */
+.ui-selectonemenu{
+    padding-right:0;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger{
+    width: 24px;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
+    margin-top: 8px;
+}
+.ui-state-default .ui-icon {
+    background-image: radial-gradient;
+}
+
+
+/* hace que el borde de la cabecera del model sea completa */
+
+.modal-content {
+  
+    border-radius: .5rem;
+  
+}
+
+
+/*HACER QUE EL ICONO PARPADEEE*/
+
+
+.parpadea {
+  
+  animation-name: parpadeo;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  -webkit-animation-name:parpadeo;
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes parpadeo{  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.0; }
+  100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes parpadeo {  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.0; }
+   100% { opacity: 1.0; }
+}
+
+@keyframes parpadeo {  
+  0% { opacity: 1.0; }
+   50% { opacity: 0.0; }
+  100% { opacity: 1.0; }
+}
+
+
+/*********************************SWITCH BOOSTRAP 4***********************/
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/*ESTADO rojo desactviaod*/
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ea1515;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/*ESTADO verde activado*/
+input:checked + .slider {
+  background-color: #3bc70e;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/*FIN SWITCH */
+
+/*Login*/
+
+body#LoginForm{ 
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:cover; 
+    padding:10px; 
+    background: #f2f2f2
+}
+
+.form-heading { 
+    color:#fff; 
+    font-size:23px;
+}
+.panel h2{ 
+    color:#444444; font-size:18px;
+    margin:0 0 8px 0;}
+
+.panel p {
+    color:#777777; 
+     font-size:14px;
+     margin-bottom:30px; 
+     line-height:24px;
+}
+
+.login-form .form-control {
+  background: #f7f7f7 none repeat scroll 0 0;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
+}
+.main-div {
+    background: #ffffff none repeat scroll 0 0;
+    border-radius: 2px;
+    margin: 10px auto 30px;
+    max-width: 40%;
+    padding: 10% 8% 15% 8%;
+}
+
+.login-form .form-group {
+  margin-bottom:10px;
+}
+.login-form{ text-align:center;}
+.forgot a {
+  color: #777777;
+  font-size: 14px;
+  text-decoration: underline;
+}
+.login-form  .btn.btn-primary {
+  background: #f11616 none repeat scroll 0 0;
+  border-color: #f11616;
+  color: #ffffff;
+  font-size: 14px;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0;
+}
+.forgot {
+  text-align: left; margin-bottom:30px;
+}
+.botto-text {
+  color: #ffffff;
+  font-size: 14px;
+  margin: auto;
+}
+.login-form .btn.btn-primary.reset {
+  background: #ff9900 none repeat scroll 0 0;
+}
+.back { text-align: left; margin-top:10px;}
+.back a {color: #444444; font-size: 13px;text-decoration: none;}
+
+
+
+   
+@media (max-width: 576px){
+.main-div{
+   background: #ffffff none repeat scroll 0 0;
+    border-radius: 2px;
+    margin: 10px auto 30px;
+    max-width: 100%;
+    padding: 10% 8% 15% 8%;
+}
+}
+

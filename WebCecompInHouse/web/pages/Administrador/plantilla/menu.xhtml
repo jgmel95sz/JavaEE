@@ -1,0 +1,119 @@
+
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    
+     <!-- Sidebar  -->
+        <nav id="sidebar">
+            
+             
+            
+           <div class="sidebar-header" >
+                
+                 <h3> 
+                    <img src="../../../resources/images/LogoMenuNormal.png" alt="" align="left"/> 
+                 </h3>
+                  
+               
+               <h4>
+                 <i class="fas fa-user-circle "></i>
+
+                 <h:outputLabel  value="#{usuarioController.nomAccedido}"></h:outputLabel> 
+                 
+               </h4>
+                   
+                <strong>
+                    <img src="../../../resources/images/LogoMenuMini.png" alt="left"/>
+                </strong>
+            </div>
+               
+           
+         
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#InfomracionSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-home"></i>
+                        Informacion
+                    </a>
+                    <ul class="collapse list-unstyled" id="InfomracionSubmenu">
+                        <li>
+                            <h:link> Datos Personales </h:link>
+                            
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                   
+                    <a href="#cursosSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        Cursos/Talleres
+                    </a>
+                    <ul class="collapse list-unstyled" id="cursosSubmenu">
+                        
+                       
+                            <h:form id="subemnuCurg">
+                        <li class="nav-item">
+                            <h:commandLink value="Configuracion General" class="nav-link" action="#{cursoDetController.redireccionAhCursos()}" ></h:commandLink>
+                        </li>                 
+                            </h:form> 
+                            <h:form id="crearCursodets">
+                         <li class="nav-item">
+                            <h:commandLink value="Configuracion Detallada" class="nav-link" action="#{cursoDetController.redireccionAhCursosDetallados()}" ></h:commandLink>
+                        </li>
+                            </h:form> 
+                        
+                    </ul>
+                </li>
+                 <li>
+                      <a href="#grupoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        Grupos
+                         
+                      </a>
+                    <ul class="collapse list-unstyled" id="grupoSubmenu">
+                            <h:form id="subemnugrupos">
+                        <li class="nav-item">
+                            <h:commandLink value="Activos" class="nav-link" actionListener="#{cursoDetController.doBuscarCursoDetTodos()}" action="#{grupoCursoController.redireccionAhGroupCurso()}" ></h:commandLink>
+                        </li>                 
+                            </h:form> 
+                            <h:form id="subemnugrupos2">
+                         <li class="nav-item">
+                             <h:commandLink value="Historico" class="nav-link" actionListener="#{cursoDetController.doBuscarCursoDetTodos()}"  action="#{grupoCursoController.redireccionAhGroupCursoHistorico()}" ></h:commandLink>
+                        </li>
+                            </h:form> 
+                        
+                     
+                        
+                    </ul>
+                   
+                </li>
+              
+            </ul>
+            
+            <ul class="list-unstyled components">
+                
+                 <li>
+                     <h:form>
+                     <p:commandLink ajax="false"  action="#{usuarioController.doLogoutAdmin()}">
+                      <i class="fas fa-copy"></i> Logout
+                     </p:commandLink>
+                     </h:form>
+                   
+                </li>
+            </ul>
+
+           
+        </nav>
+
+    
+    
+    
+    
+</ui:composition>
+
+

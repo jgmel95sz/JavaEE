@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <body>
+        <ui:composition template="./../plantilla/plantilla.xhtml">
+
+            <ui:define name="top">
+                <ui:include src="MenuMatricula.xhtml"></ui:include>
+            </ui:define>
+
+            <ui:define name="content">
+            <!--todos pagos-->   
+
+            <div class="container-fluid">   
+                <div class="card bg-secondary text-white font-weight-bold " style="height: 50px" >
+                    <div class="card-body"  > <h5 style="font-size: 1rem">  Pagos Matriculados</h5> </div>
+                </div>
+               
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <h:form id="formGrupopagos">
+                            <p:tooltip />
+                            <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                            <div class="table-responsive" align="center">
+                                <table class="panel table table-hover paginationTable">
+                                    <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                        <tr class="text-center">
+                                            <th>#</th>
+                                            <th >Nombres Completos</th>
+                                            <ui:repeat   value="#{matriculaController.lstCuotas}" var="cuota">
+                                                <th>
+                                                    <h:outputText rendered="#{matriculaController.formapago==1}" value="Mes #{cuota}" />
+                                                    <h:outputText rendered="#{matriculaController.formapago==2}" value="Cuota #{cuota}" />
+                                                </th>
+                                            
+                                            </ui:repeat>
+                                            <th >Detalles</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody  style="color: #000000; background-color: white">
+                                        <ui:repeat   value="#{matriculaController.lstMatri}" var="matri" varStatus="i">
+                                            <tr>
+                                                <td class="text-center"><h:outputText value="#{i.index+1}"/> </td>
+                                                <td class="text-center"><h:outputText  value="#{matri.drtPersonanatural.nombreCompleto}"/></td>
+                                                <ui:repeat   value="#{matriculaController.doVerPagosPorMatricula(matri)}" var="pago">
+                                                  <td class="text-center">
+                                                       <h:outputText rendered="#{pago==1}" value="Pago Normal" a:style="color: #5ad07f;font-weight: bold"/>
+                                                       <h:outputText rendered="#{pago==2}" value="1/2 Beca" a:style="color: #5ad07f;font-weight: bold"/>
+                                                       <h:outputText rendered="#{pago==7}" value="Beca" a:style="color: #5ad07f;font-weight: bold"/>
+                                                       <h:outputText rendered="#{pago==8}" value="Des. Planilla" a:style="color: #5ad07f;font-weight: bold"/>
+                                                       <h:outputText rendered="#{pago==10}" value="Completo(1 pago)" a:style="color: #5ad07f;font-weight: bold"/>
+                                                       <h:outputText rendered="#{pago==20}" value="1/2 Beca Completo (1 Pago)" a:style="color: #5ad07f;font-weight: bold"/>
+                                                       <h:outputText rendered="#{pago==70}" value="Beca Completa" a:style="color: #5ad07f;font-weight: bold"/>
+                                                       <h:outputText rendered="#{pago==80}" value="Des. Planilla (Completo)" a:style="color: #5ad07f;font-weight: bold"/>
+                                                       <h:outputText rendered="#{pago==0}" value="------" a:style="color: red"/>
+                                                  </td>
+                                                </ui:repeat>
+                                                  <td class="text-center">
+                                                       <p:commandLink actionListener="#{matriculaController.doMostrarPagosPorMatriculaEnGrupoModoAdmi(matri)}" 
+                                                                      a:class="btn btn-secondary btn-sm" update=":formVerPagosMatri" 
+                                                                       onstart="PF('statusDialog').show();" 
+                                                                         oncomplete="PF('statusDialog').hide();"
+                                                                      a:data-toggle="modal" a:data-target="#modalVerPagosMatri" >
+                                                                      <i class="fas fa-search"></i> Ver Pagos
+                                                       </p:commandLink>
+                                                  </td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div> 
+
+            
+            
+                   
+         <!-- Modal ver pagos por matricula -->   
+        <div class="container-fluid">
+            
+            <div class="modal fade" id="modalVerPagosMatri" data-backdrop="static" >
+                    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 65%">
+                      
+                        <div class="modal-content">
+                         
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                      <h:form id="formVerPagosMatri">
+                      <p:tooltip />
+                       <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                                
+
+                                                 <div class="table-responsive" align="center">
+                                                     <table class="panel table table-hover">
+                                                         <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                             <tr class="text-center">
+                                                                 <th>#</th>
+                                                                 <th>Concepto</th>
+                                                                 <th>Monto</th>
+                                                                 <th>Fecha</th>
+                                                             </tr>
+                                                         </thead>
+                                                         <tbody  style="color: #000000; background-color: white">
+                                                             <ui:repeat   value="#{matriculaController.lstpagos}" var="item" varStatus="i">
+                                                                 <tr>
+                                                                     <td class="text-center"><h:outputText value="#{i.index+1}"/> </td>
+                                                                     <td class="text-center"><h:outputText value="#{item.concepto}"/> </td>
+                                                                     <td class="text-center"><h:outputText value="#{item.monto}"/> </td>
+                                                                     <td class="text-center"><h:outputText value="#{item.fecha}"/> </td>
+                                                                 </tr>
+                                                             </ui:repeat>
+                                                         </tbody>
+                                                     </table>
+                                                 </div>
+                                            </div>
+                                         </div>
+                                     </div>
+                                   </h:form>
+                                    
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                   
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                </div>
+                          
+                        </div>
+                   
+                    </div>
+                      
+            </div>
+         
+        </div>  
+             
+            
+      
+       
+             <ui:include src="dlgCarga.xhtml"/>
+            
+         </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
+

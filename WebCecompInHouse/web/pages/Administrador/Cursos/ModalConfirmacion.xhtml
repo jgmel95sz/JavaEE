@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <body>
+
+
+        <ui:composition>
+            <!-- The Modal -->
+            <h:form id="ModalConfirmacion">
+                <div class="modal fade" id="myModal" data-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                Estas Seguro que desea Eliminar registro?
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                 
+                                
+                              <!-- Modal de la confirmacion de Eliminar de la tabla de Inversion -->
+                                <p:panelGrid rendered="#{cursoDetController.tipoModal == 1}" >
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <p:commandButton  value="Si" t:type="button" t:class="btn btn-secondary" t:data-dismiss="modal" >
+                                    <p:ajax update=":formInverTable:DTinverAlumno" listener="#{cursoDetController.doOcultarInversion()}" />
+                                    <f:ajax listener="#{usuarioController.framework.doMensajeF('Exito!','Se borro registro',1)}" render=":formInver:msgbox" ></f:ajax>
+                                </p:commandButton>
+                               </p:panelGrid>
+                               <!-- Modal de la confirmacion de Eliminar de la tabla de duracion -->
+                               <p:panelGrid rendered="#{cursoDetController.tipoModal == 2}" >
+                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <p:commandButton  value="Si" t:type="button" t:class="btn btn-secondary" t:data-dismiss="modal" >
+                                    <p:ajax update=":DuracionForm:DTEscalaModalidad" listener="#{cursoDetController.doOcultarDuracion()}" />
+                                    <f:ajax listener="#{usuarioController.framework.doMensajeF('Exito!','Se borro registro',1)}" render=":DuracionForm:msgbox" ></f:ajax>
+                                </p:commandButton>
+                               </p:panelGrid>
+                               
+                               <!-- Modal de la confirmacion de Eliminar de la tabla de nombre cursos -->
+                               <p:panelGrid rendered="#{cursoDetController.tipoModal == 4}" >
+                                 <button type="button" class="btn btn-secondary"  data-dismiss="modal" >No</button>
+
+                                <p:commandButton  value="Si" t:type="button" t:class="btn btn-secondary" t:data-dismiss="modal" 
+                                                   onstart="PF('loading').show();" 
+                                                  oncomplete="PF('loading').hide();" >
+                                    <p:ajax update="createForm" listener="#{cursoDetController.doOcultarNombreCurso()}" />
+                                    <f:ajax render=":createForm:msgbox" ></f:ajax>
+                                </p:commandButton>
+                               </p:panelGrid>
+                               <!-- Modal de la confirmacion de Eliminar de la tabla de cursos detallados -->
+                               <p:panelGrid rendered="#{cursoDetController.tipoModal == 5}" >
+                                 <button type="button" class="btn btn-secondary"  data-dismiss="modal" >No</button>
+
+                                <p:commandButton ajax="false" value="Si" t:type="button" t:class="btn btn-secondary" t:data-dismiss="modal" >
+                                    <p:ajax update="formcursosSub" listener="#{cursoDetController.doOcultarCursosSubDetalles()}" />
+                                </p:commandButton>
+                               </p:panelGrid>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </h:form> 
+        </ui:composition>
+
+    </body>
+</html>
+

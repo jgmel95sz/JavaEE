@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+       <body>
+           
+     <ui:composition template="plantilla/plantilla.xhtml">
+            <ui:define name="top">
+
+            </ui:define>
+              
+        <ui:define name="content">
+               
+       <div class="container-fluid">
+           
+           <h:form id="formRegisterAluExterno" >
+            <p:tooltip /> 
+            <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+ 
+            <p:wizard>
+                
+                <p:tab id="datapersonal" title="Personal">
+                   <div class="ui-fluid">
+                    <p:panel header="Detalles Personales">
+                    <p:messages  id="msgs" />
+                    <p:panelGrid   columns="4" columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-2,ui-grid-col-1"  layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel  for="TipoDocumentoIde"  value="Tipo de Documento de Identidad:" />
+                        <p:selectOneMenu style="height: 32px;width: 95%" id="TipoDocumentoIde"   value="#{usuarioController.drtDocidentidad}" converter="selectOneMenuConverter" required="true">
+                               <f:selectItem itemLabel="Elegir Tipo" itemValue="" noSelectionOption="true" />                               
+                               <f:selectItems var="itemf"   value="#{usuarioController.lstdrtDocidentidad}"  itemLabel="#{itemf.nombre}" itemValue="#{itemf}" />
+                         </p:selectOneMenu>
+                         <p:message for="TipoDocumentoIde" display="tooltip" />  
+                                        <!--sds-->
+                         <p:outputLabel  for="NumeroIde"  value="Número Doc. Identidad :" />
+                         <p:inputText id="NumeroIde" value="#{usuarioController.drtPersonanatural.numeroPndid}" disabled="true" required="true" ></p:inputText>     
+                         <p:message for="NumeroIde" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="apePaterno"  value="Apellido Paterno :" />
+                         <p:inputText style="width: 100%" id="apePaterno" value="#{usuarioController.drtPersonanatural.apPaterno}"  onkeyup="mayus(this);" required="true"  ></p:inputText>   
+                         <p:message for="apePaterno" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="apeMaterno"  value="Apellido Materno :" />
+                         <p:inputText style="width: 100%" id="apeMaterno" value="#{usuarioController.drtPersonanatural.apMaterno}" onkeyup="mayus(this);" required="true"   ></p:inputText>   
+                         <p:message for="apeMaterno" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="nombres"  value="Nombres :" />
+                         <p:inputText style="width: 100%" id="nombres" value="#{usuarioController.drtPersonanatural.nombre}" onkeyup="mayus(this);" required="true"  ></p:inputText>   
+                         <p:message for="nombres" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel style="width:100%" for="fechNac" value="Fecha de Nacimiento : " />
+                         <p:calendar   id="fechNac" value="#{usuarioController.drtPersonanatural.fechaNac}" required="true" pattern="dd-MM-yyyy" mask="true" placeholder="Ejemplo: 02-12-1995"> </p:calendar>
+                         <p:message for="fechNac"  display="tooltip"/> 
+                         <!--sds-->
+                         <p:outputLabel  for="sexo"  value="Sexo :" />
+                         <p:selectOneButton id="sexo" value="#{usuarioController.drtPersonanatural.sexo}" required="true">
+                            <f:selectItem  itemLabel="Masculino" itemValue="M" />
+                            <f:selectItem itemLabel="Femenino" itemValue="F" />
+                         </p:selectOneButton>   
+                         <p:message for="sexo" display="tooltip" />  
+                         <!--sds-->
+                    </p:panelGrid>
+
+                 </p:panel> 
+                 </div>
+                </p:tab>
+                 
+                <div class="ui-fluid"> 
+                <p:tab id="proce" title="Procedencia">
+                    <p:panel rendered="#{usuarioController.drtDocidentidad.idPdid==4}" header="Lugar Nacimiento">
+                    <p:messages  id="msgs2" />
+                    <p:panelGrid   columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-1"  layout="grid" styleClass="ui-panelgrid-blank">
+                          <p:outputLabel  for="departamento"  value="Departamento :" />
+                          <p:selectOneMenu style="height: 32px;width: 95%" id="departamento"   value="#{usuarioController.drtDepartamento}" converter="selectOneMenuConverter" required="true">
+                               <f:selectItem itemLabel="Elegir Tipo" itemValue="" noSelectionOption="true" />                               
+                               <f:selectItems var="itemf"   value="#{usuarioController.lstDepartamentos}"  itemLabel="#{itemf.nombreDpto}" itemValue="#{itemf}" />
+                               <p:ajax listener="#{usuarioController.doCargarProvincia()}" update="provincia,distrito" /> 
+                          </p:selectOneMenu>
+                         <p:message for="departamento" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="provincia"  value="Provincia :" />
+                         <p:selectOneMenu style="height: 32px;width: 95%" id="provincia"   value="#{usuarioController.drtProvincia}" converter="selectOneMenuConverter" required="true">
+                               <f:selectItem itemLabel="Elegir Tipo" itemValue="" noSelectionOption="true" />                               
+                               <f:selectItems var="itemp"   value="#{usuarioController.lstProvincias}"  itemLabel="#{itemp.nombreProv}" itemValue="#{itemp}" />
+                               <p:ajax listener="#{usuarioController.doCargarDistrito() }" update="distrito" /> 
+                          </p:selectOneMenu>
+                         <p:message for="provincia" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="distrito"  value="Distrito :" />
+                         <p:selectOneMenu style="height: 32px;width: 95%" id="distrito"   value="#{usuarioController.drtPersonanatural.drtDistrito}" converter="selectOneMenuConverter" required="true">
+                               <f:selectItem itemLabel="Elegir Tipo" itemValue="" noSelectionOption="true" />                               
+                               <f:selectItems var="itemf"   value="#{usuarioController.lstDistritos}"  itemLabel="#{itemf.nombreDist}" itemValue="#{itemf}" />
+                          </p:selectOneMenu>
+                         <p:message for="distrito" display="tooltip" />  
+                    </p:panelGrid>
+
+                 </p:panel> 
+                 <p:panel  header="Lugar de Residencia">
+                    <p:messages  id="msgs3" />
+                    <p:panelGrid   columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-1"  layout="grid" styleClass="ui-panelgrid-blank">
+                          <p:outputLabel  for="dep"  value="Departamento :" />
+                          <p:selectOneMenu style="height: 32px;width: 95%" id="dep"   value="#{usuarioController.drtDep}" converter="selectOneMenuConverter" required="true">
+                               <f:selectItem itemLabel="Elegir Tipo" itemValue="" noSelectionOption="true" />                               
+                               <f:selectItems var="itemf"   value="#{usuarioController.lstDep}"  itemLabel="#{itemf.nombreDpto}" itemValue="#{itemf}" />
+                               <p:ajax listener="#{usuarioController.doCargarProvinciaResidencia()}" update="pro,dis" /> 
+                          </p:selectOneMenu>
+                         <p:message for="dep" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="pro"  value="Provincia :" />
+                         <p:selectOneMenu style="height: 32px;width: 95%" id="pro"   value="#{usuarioController.drtPro}" converter="selectOneMenuConverter" required="true">
+                               <f:selectItem itemLabel="Elegir Tipo" itemValue="" noSelectionOption="true" />                               
+                               <f:selectItems var="itemp"   value="#{usuarioController.lstPro}"  itemLabel="#{itemp.nombreProv}" itemValue="#{itemp}" />
+                               <p:ajax listener="#{usuarioController.doCargarDistritoResidencia()}" update="dis" /> 
+                          </p:selectOneMenu>
+                         <p:message for="pro" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="dis"  value="Distrito :" />
+                         <p:selectOneMenu style="height: 32px;width: 95%" id="dis"   value="#{usuarioController.drtPersonanatural.drtDistrito1}" converter="selectOneMenuConverter" required="true">
+                               <f:selectItem itemLabel="Elegir Tipo" itemValue="" noSelectionOption="true" />                               
+                               <f:selectItems var="itemf"   value="#{usuarioController.lstDis}"  itemLabel="#{itemf.nombreDist}" itemValue="#{itemf}" />
+                          </p:selectOneMenu>
+                         <p:message for="dis" display="tooltip" />  
+                    </p:panelGrid>
+
+                 </p:panel>   
+                </p:tab>
+               <p:tab id="otros" title="Otros">
+                   <div class="ui-fluid">
+                    <p:panel header="Informacion de Contacto">
+                    <p:messages  id="msgs4" />
+                    <p:panelGrid   columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-1"  layout="grid" styleClass="ui-panelgrid-blank">
+                       
+                        <p:outputLabel  for="email"  value="Email :" />
+                        <p:inputText id="email" value="#{usuarioController.drtPersonanatural.emailPrin}" 
+                                     a:data-validation="email" required="true" placeholder="ejemplo@ejemplo.com" a:type="email"
+                                     validatorMessage="Correo Invalido" >
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>     
+                        <p:message for="email" display="tooltip" />  
+                           <!--sds-->
+                   
+                        
+                         <p:outputLabel  for="telefon"  value="Teléfono Fijo :" />
+                         <p:inputText style="width: 100%" id="telefon" value="#{usuarioController.drtPersonanatural.telefonoPrin}"  
+                                      validatorMessage="El telefono no es válido"
+                                      a:type="number"  placeholder="Ejemplo: 043456895"  >
+                             <f:validateLength maximum="9" minimum="6"/>
+                         </p:inputText>   
+                         <p:message for="telefon" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="celu"  value="Celular :" />
+                         <p:inputText style="width: 100%" id="celu" value="#{usuarioController.drtPersonanatural.celularPrin}" 
+                                      validatorMessage="El Celular no es válido" a:type="number" placeholder="Ejemplo: 985621456"   >
+                             <f:validateLength maximum="9" minimum="9"/>
+                         </p:inputText>   
+                         <p:message for="celu" display="tooltip" />  
+                         <!--sds-->
+                         <p:outputLabel  for="dire"  value="Direccion :" />
+                         <p:inputText style="width: 100%" id="dire" value="#{usuarioController.drtPersonanatural.direccion}" required="true" ></p:inputText>   
+                         <p:message for="dire" display="tooltip" />  
+                         <!--sds-->
+                  
+                    </p:panelGrid>
+
+                 </p:panel> 
+                 </div>
+                </p:tab>
+                 <p:tab id="confirmacionx" title="Confirmacion">
+                   <div class="ui-fluid">
+                    <p:panel header="Informacion de Contacto">
+                    <p:messages  id="msgs5" />
+                    <p:panelGrid   columns="5" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-1,ui-grid-col-2,ui-grid-col-3"  layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel style="font-weight: bold;"  value="Tipo de Documento  :"/>
+                         <p:outputLabel  value="#{usuarioController.drtDocidentidad.nombre}" />
+                         <!--Div-->
+                         <p:outputLabel style="font-weight: bold;"  value="Numero Doc. Identidad:"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.numeroPndid}" />
+                        
+                         <p:outputLabel style="font-weight: bold;"  value="Apellido Paterno  :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.apPaterno}" />
+                         <!--Div-->
+                         <p:outputLabel style="font-weight: bold;"  value="Apellido Materno  :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.apMaterno}" />
+                        
+                         <p:outputLabel style="font-weight: bold;"  value="Nombres  :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.nombre}" />
+                         <!--Div-->
+                         <p:outputLabel style="font-weight: bold;"  value="Sexo  :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.sexo}" />
+                        
+                         <p:outputLabel style="font-weight: bold;"  value="Direccion  :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.direccion}" />
+                         <!--Div-->
+                         <p:outputLabel style="font-weight: bold;"  value="Telefono Fijo  :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.telefonoPrin}" />
+                       
+                         <p:outputLabel style="font-weight: bold;"  value="Celular :" />
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.celularPrin}" />
+                         <!--Div-->
+                         <p:outputLabel style="font-weight: bold;"  value="Email :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.emailPrin}" />
+                       
+                         <p:outputLabel style="font-weight: bold;"  value="Fecha Nacimiento :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.fechaNac}" >
+                            <f:convertDateTime dateStyle="short" />
+                         </p:outputLabel>
+                         <!--Div-->
+                         <p:outputLabel style="font-weight: bold;"  value="Lugar Nacimiento :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.drtDistrito.nombreDist}" />
+                        
+                         <p:outputLabel style="font-weight: bold;"  value="Lugar Residencia :"/>
+                         <p:outputLabel  value="#{usuarioController.drtPersonanatural.drtDistrito1.nombreDist}" />
+                         
+                    </p:panelGrid>    
+                    <br></br>
+                    <p:panelGrid   columns="2" columnClasses="ui-grid-col-2,ui-grid-col-7"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                        <p:commandButton icon="ui-icon-disk"   value="Guardar" action="#{usuarioController.doRegistroExitoso()}"
+                                                          actionListener="#{usuarioController.doCrearPersonaExterna()}"   styleClass="ui-priority-primary"   >
+
+                                        </p:commandButton>
+                    </p:panelGrid>  
+                 </p:panel> 
+                 </div>
+                </p:tab>
+                </div>
+                
+            </p:wizard>    
+           </h:form>  
+        
+      </div>
+        </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>

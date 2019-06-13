@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <body>
+     <ui:composition>
+        <div class="container">
+        
+            <div class="modal fade" id="mediabecas" data-backdrop="static">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 85%">
+                        <div class="modal-content">
+                           
+                                <!-- Modal Header -->
+                                <div class="modal-header btn-info">
+                                    <h:form id="headerMedia">
+                                    <h6 class="modal-title">
+                                        Medias Becas - <h:outputLabel value="#{cursoDetController.nom_tipo_alumno}"></h:outputLabel>
+                                    </h6>
+                                     </h:form>   
+                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                 
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                               
+                                <button  type="button" class="btn btn-primary"  data-toggle="collapse" data-target="#mediascollapse">Asignar Alumno</button>
+                                <div id="mediascollapse" class="collapse">
+                                <h:form id="formMediabecas">   
+                                 <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                 <div class="row">
+                                  <div class="col-lg-6">   
+                                   <div class="card">
+                                     <div class="card-body">
+                                            <br></br>
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <div class="form-group">
+                                                      
+                                                        <p:calendar a:style="width: 100%;font-weight: inherit;color: #1f2021;box-shadow: inset 0 2px 2px #ffffff;height: 35px"  label="button" required="true"  a:placeholder="Seleccionar fecha de vencimiento de la media beca" id="fechalimite" value="#{cursoDetController.fechaLimite}"  mindate="fechaMin" />
+                                                    </div>
+                                                </div> 
+                                            </div>
+ 
+                                             <div class="row">
+                                                <div class="col-lg-8">
+                                                 <div class="input-group mb-3">
+                                                     <h:inputText rendered="#{cursoDetController.id_tipoAlumno==1}" value="#{usuarioController.codigoEst}" a:type="number" a:class="form-control" id="codigoxa" a:placeholder="Ingrese Codigo de Alumno" ></h:inputText>
+                                                     <h:inputText rendered="#{cursoDetController.id_tipoAlumno==2}" value="#{usuarioController.dniEstGene}" a:type="number" a:class="form-control" id="codigoxa2" a:placeholder="Ingrese Numero de Documento (DNI)" ></h:inputText>
+                                                     <h:inputText rendered="#{cursoDetController.id_tipoAlumno==3}" value="#{usuarioController.idCardEstTrab}" a:type="number" a:class="form-control" id="codigoxa73" a:placeholder="Ingrese Numero de Documento (DNI)" maxlength="12" ></h:inputText>
+
+                                                    <div class="input-group-append">
+                                                        <p:commandLink rendered="#{cursoDetController.id_tipoAlumno==1}" action="#{usuarioController.doBuscarAlumnoUns()}" 
+                                                                       onstart="PF('loading').show();" 
+                                                                       oncomplete="PF('loading').hide();"
+                                                                       a:class="btn btn-secondary " update=":formMediabecas:userMediaBeca">
+                                                        <i class="fas fa-search"></i> 
+                                                        </p:commandLink>
+                                                        <p:commandLink rendered="#{cursoDetController.id_tipoAlumno==2}" action="#{usuarioController.doBuscarPersona()}" 
+                                                                        onstart="PF('loading').show();" 
+                                                                        oncomplete="PF('loading').hide();"
+                                                                       a:class="btn btn-secondary " update=":formMediabecas:userMediaBeca">
+                                                        <i class="fas fa-search"></i> 
+                                                        </p:commandLink>
+                                                        <p:commandLink rendered="#{cursoDetController.id_tipoAlumno==3}" action="#{usuarioController.doBuscarEstTrabajador()}" 
+                                                                        onstart="PF('loading').show();" 
+                                                                         oncomplete="PF('loading').hide();"
+                                                                          a:class="btn btn-secondary " update=":formMediabecas:userMediaBeca">
+                                                                                <i class="fas fa-search"></i> 
+                                                       </p:commandLink>
+                                                    </div>
+                                                  </div>
+                                                 </div>   
+                                             </div>
+                                         <p:panel id="userMediaBeca">
+                                         <p:panelGrid >
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="mt-3">
+                                                     <div class="input-group mb-3">
+                                                       <div class="input-group-prepend">
+                                                           <!-- <img class="img-fluid" src="img_avatar1.png" alt="Card image" style="width:45px;height:37px" > -->
+                                                           <h:graphicImage rendered="#{usuarioController.sexo == 1}" class="img-fluid" a:src="../../../resources/images/masculino.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage>
+                                                           <h:graphicImage rendered="#{usuarioController.sexo == 2}"  class="img-fluid" a:src="../../../resources/images/femenino.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage>
+                                                           <h:graphicImage rendered="#{usuarioController.sexo == 3}"  class="img-fluid" a:src="../../../resources/images/userdesc.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage> 
+                                                           <h:graphicImage rendered="#{usuarioController.sexo == 11}"  class="img-fluid" a:src="../../../resources/images/userdesc.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage> 
+                                                           <h:graphicImage rendered="#{usuarioController.sexo == 13}"  class="img-fluid" a:src="../../../resources/images/userdesc.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage> 
+ 
+                                                       </div>
+                                                           <h:outputLabel rendered="#{usuarioController.sexo ==1 or usuarioController.sexo ==2}" class="form-control card-text" value="#{usuarioController.drtPersonanatural.nombreCompleto}" ></h:outputLabel> 
+                                                           <h:outputLabel rendered="#{usuarioController.sexo == 3 }" class="form-control card-text" value="Persona no regisrada en la BD" ></h:outputLabel> 
+                                                           <h:outputLabel rendered="#{usuarioController.sexo == 11 }" class="form-control card-text" value="Persona registrada como Alumno Uns" ></h:outputLabel> 
+                                                           <h:outputLabel rendered="#{usuarioController.sexo == 13 }" class="form-control card-text" value="Persona registrada como Trabajador Uns" ></h:outputLabel> 
+
+                                                           <div class="input-group-append">
+                                                              <p:commandLink   rendered="#{usuarioController.sexo ==1 or usuarioController.sexo ==2}" 
+                                                                               type="submit" action="#{cursoDetController.doCrearMediaBeca()}" 
+                                                                               onstart="PF('loading').show();" 
+                                                                               oncomplete="PF('loading').hide();"
+                                                                               a:class="btn btn-success" update=":formTableMedia :pagMediab">
+                                                                <i class="fas fa-plus-circle"></i> 
+                                                              </p:commandLink>
+                                                               <p:commandLink   rendered="#{usuarioController.sexo == 3 and cursoDetController.id_tipoAlumno==2}"
+                                                                                onstart="PF('loading').show();" 
+                                                                                 oncomplete="PF('loading').hide();"
+                                                                                type="submit" action="#{cursoDetController.doCrearMediaBeca()}" 
+                                                                                a:class="btn btn-success" update=":formTableMedia :pagMediab">
+                                                                <i class="fas fa-plus-circle"></i> 
+                                                              </p:commandLink>
+                                                             <!--<button class="btn btn-success" type="submit">Go</button> -->
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                 </div>
+                                              </div>
+                                            </p:panelGrid>
+                                            </p:panel>
+                                             </div>
+                                            </div>       
+                                          </div>
+                                        </div>
+                                    </h:form>      
+                                </div>
+                                
+                                     <!--Inicio table -->
+                                      <div class="row">
+                                                  <div class="col-lg-12">
+
+                                                      <h:form id="formTableMedia">
+                                                          <p:tooltip />
+                                                          <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                                          <div class="table-responsive" align="center">
+                                                              <table class="panel table table-hover">
+                                                                  <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                                      <tr class="text-center">
+                                                                           <th>#</th>
+                                                                          <th>
+                                                                              <h:outputText rendered="#{cursoDetController.id_tipoAlumno==1}" value="Codigo Alumno"/>
+                                                                              <h:outputText rendered="#{cursoDetController.id_tipoAlumno!=1}" value="DNI"/>
+                                                                          </th>
+                                                                          <th>Nombres Completos</th>
+                                                                          <th>Tipo Alumno</th>
+                                                                          <th>Condicion</th>
+                                                                          <th>Fecha Vencimiento</th>
+                                                                          <th>Cancelar 1/2 Beca</th>  
+
+                                                                      </tr>
+                                                                  </thead>
+                                                                  <tbody  style="color: #000000; background-color: white">
+                                                                      <ui:repeat   value="#{cursoDetController.lsCecDescExoneradoses}" var="item">
+                                                                          <tr>
+                                                                              <td class="text-center"><h:outputText value="#{item.idAluDesExo}"/> </td>
+                                                                              <td class="text-center">
+                                                                                  <h:outputText rendered="#{cursoDetController.id_tipoAlumno==1}"  value="#{item.codAlumno}"/> 
+                                                                                  <h:outputText rendered="#{cursoDetController.id_tipoAlumno!=1}"  value="#{item.numDocumento}"/> 
+                                                                              </td>
+                                                                              <td class="text-center"><h:outputText value="#{item.nomCompletosExo}"/></td>
+                                                                              <td class="text-center"><h:outputText value="#{item.cepCecInversionCurso.cepCecTipAlumno.nomTipAlumno}"/></td>     
+                                                                              <td class="text-center"><h:outputText value="Media Beca"/></td>    
+                                                                              <td class="text-center"><h:outputText value="#{item.fechaLimite}"/></td>  
+                                                                              <td class="text-center">
+                                                                                  <p:commandLink action="#{cursoDetController.doCapturarMediBEca(item)}" 
+                                                                                               a:class="btn btn-secondary btn-sm" 
+                                                                                               a:data-toggle="modal" a:data-target="#modalEliminacionMediaBeca"  a:data-dismiss="modal" >
+                                                                                      <i class="fas fa-trash-alt"></i> 
+                                                                                </p:commandLink>
+                                                                              </td>
+                                                                              
+                                                                          </tr>
+                                                                      </ui:repeat>
+                                                                  </tbody>
+                                                              </table>
+                                                          </div>
+                                                      </h:form>  
+                                                      <h:form id="pagMediab">
+                                                            <ul class="pagination justify-content-center" style="margin:20px 0">
+                                                                <p:repeat  value="#{cursoDetController.paginacionMediaBeca}" var="num">
+                                                                       <li class="page-item">
+                                                                           <p:commandLink a:class="page-link" value="#{num}" actionListener="#{cursoDetController.doCapturarPaginaMediaBeca(num)}"
+                                                                                          onstart="PF('loading').show();" 
+                                                                                           oncomplete="PF('loading').hide();" update=":formTableMedia" >
+                                                                           </p:commandLink>
+                                                                       </li>
+                                                               </p:repeat>    
+                                                            </ul>
+                                                        </h:form>   
+                                                  </div>
+                                              </div>
+                                <!--Fin table -->
+                           
+                                </div>      
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal"  data-toggle="modal" >Salir</button>
+                                </div>
+                        
+                        </div>
+                    </div>
+                </div>
+             </div>
+            
+         
+         
+         
+         <!-- Modal Confirmacion de Eliminacion mediabeca -->
+           
+                <div class="modal fade" id="modalEliminacionMediaBeca" data-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" style="max-width: 40%">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header bg-danger">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <h:form id="formEliminacionMediaBeca">
+                        
+                                <!-- Modal body -->
+                            <div class="modal-body">
+                                
+                                <div class="alert alert-warning">
+                                    <strong>Warning!</strong><h:outputLabel value=" Estas Seguro que desea Cancelar su 1/2 Beca?" />  
+                                </div>
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer bg-danger">
+                               <p:commandLink value="Si" class="btn btn-secondary"  
+                                                       a:data-dismiss="modal" a:data-toggle="modal" a:data-target="#mediabecas"
+                                                       actionListener ="#{cursoDetController.doEliminarMediBEca()}" update=":formTableMedia :pagMediab">
+                                                       <i class="fas fa-trash-alt"></i> Si  
+                                                     
+                                </p:commandLink>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#mediabecas"  >No</button>
+                                
+                            </div>
+                            
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            
+        
+                     <p:dialog widgetVar="loading"
+                                 modal="true"
+                                 draggable="false"
+                                 closable="false"
+                                 appendTo="@(body)"
+                                 resizable="false"                
+                                 >
+                           <div align="center" >
+                               <img src="../../../resources/images/cargandoloading.gif" alt=""/>
+
+                           </div>
+
+                       </p:dialog>
+         
+       
+            
+        </ui:composition>
+    </body>
+</html>
+

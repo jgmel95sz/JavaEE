@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+       <body>
+
+     <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+                
+                
+            </ui:define>
+              
+        <ui:define name="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white  font-weight-bold">Mis Datos Personales</div>
+                        <div class="card-body">
+                            <h:form> 
+                            <div class="row">
+                                <div class="col-sm-2 font-weight-bold ">Nombres : </div>
+                                <div class="col-sm-10">
+                                    <h:outputLabel value="#{usuarioController.drtPersonanatural.nombre}"></h:outputLabel>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 font-weight-bold">Apellido Paterno : </div>
+                                <div class="col-sm-10">
+                                    <h:outputLabel value="#{usuarioController.drtPersonanatural.apPaterno}"></h:outputLabel>
+                                </div>
+                            </div>
+                                 <div class="row">
+                                <div class="col-sm-2 font-weight-bold">Materno Paterno : </div>
+                                <div class="col-sm-10">
+                                    <h:outputLabel value="#{usuarioController.drtPersonanatural.apMaterno}"></h:outputLabel>
+                                </div>
+                            </div>
+                                 <div class="row">
+                                <div class="col-sm-2 font-weight-bold">Email : </div>
+                                <div class="col-sm-10">
+                                    <h:outputLabel value="#{usuarioController.drtPersonanatural.emailPrin}"></h:outputLabel>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 font-weight-bold">Fecha Nacimiento : </div>
+                                <div class="col-sm-10">
+                                    <h:outputLabel value="#{usuarioController.drtPersonanatural.fechaNac}"></h:outputLabel>
+                                </div>
+                            </div>
+                            </h:form>
+                        </div> 
+                    
+                   </div> 
+                </div>
+        
+        </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>

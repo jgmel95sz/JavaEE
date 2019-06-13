@@ -1,0 +1,261 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <body>
+        <ui:composition template="./../plantilla/Plantilla.xhtml">
+
+            <ui:define name="top">
+                <ui:include src="MenuConfiguracion.xhtml"></ui:include>
+            </ui:define>
+
+
+
+            <ui:define name="content">
+
+                
+              <div class="card">
+                    <div class="card-header card bg-danger text-white">
+                        Crear Curso/Taller
+                    </div>
+                    <div class="card-body">
+
+                        <h:form id="form">
+                            <p:growl id="msgbox" showDetail="true"  showSummary="false"/>
+                            <p:panel id="creategeneral">  
+                                <div class="ui-fluid">
+                                    <p:panelGrid  columns="4" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel for="console" value="Modalidad de Enseñanza: " style=" font-weight: bold "/>
+                                        <p:selectOneRadio  required="true" id="tipoexox"  value="#{cursoDetController.tipoEnsenanza}"  columns="2">
+                                                           <f:selectItem itemLabel="Curso" itemValue="1" />
+                                                           <f:selectItem itemLabel="Taller" itemValue="2" />  
+                                        </p:selectOneRadio>
+                                        <p:outputLabel  value="" />
+                                    </p:panelGrid>
+
+                                    <p:panelGrid  columns="4" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel for="console" value="Nombre de Curso/Taller: " style=" font-weight: bold "/>
+                                        <p:selectOneMenu id="console" style="height: 35px;width: 100%" value="#{cursoDetController.idCurso}" effect="fade"  required="true"
+                                                         filter="true" filterMatchMode="startsWith">
+                                            <f:selectItem itemLabel="Elegir" itemValue="" />              
+                                            <f:selectItems var="item"   value="#{cursoDetController.lstCursosNombres}"  itemLabel="#{item.nomCurso}" itemValue="#{item.idCursoCab}" />  
+                                            <p:column>
+                                                <h:outputText value="#{item.nomCurso}" />
+                                            </p:column>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel  value="" />
+                                        <p:commandButton icon="ui-icon-circle-plus" value="Crear nuevo nombre" 
+                                                          onstart="PF('loading').show();" 
+                                                          oncomplete="PF('loading').hide();" 
+                                                          update=":createForm"
+                                                         type="button"  a:data-toggle="modal" a:data-target="#ModalCrearCurso"  
+                                                         action="#{cursoDetController.doTamanoPaginacionCursoCab()}" />  
+                                    </p:panelGrid> 
+                                    <p:panelGrid  columns="3" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel for="niveles"  value="Tipo de Nivel: " style=" font-weight: bold " />
+                                        <p:selectOneMenu id="niveles"  required="true" style="height: 35px;width: 100%" value="#{cursoDetController.idnivel}">
+                                            <f:selectItem itemLabel="Seleccionar nivel" itemValue="" />              
+                                            <f:selectItems var="item"   value="#{cursoDetController.doBuscarNivel()}"  itemLabel="#{item.nombreNivel}" itemValue="#{item.idNivel}" />                       
+                                        </p:selectOneMenu>
+                                
+                                            <p:outputLabel  value="" />
+                                            <p:outputLabel value="Horas Lectivas:"  for="horaslec" style=" font-weight: bold " />
+                                            <p:inputText id="horaslec" a:type="number" value="#{cursoDetController.horas_lectivas}"  required="true" class="te" style="width: 100%"  >
+                                         </p:inputText>
+                                    
+                                    </p:panelGrid>
+                                </div>
+                                <br></br>  
+                                <p:commandButton   icon="ui-icon-disk" class="btn"  style="height: 60px" value="GUARDAR DETALLES"
+                                                   action="#{cursoDetController.doCrearCursoDet()}"  >
+                                   
+                                </p:commandButton>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                </div>     
+
+ <!-- Modal CREAR NOMBRES -->
+                <div class="modal fade modal-scroll" id="ModalCrearCurso" data-backdrop="static">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4> 
+                                <button type="button" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>
+                              
+                            </div>
+                            <h:form id="createForm">
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                               
+                               
+                                      <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                    <p:panelGrid   columns="3" columnClasses="ui-grid-col-2,ui-grid-col-7,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel for="curName" value="Nombre :" />
+                                        <p:inputText style="width: 100%" id="curName" value="#{cursoDetController.nom_curso}" />
+                                        <p:commandButton  actionListener="#{cursoDetController.doCrearCursoGeneral()}" 
+                                                          onstart="PF('loading').show();" 
+                                                                       oncomplete="PF('loading').hide();"
+                                                          value="Guardar" update=":createForm :createForm:msgbox"  />  
+                                    </p:panelGrid>
+                                 
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                 
+                                    
+                                       <div class="table-responsive" align="center">
+                                        <table class="panel table table-hover">
+                                            <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                <tr class="text-center">
+                                                    <th>#</th>
+                                                    <th>Nombre</th>
+                                                    <th>Editar</th>
+                                                    <th>Borrar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  style="color: #000000; background-color: white">
+                                             
+                                                <ui:repeat id="list" value="#{cursoDetController.lstCursos}" var="item">
+                                                    <tr>
+                                                        <td class="text-center"><h:outputText  value="#{item.idCursoCab}"/></td>
+                                                        <td class="text-center">
+                                                            <h:outputText value="#{item.nomCurso}"/>
+
+                                                        </td>
+                                                        <td class="text-center" >
+                                                            <p:commandLink  rendered="#{cursoDetController.doValidaridCursoCab(item.idCursoCab) == 0}"
+                                                                            actionListener="#{cursoDetController.doCapturarNombreCurso(item)}"
+                                                                            a:class="btn btn-secondary btn-sm" 
+                                                                            a:data-toggle="modal" a:data-dismiss="modal" 
+                                                                            a:data-target="#ModalEditarCurso" update="FormModalModificarCursoGeneral">
+
+                                                                <i class="fas fa-edit"></i> 
+                                                            </p:commandLink>
+                                                            <p:commandLink  rendered="#{cursoDetController.doValidaridCursoCab(item.idCursoCab) == 1}"                               
+                                                                            a:class="btn btn-secondary btn-sm disabled"  >
+                                                                <i class="fas fa-edit"></i> 
+                                                            </p:commandLink>
+
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p:commandLink rendered="#{cursoDetController.doValidaridCursoCab(item.idCursoCab) == 0}" 
+                                                                           actionListener="#{cursoDetController.doCapturarNombreCurso(item)}"
+                                                                           a:data-toggle="modal" a:data-target="#myModal" a:class="btn btn-secondary btn-sm" >
+                                                                <i class="fas fa-trash-alt"></i> 
+                                                            </p:commandLink>
+                                                            <p:commandLink  rendered="#{cursoDetController.doValidaridCursoCab(item.idCursoCab) == 1}"
+                                                                            a:class="btn btn-secondary btn-sm disabled" >
+                                                                <i class="fas fa-trash-alt"></i> 
+                                                            </p:commandLink>
+                                                        </td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                 
+                                
+                                        <ul class="pagination justify-content-center" style="margin:20px 0" >
+                                            <p:repeat id="repet" value="#{cursoDetController.paginacionCursoCab}" var="num">
+                                                   <li class="page-item">
+                                                       <p:commandLink a:class="page-link" value="#{num}" actionListener="#{cursoDetController.doCapturarPaginaCurCab(num)}"
+                                                                      onstart="PF('loading').show();" 
+                                                                       oncomplete="PF('loading').hide();" update=":createForm " >
+                                                       </p:commandLink>
+                                                   </li>
+                                              </p:repeat>    
+                                      </ul>
+                                  
+                             </div>
+
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+
+                                  
+                                    <p:commandLink  update=":form:console" 
+                                                    onstart="PF('loading').show();" 
+                                                    oncomplete="PF('loading').hide();"
+                                                    action="#{cursoDetController.doListarNombres()}"  value="Aceptar" a:class="btn btn-secondary" a:data-dismiss="modal" >
+                                       
+                                    </p:commandLink>
+                                  
+                                </div>
+                            </h:form> 
+                        </div>
+                    </div>
+                </div>
+
+
+ 
+  <!-- Modal EDITAR NOMBRES -->
+
+                <div class="modal fade modal-scroll" id="ModalEditarCurso" data-backdrop="static">
+                    <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#ModalCrearCurso">&times;</button>
+                            </div>
+                            <h:form id="FormModalModificarCursoGeneral">
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <p:panelGrid   columns="1" columnClasses="ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel for="curName" value="Nombre :" />
+                                        <p:inputText style="width: 100%" id="curName"  value="#{cursoDetController.cursocab.nomCurso}" />
+
+                                    </p:panelGrid>
+
+                                </div>
+
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <p:panelGrid>
+                                        .     <p:commandButton  a:class="btn btn-secondary" 
+                                                                action="#{cursoDetController.doModificarNombreCurso()}" 
+                                                                value="Modificar" update=":createForm" a:data-dismiss="modal" 
+                                                                a:data-toggle="modal" a:data-target="#ModalCrearCurso"/>  
+                                    </p:panelGrid>    
+                                    <button type="button"   class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#ModalCrearCurso" >cancelar</button>
+
+                                </div>
+                            </h:form> 
+                        </div>
+                    </div>
+                </div>
+
+         <ui:include src="loading.xhtml"/>
+        <ui:include src="ModalConfirmacion.xhtml"></ui:include>
+        
+        
+         <p:dialog widgetVar="loading"
+                   modal="true"
+                   draggable="false"
+                   closable="false"
+                   appendTo="@(body)"
+                   resizable="false"                
+                   >
+             <div align="center" >
+                 <img src="../../../resources/images/cargandoloading.gif" alt=""/>
+             </div>
+             
+         </p:dialog>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

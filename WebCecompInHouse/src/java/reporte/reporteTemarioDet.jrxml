@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteTemarioDet" language="groovy" pageWidth="484" pageHeight="25" columnWidth="484" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d6a234cb-fb33-4af8-8060-34d4c97bdbd9">
+	<property name="ireport.zoom" value="1.000000000000012"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="nomTema" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="2" width="9" height="20" uuid="e338c07d-3bed-4b64-b73b-07f5a89d8bd3"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="3" width="429" height="19" uuid="6cba1589-645f-47be-b10f-b7e72d64721b"/>
+				<textFieldExpression><![CDATA[$F{nomTema}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="25" uuid="056bc976-5142-42e5-b23f-3829c841b390"/>
+			</line>
+			<line>
+				<reportElement x="484" y="0" width="1" height="25" uuid="bfb1de41-c8d5-4b99-b169-69e9af0beacd"/>
+			</line>
+			<line>
+				<reportElement x="1" y="0" width="483" height="1" uuid="e751427c-db1d-4001-bd5d-1cafb3e19220"/>
+			</line>
+			<line>
+				<reportElement x="1" y="24" width="483" height="1" uuid="923abf7d-6f00-4c59-a648-143af8bb90a9"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

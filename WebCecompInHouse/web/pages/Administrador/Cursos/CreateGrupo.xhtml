@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
+
+    <body>
+        <ui:composition template="./../plantilla/Plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="MenuConfiguracion.xhtml"></ui:include>
+            </ui:define>
+
+
+            <ui:define name="content">
+
+
+
+                <h:form id="formCreateGrupo">
+                                       
+                    <p:tooltip />
+                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                    <p:wizard>
+                        <div class="ui-fluid">
+                        <p:tab id="curGrup" title="Curso Grupo">
+                            <div class="ui-fluid">
+                                
+                                <p:panel  header="Asignar grupo y Fecha">
+                                 
+                                    <div class="container" >
+                                            <div class="alert alert-info" style="width: 100%;">
+                                                        
+                                                       <h:outputLabel value="#{cursoDetController.selectedListCurSubDet.cepCecCursoDet.cepCecCursoCab.nomCurso} _ " /> 
+                                                       <h:outputLabel value=" #{cursoDetController.selectedListCurSubDet.cepCecCursoDet.cepNivel.nomAbrevNivel}" /> -
+                                                       <h:outputLabel value="#{cursoDetController.selectedListCurSubDet.cepEscalaTipomod.cepTipoModalidad.nomModalidad}"/> -
+                                                       <h:outputLabel value="#{cursoDetController.selectedListCurSubDet.cepTipoDesarrollo.nomTipoDes}"/> - 
+                                                       <h:outputLabel value=" #{cursoDetController.detPlan}"/>
+
+                                              
+                                            </div>
+                                         </div>   
+                                       
+                                    <p:messages id="msgs" />
+
+                                    <p:panelGrid   columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-1"  layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel for="grupo"  value="Seccion:" />
+                                        <p:selectOneMenu style="height: 35px;width: 100%" id="grupo"   value="#{grupoCursoController.id_grupo}" required="true">
+                                            <f:selectItem itemLabel="Elegir # Grupo" itemValue="" noSelectionOption="true" />                               
+                                            <f:selectItems var="itemf"   value="#{grupoCursoController.doBuscarGrupos()}"  itemLabel="#{itemf.nomGrupo}" itemValue="#{itemf.idGrupo}" />
+                                            <p:ajax listener="#{grupoCursoController.doTraerFilaPorIdGrupo()}" /> 
+                                        </p:selectOneMenu>
+                                        <p:message for="grupo" display="tooltip" />  
+                                        <!--sds-->
+
+                                        <p:outputLabel for="button" value="Fecha Inicio: " />
+                                        <p:calendar id="button" value="#{grupoCursoController.fecha_inicio}" label="button" required="true" mindate="#{grupoCursoController.minFechaInicio}" >
+                                            <f:ajax event="dateSelect" execute="@this" listener="#{grupoCursoController.onDateSelectGrupo}" render="popup" ></f:ajax>
+                                        </p:calendar>
+                                        <p:message for="button" id="msgFechaInicio" display="icon" />
+                                        <h:outputLabel></h:outputLabel>
+
+                                        <p:outputLabel for="popup" value="Fecha Fin : " />
+                                        <p:calendar id="popup" value="#{grupoCursoController.fecha_fin}" label="Popup" required="true" mindate="#{grupoCursoController.minFechaFin}">
+                                        </p:calendar>
+                                        <p:message for="popup"  id="msgFechaFin" display="icon" />
+
+                                        <h:outputLabel></h:outputLabel>
+                                        <p:outputLabel  value="Ambiente" />
+                                        <p:selectOneMenu style="height: 35px;width: 100%"  id="ambiente"    value="#{grupoCursoController.id_aula}"  filter="true" filterMatchMode="startsWith">
+                                            <f:selectItem  itemLabel="Elegir aula" itemValue="" ></f:selectItem>
+                                            <f:selectItems var="aulita"   value="#{grupoCursoController.doBuscarAulas()}"  itemLabel="#{aulita.nomAula}" itemValue="#{aulita.idAulClass}" />  
+                                            <p:column>
+                                                <h:outputText value="#{aulita.nomAula}" />
+                                            </p:column>
+                                            <p:ajax  listener="#{grupoCursoController.doCargarAmbiente()}" />
+                                        </p:selectOneMenu>
+                                    </p:panelGrid>    
+
+                                    <p:panelGrid   columns="4" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-1,ui-grid-col-2"  layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel  value="Docente" />
+                                        <p:selectOneMenu style="height: 35px;width: 100%"  id="SelectDocente"    value="#{grupoCursoController.id_docente}" filter="true" filterMatchMode="startsWith">
+                                            <f:selectItem itemLabel="Elegir Docente" itemValue="" />
+                                            <f:selectItems var="lstDocente"   value="#{grupoCursoController.doListarDocenteCursoGrupDet()}"  itemLabel="#{lstDocente.nombreDocente}" itemValue="#{lstDocente.idDir}" />                       
+                                            <c:choose>
+                                                <c:when test="#{not empty grupoCursoController.num_dni}">        
+                                                    <f:selectItems var="lstDocente1" value="#{grupoCursoController.doListarDocente()}" itemLabel="#{lstDocente1.nombreCompleto}" itemValue="#{lstDocente1.idDir}" />
+                                                </c:when>
+                                            </c:choose> 
+                                            <p:column>
+                                                <h:outputText value="#{lstDocente.nombreDocente}" />
+                                            </p:column>
+                                            <p:ajax listener="#{grupoCursoController.doCargarDocente()}" />
+
+                                        </p:selectOneMenu>
+                                        <!--sds-->
+                                        
+                                        
+                                        
+                                        <p:commandButton  ajax="true" action="#{grupoCursoController.doDeshabilitarBotonDocente()}" 
+                                                           icon="fas fa-plus-square" value="Buscar Docente"  
+                                                           t:data-toggle="modal" t:data-target="#ModalDocente" 
+                                                           update="FormAgregarDocente">
+
+                                        </p:commandButton>  
+                                       
+
+                                    </p:panelGrid>    
+                                     
+
+
+                                </p:panel>
+                            </div>       
+
+                        </p:tab>
+                    </div>
+                        <p:tab id="tabhorario" title="Horario">
+                            <div class="ui-fluid">
+
+                                <p:panel header="Asignar horario">
+
+                                    <p:messages id="msgs2" />
+                                    <p:panelGrid   columns="3" columnClasses="ui-grid-col-4,ui-grid-col-3,ui-grid-col-1"  layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:commandButton icon="ui-icon-circle-plus" value="Crear nueva combinacion de Dias" type="button"  t:data-toggle="modal" t:data-target="#modalDiasHorario"  />  
+                                    </p:panelGrid>
+                                    <br></br>
+                                    <p:panelGrid   columns="3" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-1"  layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel for="horariodias" value="Dias de clase:" />
+                                        <p:selectOneMenu style="height: 35px;width: 100%"  id="horariodias"   value="#{grupoCursoController.id_horarios_dias}" required="true" filter="true" filterMatchMode="startsWith">
+                                            <f:selectItem  itemLabel="Elegir Dias" itemValue="" ></f:selectItem>
+                                            <f:selectItems var="item"   value="#{grupoCursoController.doBuscarHorarioDias()}"  itemLabel="#{item.nomHorarioDias}" itemValue="#{item.idHorarioDias}" />   
+                                            <p:column>
+                                                <h:outputText value="#{item.nomHorarioDias}" />
+                                            </p:column>
+                                            <p:ajax listener="#{grupoCursoController.doTraerFilaPorIdHorarioDias()}" />
+                                        </p:selectOneMenu>
+                                        <p:message for="horariodias"  display="tooltip" />  
+                                        
+                                        <p:outputLabel for="time" value="Hora Inicio: " />
+                                        <p:calendar id="time" value="#{grupoCursoController.hora_inicio}" pattern="HH:mm" timeOnly="true" label="time" required="true" >
+                                            <f:ajax event="dateSelect"  listener="#{grupoCursoController.onTimeSelectHorario}" render="time2" ></f:ajax>
+                                        </p:calendar>
+                                        <p:message for="time"  display="tooltip" />  
+
+                                        <p:outputLabel for="time2" value="Hora Fin: " />
+                                        <p:calendar id="time2" value="#{grupoCursoController.hora_fin}" pattern="HH:mm" timeOnly="true"  label="time2" 
+                                                    required="true" minHour="#{grupoCursoController.minHoraFinHorario}" minMinute="#{grupoCursoController.minMinuteFinHorario}">
+                                            <f:ajax event="dateSelect"  listener="#{grupoCursoController.onTimeSelectHorarioFin}" render="time2" ></f:ajax>
+
+                                        </p:calendar>
+                                        <p:message for="time2"  display="tooltip" />  
+                                    </p:panelGrid>    
+
+                                </p:panel>
+                            </div>
+                        </p:tab>
+
+
+                        <p:tab id="tabCronograma" title="Cronograma">
+                            <div class="ui-fluid">
+
+                                <p:panel id="cronograma" header="Asginar Cronograma Matricula">   
+                                    <p:panelGrid   columns="3" columnClasses="ui-grid-col-2,ui-grid-col-4"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                                        <p:outputLabel style="width:100%" for="CroFi" value="Fecha Inicio: " />
+                                        <p:calendar   id="CroFi" value="#{grupoCursoController.fecha_ini_cro}" required="true" mindate="#{grupoCursoController.minDia}">
+                                           <f:ajax event="dateSelect" listener="#{grupoCursoController.onDateSelect}" render="cronograma" ></f:ajax>
+                                        </p:calendar>
+                                        <p:message for="CroFi"  display="tooltip" />  
+
+                                       
+  
+                                        <p:outputLabel style="width:100%" t:class="text-sm-left" for="time3" value="Hora Inicio: " />
+                                        <p:calendar  id="time3" value="#{grupoCursoController.hora_ini_cro}" pattern="HH:mm" timeOnly="true"  required="true" 
+                                                     minHour="#{grupoCursoController.hora}" minMinute="#{grupoCursoController.minute}"  >
+                                                    <f:ajax event="dateSelect" listener="#{grupoCursoController.onTimeSelectInicio}" render="cronograma"></f:ajax>  
+                                        </p:calendar>
+                                        <p:message for="time3"  display="tooltip" />  
+
+
+                                        <p:outputLabel  style="width:100%" for="button2" value="Fecha Fin: " />
+                                        <p:calendar   id="button2" value="#{grupoCursoController.fecha_fin_cro}" required="true" mindate="#{grupoCursoController.FFMinDia}" >
+                                               <f:ajax event="dateSelect" listener="#{grupoCursoController.onSelectFechaFin}" render="cronograma"></f:ajax>
+                                        </p:calendar>
+                                        <p:message for="button2"  display="tooltip" />  
+
+
+                                        <p:outputLabel style="width:100%" for="time4" value="Hora Fin: " />
+                                        <p:calendar   id="time4" value="#{grupoCursoController.hora_fin_cro}" pattern="HH:mm" timeOnly="true" required="true" 
+                                                      minHour="#{grupoCursoController.hora_f}" minMinute="#{grupoCursoController.minute_f}" >
+                                             <f:ajax event="dateSelect" listener="#{grupoCursoController.onTimeSelectFinal}" render="cronograma"></f:ajax>
+ 
+                                        </p:calendar>
+                                        <p:message for="time4"  display="tooltip" />  
+
+                                 </p:panelGrid>    
+
+
+                                </p:panel>
+                            </div>
+                        </p:tab>      
+
+
+
+                        <p:tab id="tabConfirmar" title="Confirmar">
+                            <div class="ui-fluid">
+
+                                <p:panel header="Confirmar Datos ingresados">
+                                      <p:panelGrid   columns="1" columnClasses="ui-grid-col-12"  layout="grid" styleClass="ui-panelgrid-blank">
+                                      <p:outputLabel style="color: #0566b3"  value="Datos de Grupo" /> 
+                                      </p:panelGrid>    
+
+                                    
+                                    
+                                    <p:panelGrid   columns="5" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-1,ui-grid-col-2,ui-grid-col-3"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                                        
+                                        <p:outputLabel  value="# Grupo  :"/>
+
+                                        <p:outputLabel t:class="font-weight-normal" value="#{grupoCursoController.nom_grupo}" />
+
+                                        <!--Div-->
+                                        <p:outputLabel t:class="text-left" value="Horario: "/>
+
+
+                                        <p:outputLabel t:class="font-weight-normal"  value="#{grupoCursoController.nombreHorarioDias}"/>
+
+                                       
+                                        
+
+                                        <p:outputLabel  t:class="text-left" value="Hora Inicio : "/>
+
+
+                                        <p:outputLabel t:class="font-weight-normal"  value = "#{grupoCursoController.doArreglandoFormatoTime(grupoCursoController.hora_inicio)}" >
+                                            <f:convertDateTime pattern="HH:mm" />
+                                        </p:outputLabel>
+                                        <!--Div-->
+
+                                        <p:outputLabel  value="Hora Fin : "/>
+
+
+
+                                        <p:outputLabel t:class="font-weight-normal" value = "#{grupoCursoController.doArreglandoFormatoTime(grupoCursoController.hora_fin)}" >
+                                            <f:convertDateTime pattern="HH:mm" />
+                                        </p:outputLabel>
+                                        
+                                        
+                                        <p:outputLabel value="Fecha Inicio : "/>
+
+
+                                        <p:outputLabel t:class="font-weight-normal"   value="#{grupoCursoController.fecha_inicio}">
+                                            <f:convertDateTime dateStyle="short" />
+                                        </p:outputLabel>
+
+                                        
+                                        <!--Div-->
+
+                                       <p:outputLabel   value="Fecha Fin :"/>
+
+                                        <p:outputLabel  t:class="font-weight-normal"  value="#{grupoCursoController.fecha_fin}" >
+                                            <f:convertDateTime dateStyle="short" />
+                                        </p:outputLabel>
+                                       
+                                       
+                                        <p:outputLabel value="Ambiente : "/>
+                                        <p:outputLabel t:class="font-weight-normal"   value="#{grupoCursoController.cepAulaClass.nomAula}" />
+                                           
+                                        
+                                        <!--Div-->
+                                        <p:outputLabel value="Docente "/>
+
+
+                                        <p:outputLabel t:class="font-weight-normal"   value="#{grupoCursoController.drtPersonanatural.nombreCompleto}" />
+                                           
+                                      
+
+
+                                    </p:panelGrid>    
+                                    
+                                    <br></br>
+                                    <p:panelGrid   columns="1" columnClasses="ui-grid-col-12"  layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel style="color: #0566b3" value="Cronograma Matricula" /> 
+
+                                    </p:panelGrid>
+
+
+                                    <p:panelGrid   columns="5" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-1,ui-grid-col-2,ui-grid-col-3"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                                        <p:outputLabel  value="Fecha Inicio :"/>
+
+
+                                        <p:outputLabel t:class="font-weight-normal"  value="#{grupoCursoController.fecha_ini_cro}">
+                                            <f:convertDateTime dateStyle="short" />
+                                        </p:outputLabel>
+
+                                        <!--Div-->
+
+                                        <p:outputLabel  value="Hora Inicio :"/>
+                                        <p:outputLabel t:class="font-weight-normal"  value = "#{grupoCursoController.doArreglandoFormatoTime(grupoCursoController.hora_ini_cro)}" >
+                                            <f:convertDateTime pattern="HH:mm" />
+                                        </p:outputLabel>
+
+                                        <p:outputLabel  value="Fecha Fin :"/>
+                                        <p:outputLabel t:class="font-weight-normal"  value="#{grupoCursoController.fecha_fin_cro}">
+                                            <f:convertDateTime dateStyle="short" />
+                                        </p:outputLabel>
+
+                                        <p:outputLabel  value="" />
+
+
+                                        <p:outputLabel value="Hora Fin : "/>
+
+                                        <p:outputLabel t:class="font-weight-normal" value = "#{grupoCursoController.doArreglandoFormatoTime(grupoCursoController.hora_fin_cro)}" >
+                                            <f:convertDateTime pattern="HH:mm" />
+                                        </p:outputLabel>
+
+
+                                      
+                                    </p:panelGrid>  
+                                    
+                                  <p:panelGrid   columns="2" columnClasses="ui-grid-col-3,ui-grid-col-7"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                                         <p:commandButton icon="ui-icon-disk"  style="height: " value="Guardar"
+                                                         action="#{grupoCursoController.doCrearParametrosMatricula()}"   styleClass="ui-priority-primary"   >
+
+                                        </p:commandButton>
+                                  </p:panelGrid>  
+                                </p:panel>
+                            </div>
+                        </p:tab>
+
+                    </p:wizard>
+
+
+                </h:form>
+
+
+                <ui:include src="CreateDiasHorario.xhtml"/>
+                <ui:include src="dlgAgregarDocente.xhtml"/>
+                
+
+     
+            </ui:define>
+
+        </ui:composition>
+
+
+    </body>
+</html>
+

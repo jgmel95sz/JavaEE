@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Administrador/Cursos/CursosDetallados.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/dao/MatriculaPagoDAOLocal.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/negocio/GestorCursoGrupoServiceLocal.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/index.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Administrador/Cursos/CreateCurso.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/controladores/UsuarioController.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/controladores/ReportesController.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/negocio/GestorCursoDetServiceLocal.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Administrador/Matricula/MenuMatricula.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Administrador/Matricula/Pagos.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/loginEstudianteGeneral.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/dao/CepCecGrupoCurDetalleDAO.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/negocio/DrtTipoPerUnsService.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/loginEstudianteUns.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Administrador/Cursos/CrearInversionCurso.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/negocio/GestorRcdVoucherService.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/dao/CursoGrupoDAOLocal.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Administrador/Cursos/Grupos.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Usuario/Cursos/voucher.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/controladores/CursoDetController.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/conf/persistence.xml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/dao/MatriculaPagoDAO.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Administrador/Cursos/CreateGrupo.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/loginDocente.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/pages/Administrador/Cursos/GruposHistoricos.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/negocio/GestorMatriPagoServiceLocal.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/controladores/GrupoCursoController.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/negocio/GestorCursoGrupoService.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/negocio/GestorMatriPagoService.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/negocio/GestorRcdVoucherServiceLocal.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/resources/css/main.css</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/web/loginEstudianteTrabajador.xhtml</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/entidades/CepCecCurGrupDet.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/ejb/dao/CursoGrupoDAO.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/controladores/MatriculaController.java</file>
+            <file>file:/C:/Users/Melvin/Documents/NetBeansProjects/WebCecompInHouse/src/java/controladores/NotasController.java</file>
+        </group>
+    </open-files>
+</project-private>

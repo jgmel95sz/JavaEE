@@ -1,0 +1,318 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
+    <body>
+
+        <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="MenuConfiguracion.xhtml"></ui:include>
+            </ui:define>
+
+            <ui:define name="content">
+               
+                    <div class="ui-fluid">
+
+                        <div class="card">
+                            <div class="card-header card bg-danger text-white">
+                                <h:form id="formInverHedear">
+                                    <h:outputText value="Inversion #{cursoDetController.nombreCursoCompleto}" ></h:outputText>
+                                </h:form>
+
+
+                            </div>
+                            <div class="card-body">
+                                <a href="#newInverAlumno" class="btn btn-danger" data-toggle="collapse">Nueva Inversion</a>
+
+                                <div id="newInverAlumno" class="collapse"><span class="border border-danger"></span>
+                                    <h:form id="formInver">
+                                     <p:growl id="msgbox" showDetail="true"  showSummary="false"/>
+                                     
+                                     <div class="alert alert-info">
+                                         <strong>Ojo!</strong> 
+                                          <h:outputText rendered="#{cursoDetController.formapago == 0}" value="Unico pago  : #{cursoDetController.selectedListCurSubDet.numCuotas} " />
+
+                                         <h:outputText rendered="#{cursoDetController.formapago == 1}" value="El # de meses para este curso es : #{cursoDetController.selectedListCurSubDet.numCuotas} " />
+                                     <h:outputText rendered="#{cursoDetController.formapago == 2}" value="El # de cuotas para este curso es : #{cursoDetController.selectedListCurSubDet.numCuotas} " />
+                                     </div>
+                                     
+                                    
+                                    <p:tooltip />
+
+                                    <h:panelGrid >
+                                        <div class="container-fluid">
+                                        <div class="row">
+                                              <div class="col-lg">
+                                                    <h:selectOneMenu  id="tipoinversion"  value="#{cursoDetController.id_tipo_inver}" t:class="custom-select mb-3">
+                                                      <f:selectItem itemLabel="Tipo de Inversion" itemValue="" />              
+                                                       <f:selectItems var="item"   value="#{cursoDetController.dobuscarTipoInversion()}"  itemLabel="#{item.nomTipoinversion}" itemValue="#{item.idTipoinversion}" />                       
+                                                    <f:ajax render=":formInver:panelPri" listener="#{cursoDetController.doVerTipoInversion()}"/>
+  
+                                                    </h:selectOneMenu>  
+                                                  
+                                              </div>
+                                        </div> 
+                                         </div>    
+                                    </h:panelGrid>
+                                 
+                                    <hr></hr> 
+                                    <p:panel id="panelPri" >
+
+
+                                        <p:outputLabel value="No se ah seleccionado algun tipo de inversion "  rendered="#{cursoDetController.id_tipo_inver == 0}" t:class="alert alert-warning" style="width: 100%" />
+
+                                        <p:panelGrid  rendered="#{cursoDetController.id_tipo_inver == 2}" columns="3" columnClasses="ui-grid-col-2,ui-grid-col-5,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+                                            <h:outputText rendered="#{cursoDetController.selectedListCurSubDet.numCuotas!=1}" value="Tipo Costo:" />
+                                            <p:selectOneButton rendered="#{cursoDetController.selectedListCurSubDet.numCuotas!=1}" value="#{cursoDetController.optionPago}" required="true">
+                                                <f:selectItem itemLabel="Costo por cada Mes o cuota" itemValue="1" />
+                                                <f:selectItem itemLabel="Costo por total Curso (Pago al Contado)" itemValue="2" />
+                                                <f:ajax render="ckecki"  />
+                                            </p:selectOneButton>
+                                        </p:panelGrid>
+                                            
+
+                                        
+                                        <p:panelGrid  rendered="#{cursoDetController.id_tipo_inver != 0}" columns="3" columnClasses="ui-grid-col-2,ui-grid-col-5,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+                                            <p:outputLabel for="tipoAlumnito" value="Tipo de Alumno:" style="text-align: left" />
+                                            <p:selectOneMenu  id="tipoAlumnito" style="height: 35px"   value="#{cursoDetController.id_tipoAlumno}" required="true" >
+                                                <f:selectItem itemLabel="Elegir Tipo de Alumno :" itemValue=""  />              
+                                                <f:selectItems var="items"   value="#{cursoDetController.doBuscarTodosTipoAlumnos()}"  itemLabel="#{items.nomTipAlumno}" itemValue="#{items.idTipAlumno}" />                          
+                                                <f:ajax render=":formInver:SOMConcepto" listener="#{cursoDetController.LeerSape()}" />
+
+                                            </p:selectOneMenu>
+                                            <p:message for="tipoAlumnito" id="msgtipoAlumnito" display="tooltip" />  
+
+    
+                                            <p:outputLabel for="SOMConcepto" value="Concepto :"  />
+                                            <p:selectOneMenu id="SOMConcepto"  style="height: 35px"  value="#{cursoDetController.id_rcdConcepto}"  filter="true" effect="fade" filterMatchMode="startsWith" required="true"  requiredMessage="Error! No se selecciono" >
+                                                <f:selectItem itemLabel="Elegir Concepto" itemValue=""  />              
+                                                <f:selectItems var="item"  value="#{cursoDetController.lstRcdConceptos}"  itemLabel="#{item.idConcepto} #{item.nombre}" itemValue="#{item.idConcepto}" >
+                                                </f:selectItems> 
+                                                <p:column>
+                                                    <h:outputText value="#{item.idConcepto} #{item.nombre}" />     
+                                                </p:column>
+                                                <p:ajax  event="change" update=":formInver:codbanco"  listener="#{cursoDetController.doCapturarCodBanco()}"/>
+
+                                            </p:selectOneMenu>
+                                            <p:message for="SOMConcepto" id="msgSOMConcepto" display="tooltip" />  
+                                           
+                                                               
+                                            
+                                            <p:outputLabel for="codbanco" value="Codigo Banco:" />                                          
+                                            <p:outputLabel id="codbanco" value="#{cursoDetController.id_rcdConcepto}"  style="height: 88%; width: 100%; text-align: center" t:class="card bg-secondary text-white" />
+                                             <!--Div-->
+                                           <p:outputLabel value="Costo Concepto:" />
+                                            <p:inputNumber id="precioLabel" value="#{cursoDetController.precio}" style="height: 88%; width: 100%; text-align: center"  >
+                                                <p:ajax rendered="#{cursoDetController.id_tipo_inver != 3}" event="keyup" update="input1" listener="#{cursoDetController.doCapturaPrecio()}" />
+                                            </p:inputNumber>
+                                        </p:panelGrid>
+                                        
+                                         
+
+                                        <p:panelGrid rendered="#{cursoDetController.id_tipo_inver ==1 or cursoDetController.id_tipo_inver ==2}" columns="3" columnClasses="ui-grid-col-2,ui-grid-col-5,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+                                          
+
+                                            <p:outputLabel value="Costo Total Curso :" />
+                                            <p:outputLabel id="input1" value="S/. #{cursoDetController.precio_total}" style="height: 88%; width: 100%; text-align: center" t:class="card bg-secondary text-white"/>  
+                                             <!--Div-->
+                                           
+                                        </p:panelGrid>
+                                        
+                                        <p:panelGrid rendered="#{cursoDetController.id_tipo_inver != 0}" columns="3" columnClasses="ui-grid-col-2,ui-grid-col-5,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+                                            <p:outputLabel value="Descripcion :" />
+                                            <p:inputTextarea value="#{cursoDetController.descrp_inver}" rows="3" cols="100" />
+                          
+                                        </p:panelGrid>
+
+                                        <p:panel id="ckecki">
+                                        <p:panelGrid rendered="#{(cursoDetController.id_tipo_inver ==1 and cursoDetController.selectedListCurSubDet.numCuotas!=1)  or (cursoDetController.id_tipo_inver ==2 and cursoDetController.optionPago=='1' and cursoDetController.selectedListCurSubDet.numCuotas!=1)}" columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank">
+                                            <p:selectBooleanCheckbox  id="check"  itemLabel="Habilitar la opcion de poder pagar al contado el Costo total del curso" value="#{cursoDetController.estado_concepto_total}" />
+                                        </p:panelGrid>
+                                        </p:panel>
+
+                                        <p:panelGrid  rendered="#{cursoDetController.id_tipo_inver == 1 or  cursoDetController.id_tipo_inver == 2}"
+                                                      columns="5" columnClasses="ui-grid-col-2,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                                            <p:commandButton value="Agregar Inversion"  icon="ui-icon-plusthick" action="#{cursoDetController.doCrearInversion(1)}" update=":formInverTable,panelPri,:formInver" > 
+                                            </p:commandButton>                                                
+                                        </p:panelGrid>
+                                        <p:panelGrid  rendered="#{ cursoDetController.id_tipo_inver == 3  or cursoDetController.id_tipo_inver == 5 or cursoDetController.id_tipo_inver == 6 or cursoDetController.id_tipo_inver == 7 or cursoDetController.id_tipo_inver==8}"
+                                                      columns="5" columnClasses="ui-grid-col-2,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank"> 
+                                            <p:commandButton value="Agregar Inversion"  icon="ui-icon-plusthick" action="#{cursoDetController.doCrearInversion(2)}" update=":formInverTable,panelPri,:formInver" >
+
+                                            </p:commandButton>                                                
+                                        </p:panelGrid>
+                                        
+
+                                    </p:panel> 
+                                   </h:form>  
+                                </div> 
+
+                                        <br></br>
+                                        <hr></hr>
+                                        <br></br>
+                             
+                             <h:form id="formInverTable">
+                                 <div class="container-fluid">
+                                   <div class="row">
+                                            <div class="col-lg-3">
+                                                  <h:selectOneMenu  id="inversselecvt"  value="#{cursoDetController.id_tipo_inver}" t:class="custom-select mb-3">
+                                                      <f:selectItems var="tipoinver"   value="#{cursoDetController.dobuscarTipoInversion()}"  itemLabel="#{tipoinver.nomTipoinversion}" itemValue="#{tipoinver.idTipoinversion}" />  
+                                                  </h:selectOneMenu> 
+                                              </div>
+                                              <div class="col-lg-3">
+                                                  <p:commandButton id="chacvito" style="height: 35px;" 
+                                                                   action="#{cursoDetController.doElegirInversiones()}" value="Filtrar por Tipo de Concepto" 
+                                                                   update=":formInverTable:DTinverAlumno" icon="ui-icon-search"
+                                                                   onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                                                   >   
+                                                    
+                                                    </p:commandButton>     
+                                                  
+                                              </div>
+                                      </div> 
+                                 </div>
+                                  
+                             
+                                 
+                                <br></br>
+                                  <div class="card bg-secondary text-white font-weight-bold "  style="height: 50px" >
+                                        
+                                         <div class="card-body"  >
+                                             <h4 style="font-size: 1rem"> 
+                                              
+                                                    Lista de Inversion
+                                            
+
+                                             </h4>
+                                         </div>
+                                    </div>
+                                <br></br>
+                                <p:dataTable id="DTinverAlumno" rowIndexVar="rowIndex" selectionMode="single"
+                                             value="#{cursoDetController.lstInverAlumUNS}" var="item" rowKey="#{item.idInversion}"
+                                             editable="true" scrollWidth="100%"   resizeMode="expand" draggableColumns="true"
+                                             scrollable="true" scrollHeight="270"
+                                             >
+
+                                    <p:ajax event="rowEdit" listener="#{cursoDetController.doModificarInversion(item)}"  immediate="true"  process="@this"  update=":formInverTable:DTinverAlumno"/>
+                                    <p:ajax event="rowEdit" listener="#{cursoDetController.onRowEdit}"   update=":formInver:msgbox" />
+                                    <p:ajax event="rowEditCancel" listener="#{cursoDetController.onRowCancel}" update=":formInver:msgbox" />
+
+                                    <p:column headerText="#" style="width: 3%;text-align: center">
+                                        <h:outputText value="#{rowIndex+1}" />            
+                                    </p:column>    
+
+                                    <p:column  style="width: 5%;text-align:  center"  headerText="Codigo Banco">
+                                        <h:outputText value="#{item.rcdConcepto.idConcepto}" />
+                                    </p:column>
+                                    
+                                    <p:column    style="width: 30%" headerText="Concepto">
+                                        <h:outputText value="#{item.nombreConcepto}" />
+                                    </p:column>
+                                    <p:column   headerText="Precio">
+                                         <p:cellEditor>
+                                             <f:facet name="output">
+                                                 <h:outputText value="#{item.precioPension}" />
+                                             </f:facet>
+                                             <f:facet name="input">
+                                                 <p:inputText  value="#{item.precioPension}" style="width:100% " />
+                                             </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column  headerText="Precio Total">
+
+                                        <h:outputText rendered="#{item.conceptoTotal==1}" value="#{item.precioTotal}" />
+                                        <h:outputLink id="cero" value="#">
+                                        <h:outputText rendered="#{item.conceptoTotal==0}" style="color: red" value="#{item.precioTotal}" />
+                                        </h:outputLink>
+                                        <p:tooltip id="toolTipcero" for="cero" value="No se puede pagar esta cantidad a este codigo, solo es referencial"
+                                         trackMouse="true"/>
+                                    </p:column>
+                                    <p:column style="width: 8%;text-align: center" headerText="Tipo Alumno">
+                                              
+                                       <h:outputText value="#{item.cepCecTipAlumno.nomAbrev}" />
+                                        
+                                    </p:column>
+                                    <p:column style="width: 20%" headerText="Descripcion">
+                                        <p:cellEditor >
+                                            <f:facet name="output"><h:outputText value="#{item.descripcionInv}" /></f:facet>
+                                            <f:facet name="input"><p:inputText  value="#{item.descripcionInv}" style="width:100% " ></p:inputText></f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column  colspan="3" style="width: 13%;text-align: center"  headerText="Configuracion">
+                                        <p:rowEditor editTitle="Editar"  ></p:rowEditor>  
+                                        <p:commandButton t:data-toggle="modal" t:data-target="#myModal"            
+                                                         icon="ui-icon-trash"  title="Remove"  >
+                                            <p:ajax listener="#{cursoDetController.doCapturarInversion(item)}" />
+                                        </p:commandButton>  
+                                        <p:commandButton rendered="#{item.cepCecTipoInversion.idTipoinversion==2}" 
+                                                          value="1/2 Beca" 
+                                                           onstart="PF('load').show();" 
+                                                         oncomplete="PF('load').hide();"
+                                                          action="#{cursoDetController.doCapturarTipoAlumno(item)}"           
+                                                          t:data-toggle="modal" t:data-target="#mediabecas"  icon="ui ui-icon-search"
+                                                          update=":formMediabecas :formTableMedia :pagMediab :headerMedia" >
+                                        </p:commandButton> 
+                                    </p:column>
+                                    
+                                 
+                                    <f:facet name="paginatorTopLeft">
+                                        <p:commandButton type="button" icon="fa fa-sync" />
+                                    </f:facet>
+
+                                    <f:facet name="paginatorBottomRight">
+                                        <p:commandButton type="button" icon="fa fa-cloud-upload" />
+                                    </f:facet>
+
+                                </p:dataTable>  
+                                   
+                               </h:form>     
+                                
+                                <div class="row">
+                                    <div class="col-lg" style="color: red" >
+                                        <p  style="font-size: 13px;color: #e83d3d">*Los precios totales con letra roja son conceptos desahilitados para poder pagar al contado total del curso </p>                                </div>  
+
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                
+
+                   
+                 <ui:include src="MediaBecas.xhtml"></ui:include>
+                <ui:include src="ModalConfirmacion.xhtml"></ui:include>
+            
+                <p:dialog widgetVar="load"
+                                 modal="true"
+                                 draggable="false"
+                                 closable="false"
+                                 appendTo="@(body)"
+                                 resizable="false"                
+                                 >
+                           <div align="center" >
+                               <img src="../../../resources/images/cargandoloading.gif" alt=""/>
+
+                           </div>
+
+                       </p:dialog>
+         
+                
+
+                 
+              
+         
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+
+</html>
+

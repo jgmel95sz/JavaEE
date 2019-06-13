@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <body>
+
+
+        <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="MenuExonerados.xhtml"></ui:include>
+            </ui:define>
+            <ui:define name="content"> 
+
+            <div class="container-fluid">
+                
+               <div class="card">
+                            <h:form id="formtitleExonerados">
+                                <div class="card-header card bg-danger text-white">
+                                    <h:outputText value="#{cursoDetController.nom_curso}"  />
+                                </div>
+                            </h:form>     
+                   
+                            <div class="card-body">
+            
+
+                                <!--Inicio table -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+
+                                        <h:form id="formTableExo">
+                                            <p:tooltip />
+                                            <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                            <div class="table-responsive" align="center">
+                                                <table class="panel table table-hover paginationTable">
+                                                    <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                        <tr class="text-center">
+                                                            <th>#</th>
+                                                            <th>DNI/Codigo</th>
+                                                            <th>Nombres Completos</th>
+                                                            <th>Tipo Alumno</th>
+                                                            <th>Condicion</th>
+                                                            <th>Voucher Ficticios</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody  style="color: #000000; background-color: white">
+                                                        <ui:repeat   value="#{cursoDetController.lsCecDescExoneradoses}" var="item">
+                                                            <tr>
+                                                                <td class="text-center"><h:outputText value="#{item.idAluDesExo}"/> </td>
+                                                                <td class="text-center">
+                                                                    <h:outputText rendered="#{item.cepCecInversionCurso.cepCecTipAlumno.idTipAlumno==2 or item.cepCecInversionCurso.cepCecTipAlumno.idTipAlumno==3 }"  value="#{item.numDocumento}"/> 
+                                                                    <h:outputText rendered="#{item.cepCecInversionCurso.cepCecTipAlumno.idTipAlumno==1}"  value="#{item.codAlumno}"/> 
+                                                                </td>
+                                                                <td class="text-center"><h:outputText value="#{item.nomCompletosExo}"/></td>
+                                                                <td class="text-center"><h:outputText value="#{item.cepCecInversionCurso.cepCecTipAlumno.nomTipAlumno}"/></td>     
+                                                                <td class="text-center">
+                                                                    <h:outputText rendered="#{item.cepCecInversionCurso.cepCecTipoInversion.idTipoinversion==7 }" value="Beca"/>
+                                                                    <h:outputText rendered="#{item.cepCecInversionCurso.cepCecTipoInversion.idTipoinversion==8}" value="Descuento Planilla"/>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <p:commandLink   action="#{cursoDetController.doVoucherFicticio(item)}" 
+                                                                                     title="Asignar" a:class="btn btn-secondary btn-sm" a:data-toggle="modal" a:data-target="#verMasExo" update=":formverMasExo">
+                                                                                     <i class="fas fa-search"></i> 
+                                                                    </p:commandLink>
+
+                                                                </td>
+                                                            </tr>
+                                                        </ui:repeat>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                                <!--Fin table -->
+                    </div>
+               </div>
+            </div>
+
+
+
+
+            
+            
+            
+            <!-- Modal VER mas-->   
+
+                  
+                <div class="modal fade" id="verMasExo" data-backdrop="static">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                           <h:form id="formverMasExo">
+                                <!-- Modal Header -->
+                                <div class="modal-header bg-secondary text-white">
+                                    <h6 class="modal-title">
+                                        <h:outputLabel value="Detalles" ></h:outputLabel>
+                                        
+                                    </h6>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                               
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        
+                                            <div class="container-fluid">   
+                                               <div class="row">
+                                                <div class="col-lg-12">
+
+                                                  
+                                                      <p:tooltip />
+                                                      <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                                     
+                                                      <div class="table-responsive" align="center">
+                                                          <table class="panel table table-hover paginationTable">
+                                                              <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                                  <tr class="text-center">
+                                                                    
+                                                                      <th>#</th>
+                                                                      <th>Secuencia</th>
+                                                                      <th>fecha pago</th>
+                                                                      <th>Cod. Agencia</th>
+                                                                      <th>Condicion</th>
+                                                                       <th>Fecha Venc.</th>
+                                                                      <th>Estado</th>
+                                                                      <th>Cancelar</th>
+                                                                  </tr>
+                                                              </thead>
+                                                              <tbody  style="color: #000000; background-color: white">
+                                                                  <ui:repeat   value="#{cursoDetController.lstExonerados}" var="exo">
+                                                                      <tr>
+                                                                          <td class="text-center"><h:outputText  value="#{exo.idExonerados}"/></td>
+                                                                          <td class="text-center"><h:outputText value="#{exo.secuencia}"/> </td>
+                                                                          <td class="text-center">
+                                                                              <h:outputText value="#{exo.fechaPago}">
+                                                                                  <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                                              </h:outputText> 
+                                                                          </td>
+                                                                          <td class="text-center"><h:outputText value="#{exo.codAgencia}"/> </td>
+                                                                          <td class="text-center">
+                                                                              <h:outputText rendered="#{exo.cepCecDescExonerados.cepCecInversionCurso.cepCecTipoInversion.idTipoinversion==7 and exo.pagototal==true }" value="Beca Completa"/> 
+                                                                              <h:outputText rendered="#{exo.cepCecDescExonerados.cepCecInversionCurso.cepCecTipoInversion.idTipoinversion==7 and exo.pagototal==false }" value="Beca Pago 1 Cuota"/> 
+                                                                              <h:outputText rendered="#{exo.cepCecDescExonerados.cepCecInversionCurso.cepCecTipoInversion.idTipoinversion==8 and exo.pagototal==true }" value="Pago total por Planilla"/> 
+                                                                              <h:outputText rendered="#{exo.cepCecDescExonerados.cepCecInversionCurso.cepCecTipoInversion.idTipoinversion==8 and exo.pagototal==false }" value="Pago 1 cuota por Planilla"/> 
+                                                                          </td>
+                                                                          <td class="text-center">
+                                                                              <h:outputText value="#{exo.fechaVencimiento}">
+                                                                                   <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                                              </h:outputText>
+
+                                                                          </td>
+                                                                          <td class="text-center">
+                                                                              <h:outputText rendered="#{exo.fechaUso==null}" value="Sin Usar"/>
+                                                                              <h:outputText rendered="#{exo.fechaUso!=null}" value="Usado - #{exo.fechaUso}"/>
+                                                                          </td> 
+                                                                           <td class="text-center">
+                                                                                <p:commandLink  rendered="#{exo.fechaUso!=null}"
+                                                                                                a:class="btn btn-secondary btn-sm disabled" >
+                                                                                      <i class="fas fa-trash-alt"></i> 
+                                                                               </p:commandLink>
+                                                                               <p:commandLink  rendered="#{exo.fechaUso==null}"
+                                                                                               action="#{cursoDetController.doCapturarExonerado(exo)}"  
+                                                                                               a:class="btn btn-secondary btn-sm" update=":formEliminacionExo" 
+                                                                                               a:data-toggle="modal" a:data-target="#modalEliminacionExo"  a:data-dismiss="modal" >
+                                                                                      <i class="fas fa-trash-alt"></i> 
+                                                                               </p:commandLink>
+                                                                            </td>
+                                                                       </tr>
+                                                                   </ui:repeat>
+                                                               </tbody>
+                                                           </table>
+                                                       </div>
+                                                  </div>
+                                              </div>
+                                         </div>
+                                     </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                       
+                                    </div>
+                           </h:form>
+                        </div>
+                    </div>
+            
+                </div>
+            
+            
+            
+            
+                   
+         <!-- Modal Confirmacion de Eliminacion  -->
+           
+                <div class="modal fade" id="modalEliminacionExo" data-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" style="max-width: 40%">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header bg-danger">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <h:form id="formEliminacionExo">
+                           <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                <!-- Modal body -->
+                            <div class="modal-body">
+                                
+                                <div class="alert alert-warning">
+                                    <strong>Warning!</strong><h:outputLabel value=" Estas Seguro que desea Cancelar?" />  
+                                </div>
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer bg-danger">
+                                <button type="button" class="btn btn-secondary"   a:data-dismiss="modal"  a:data-toggle="modal" a:data-target="#verMasExo" >No</button>
+                                <p:commandLink value="Si" class="btn btn-secondary"  
+                                                       a:data-dismiss="modal"  a:data-toggle="modal" a:data-target="#verMasExo" 
+                                                       onstart="PF('loading').show();" 
+                                                       oncomplete="PF('loading').hide();"
+                                                       action="#{cursoDetController.doEliminarVoucheFicticio()}" update=":formverMasExo">
+                                                       <i class="fas fa-trash-alt"></i> Si  
+                                                     
+                                </p:commandLink>
+                            </div>
+                            
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+         
+         
+         
+          <p:dialog widgetVar="loading"
+                   modal="true"
+                   draggable="false"
+                   closable="false"
+                   appendTo="@(body)"
+                   resizable="false"                
+                   >
+             <div align="center" >
+                 <img src="../../../resources/images/cargandoloading.gif" alt=""/>
+                
+             </div>
+          
+         </p:dialog>
+  
+            </ui:define>
+          
+        </ui:composition>
+
+    </body>
+</html>
+

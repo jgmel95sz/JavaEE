@@ -1,0 +1,486 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+
+    <body>
+        <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="MenuConfiguracion.xhtml"></ui:include>
+            </ui:define>
+            <ui:define name="content">
+                
+                <div class="container-fluid">
+                       <div class="card bg-secondary text-white font-weight-bold "  style="height: 50px" >
+                           <div class="card-body"> <h4 style="font-size: 1rem"> Cursos Detallados </h4> </div>
+                       </div>
+                       <h:form id="FormfilterCurDet">
+                              <p:tooltip />
+                               <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                               <br/>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                 <p:selectOneMenu style="height: 35px;width: 100%"  id="cursogeneral"    value="#{cursoDetController.id_curso_det}"  filter="true" filterMatchMode="startsWith" placeholder="Filtrar segun el Curso General">
+                                            <f:selectItem  itemLabel="Elegir Curso General" itemValue="" ></f:selectItem>
+                                            <f:selectItem  itemLabel="Todos" itemValue="0" ></f:selectItem>
+                                            <f:selectItems var="curso"   value="#{cursoDetController.lstCursoDetTodos}"  itemLabel="#{curso.modEnsenanza==1 ? 'Curso '+= curso.cepCecCursoCab.nomCurso +=' ' +=curso.cepNivel.nomAbrevNivel : 'Taller '+= curso.cepCecCursoCab.nomCurso +=' ' +=curso.cepNivel.nomAbrevNivel}" itemValue="#{curso.idCursoDet}" />  
+                                            <p:column style="width: 100%">
+                                                <h:outputText value="#{curso.cepCecCursoCab.nomCurso} #{curso.cepNivel.nomAbrevNivel}" />
+                                            </p:column>
+                                 </p:selectOneMenu>
+                            </div>
+                            <div class="col-lg-2">
+                                
+                                <p:commandLink  style="height: 35px;"   a:class="btn btn-secondary btn-sm"  action="#{cursoDetController.doCargarFiltroPorCursoDet()}"
+                                                onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" ajax="false"  update="formcursosSub"  >
+                                    
+                                    <i class="fas fa-search">  </i>   Filtrar 
+                                </p:commandLink>
+                            </div>
+                           </div>
+                        </h:form> 
+                        <br></br>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h:form id="formcursosSub">
+                                    <div class="table-responsive" align="center">
+                                        <table class="panel table table-hover paginationTable ">
+                                            <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                <tr class="text-center">
+                                                    <th>#</th>
+                                                    <th>Curso/Taller General</th>
+                                                    <th>Desarrollo</th>
+                                                    <th>Modalidad</th>
+                                                    <th>Ver Mas</th>
+                                                    <th>Editar</th> 
+                                                    <th>Borrar</th> 
+                                                    <th>Inversion</th> 
+                                                    <th>Grupo</th>
+                                                    <th>Becas/Exon.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  style="color: #000000; background-color: white">
+                                                <p:repeat  value="#{cursoDetController.lstCusoSubDet}" var="item">
+                                                    <tr>
+                                                        <td class="text-center"><h:outputText  value="#{item.idCursoSubdet}"/></td>
+                                                        <td class="text-center">
+                                                            <h:outputText rendered="#{item.cepCecCursoDet.modEnsenanza==1}" value="Curso #{item.cepCecCursoDet.cepCecCursoCab.nomCurso}  #{item.cepCecCursoDet.cepNivel.nomAbrevNivel} "/>
+                                                            <h:outputText rendered="#{item.cepCecCursoDet.modEnsenanza==2}" value="Taller #{item.cepCecCursoDet.cepCecCursoCab.nomCurso}  #{item.cepCecCursoDet.cepNivel.nomAbrevNivel} "/>
+                                                        </td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepTipoDesarrollo.nomTipoDes}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepEscalaTipomod.cepTipoModalidad.nomModalidad}"/> </td>
+                                                        <td class="text-center">
+                                                            <p:commandLink 
+                                                                a:class="btn btn-secondary btn-sm" 
+                                                                a:data-toggle="modal" a:data-target="#modalVermasCursoSubDet"
+                                                                actionListener="#{cursoDetController.doBuscarPlanActual(item)}" 
+                                                                action="#{cursoDetController.doCapturarCursoSubDet(item)}"
+                                                                onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                                                update="formVermasSubDetCur">
+                                                                <i class="fas fa-search"></i> 
+                                                            </p:commandLink>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p:commandLink 
+                                                                update="FormModalModificarCursoDetalle"
+                                                                a:class="btn btn-secondary btn-sm" 
+                                                                onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
+                                                                a:data-toggle="modal" a:data-target="#myModalCursoDet" actionListener="#{cursoDetController.doCapturarCursoSubDet(item)}">
+                                                                <i class="fas fa-edit"></i> 
+                                                            </p:commandLink>
+                                                            
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p:commandLink 
+                                                                update="ConfirmacionBorrarCursoDet"
+                                                                a:class="btn btn-secondary btn-sm" 
+                                                                onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
+                                                                actionListener="#{cursoDetController.doCapturarCursoSubDet(item)}" a:data-toggle="modal" a:data-target="#myModalConfirmCursoDetBorrar">
+                                                                <i class="fas fa-trash-alt"></i> 
+                                                            </p:commandLink>
+                                                           
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p:commandLink  rendered="#{cursoDetController.doValidarSiExisteInversion(item.idCursoSubdet)== 0}" 
+                                                                            action="#{cursoDetController.doIrCrearInversion()}" 
+                                                                            onstart="PF('statusDialog').show();" 
+                                                                            oncomplete="PF('statusDialog').hide();"
+                                                                            title="Asignar" a:class="btn btn-primary btn-sm" >
+                                                                <i class="fas fa-plus-circle"></i>
+                                                                <f:setPropertyActionListener value="#{item}" target="#{cursoDetController.selectedListCurSubDet}"  />
+                                                            </p:commandLink>
+                                                            <p:commandLink   rendered="#{cursoDetController.doValidarSiExisteInversion(item.idCursoSubdet)== 1}" 
+                                                                             action="#{cursoDetController.doIrCrearInversion()}" 
+                                                                             onstart="PF('statusDialog').show();" 
+                                                                             oncomplete="PF('statusDialog').hide();"
+                                                                             title="Ver Inversion" a:class="btn btn-secondary btn-sm" >
+                                                                <i class="fas fa-search"></i> 
+                                                                <f:setPropertyActionListener value="#{item}" target="#{cursoDetController.selectedListCurSubDet}"  />
+                                                            </p:commandLink>
+
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p:commandLink   
+                                                                             onstart="PF('statusDialog').show();" 
+                                                                            oncomplete="PF('statusDialog').hide();"
+                                                                             action="#{cursoDetController.doCapturarIdCurSubDet(item)}" actionListener="#{grupoCursoController.doInicializacionValidacionDates()}"
+                                                                              a:class="btn btn-secondary btn-sm" a:data-toggle="modal" a:data-target="#ModalConfirmacionGrupo" update=":FormConfirmacionGrupo">
+                                                                <i class="fas fa-plus-circle"></i> 
+                                                            </p:commandLink>
+
+                                                        </td>
+                                                         <td class="text-center">
+                                                         
+                                                            <p:commandLink  
+                                                                             onstart="PF('statusDialog').show();" 
+                                                                            oncomplete="PF('statusDialog').hide();"
+                                                                             actionListener="#{cursoDetController.doPrepararBeca(item)}"  
+                                                                              a:class="btn btn-secondary btn-sm"  >
+                                                                <i class="fas fa-plus-circle"></i> 
+                                                            </p:commandLink>
+                                                        </td>
+                                                    </tr>
+                                                </p:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                 </h:form> 
+                             </div>
+                        </div>
+                    </div>
+
+
+
+         <!-- Modificar CURSO SUBDET -->
+                    <div class="modal fade" id="myModalCursoDet" data-backdrop="static" >
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                         
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <h:form id="FormModalModificarCursoDetalle">
+                                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body" >
+                                        <p:panelGrid rendered="#{cursoDetController.visibleEditarCurso==0}" >
+                                              <div class="alert alert-danger">
+                                                   El curso no se puede editar, porque tiene asignado inversion 
+                                                  </div>
+                                        </p:panelGrid> 
+                                        <p:panelGrid  rendered="#{cursoDetController.visibleEditarCurso==1}" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+
+                                                <p:outputLabel for="tipodesarrollo" value="Tipo de Desarrollo: " />
+                                                <p:selectOneMenu id="tipodesarrollo" style="height: 35px;width: 100%" value="#{cursoDetController.cepCursoSubDet.cepTipoDesarrollo}" converter="selectOneMenuConverter" required="true" requiredMessage="No se selecciono Tipo de Desarrollo" >
+                                                    <f:selectItem itemLabel="Elegir" itemValue="" /> 
+                                                    <f:selectItems var="itema"   value="#{cursoDetController.doBuscarTipoDesarollo()}"  itemLabel="#{itema.nomTipoDes}" itemValue="#{itema}" />                       
+                                                </p:selectOneMenu>
+                                                <p:message for="tipodesarrollo" display="tooltip" />
+
+
+
+
+                                                <p:outputLabel for="escalaDuracion" value="Duracion :" />
+                                                <p:selectOneMenu id="escalaDuracion"  style="height: 35px;width: 100%"  value="#{cursoDetController.cepCursoSubDet.cepEscalaTipomod}" filter="true" converter="selectOneMenuConverter" filterMatchMode="startsWith" required="true" requiredMessage="No se selecciono Duracion" >
+                                                    <f:selectItem itemLabel="Elegir" itemValue="" /> 
+                                                    <f:selectItems var="itemE"   value="#{cursoDetController.lstTodoEscala}"  itemLabel="#{itemE.cepTipoModalidad.nomModalidad}:  #{itemE.numEscala}  #{itemE.nombreEscala}" itemValue="#{itemE}" />                       
+                                                    <p:column>
+                                                        <h:outputText value="#{itemE.cepTipoModalidad.nomModalidad}" />
+                                                    </p:column>
+                                                </p:selectOneMenu>
+                                                <p:message for="escalaDuracion" display="tooltip" />
+
+
+                                                
+
+                                                 <p:outputLabel for="numclases" value="Numero de clases:" />
+                                                 <p:inputText id="numclases" value="#{cursoDetController.cepCursoSubDet.numClases}" required="true" requiredMessage="No se Ingreso Numero de clases">
+                                                </p:inputText>
+                                                <p:message for="numclases" display="tooltip" />
+
+                                                
+                                                <p:outputLabel value="Maximo de Alumnos :" />
+                                                <p:inputText  value="#{cursoDetController.cepCursoSubDet.maxAlum}"  >
+                                                </p:inputText>
+
+                                                <p:outputLabel  value="" />
+
+                                                <p:outputLabel value="Mininmo de Alumnos :" />
+                                                <p:inputText  value="#{cursoDetController.cepCursoSubDet.minAlum}" >
+                                                </p:inputText>
+                                              </p:panelGrid>     
+                                                
+                                                <p:panelGrid rendered="#{cursoDetController.visibleEditarCurso==1}"  columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+
+                                                    <p:outputLabel for="forma" value="Numero de Pagos:" />
+                                                    <p:selectOneRadio  id="forma"  value="#{cursoDetController.num_pagos}" columns="2" required="true" requiredMessage="No selecciono numero de pagos">
+                                                                         <f:selectItem itemLabel="Unico Pago" itemValue="1" />
+                                                                         <f:selectItem itemLabel="Mas de un Pago" itemValue="2" />  
+                                                                         <f:ajax render="masdeunpago" />
+                                                     </p:selectOneRadio>
+                                                     <p:message for="forma" display="tooltip" />                                
+                                                  </p:panelGrid>
+                                                    <p:panel id="masdeunpago" rendered="#{cursoDetController.visibleEditarCurso==1}" >
+                                                    <p:panelGrid   rendered="#{cursoDetController.num_pagos==2}" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                                                       <p:outputLabel for="cuotas" value="# Pagos : " />
+                                                       <p:inputText id="cuotas" onkeyup="return minPagos(this)" value="#{cursoDetController.cepCursoSubDet.numCuotas}"  a:type="number" a:max="100" a:min="2" required="true" requiredMessage="No se Ingreso Numero de pagos" placeholder="# de pagos">
+                                                        </p:inputText>
+                                                        <p:message for="cuotas" display="tooltip" /> 
+
+                                                        <p:outputLabel for="formadepago" value="Forma de Pagos : " />
+                                                        <p:selectOneMenu id="formadepago"  placeholder="formadepago" style="height: 35px;width: 100%"  value="#{cursoDetController.cepCursoSubDet.formaPago}"  required="true" requiredMessage="No se selecciono Forma de pago" >
+                                                            <f:selectItem itemLabel="Un pago por cada mes" itemValue="1" />
+                                                            <f:selectItem itemLabel="Un pago por cada cuota" itemValue="2" /> 
+                                                         </p:selectOneMenu>
+                                                        <p:message for="formadepago" display="tooltip" /> 
+
+                                                     </p:panelGrid>
+                                                    </p:panel>
+
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <p:panelGrid  rendered="#{cursoDetController.visibleEditarCurso==1}"  columns="2" columnClasses="ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                                            <p:commandLink value="Guardar Modificacion" ajax="false"  update="msgbox,formcursosSub" action="#{cursoDetController.doModificarCursoDetallado()}" a:class="btn btn-secondary" a:data-dismiss="modal"></p:commandLink> 
+                                        </p:panelGrid>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </h:form> 
+                       
+                           </div> 
+                             
+                        </div>
+                           
+                    </div>   
+
+                
+                
+                <!-- Modal confirmacion crear grupo -->
+
+                    <div class="modal fade" id="ModalConfirmacionGrupo" data-backdrop="static">
+                        <div class="modal-dialog modal-md modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                
+                                <h:form id="FormConfirmacionGrupo">
+                                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="alert alert-success" role="alert" jsf:rendered="#{cursoDetController.visibleEditarCurso==0}">
+                                            Esta seguro de crear grupo con el <br></br> 
+                                            <strong><h:outputLabel value=" #{cursoDetController.detPlan}" /></strong> 
+                                         </div>   
+                                        <div class="alert alert-warning" role="alert" jsf:rendered="#{cursoDetController.visibleEditarCurso==0}">
+                                            <strong>OJO!</strong> Luego que el plan este asignado no sera editable!
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" jsf:rendered="#{cursoDetController.visibleEditarCurso==1}">
+                                            <strong>OJO!</strong>No se puede agregar porque no tiene ningun tipo de inversion
+                                        </div>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <h:commandLink value="Ir" rendered="#{cursoDetController.visibleEditarCurso==0}" action="#{cursoDetController.redireccionAhCreateGroup()}" a:class="btn btn-secondary" a:data-dismiss="modal"></h:commandLink> 
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    </div>
+                                </h:form> 
+                            </div>
+                        </div>
+                    </div>   
+
+                 <ui:include src="ModalConfirmacion.xhtml"></ui:include>
+                <ui:include src="loading.xhtml"/>
+              
+         <!-- The Modal borrar cursos detallados -->
+           
+                <div class="modal fade" id="myModalConfirmCursoDetBorrar" data-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                             <h:form id="ConfirmacionBorrarCursoDet">
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="alert alert-danger" jsf:rendered="#{cursoDetController.visibleEditarCurso==0}" >
+                                   No se puede eliminar curso porque tiene asignado inversion
+                                  </div>
+                                  <h:outputLabel rendered="#{cursoDetController.visibleEditarCurso==1}" value="Estas Seguro que desea Eliminar registro?"></h:outputLabel> 
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                               <!-- Modal de la confirmacion de Eliminar de la tabla de cursos detallados -->
+                                 <button type="button" class="btn btn-secondary"  data-dismiss="modal" >Cancelar</button>
+                                 <p:commandLink  rendered="#{cursoDetController.visibleEditarCurso==1}"  action="#{cursoDetController.doOcultarCursosSubDetalles()}"
+                                                  ajax="false" update="formcursosSub" value="Si" a:type="button" a:class="btn btn-secondary" a:data-dismiss="modal" >
+                                </p:commandLink>
+                              
+                            </div>
+                         </h:form>     
+                        </div>
+                    </div>
+                </div>
+    
+         
+         
+         
+         
+       <!-- Modal DE VER MAS DETALLES DE CURSO detalaldo-->   
+        <div class="container">
+          
+            <div class="modal fade" id="modalVermasCursoSubDet" data-backdrop="static">
+               
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <h:form id="formVermasSubDetCur">
+                                  <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                  <ul class="list-group">
+                                      
+                                      <li class="list-group-item active ">
+                                          <h:outputText value="Detalles del Curso : #{cursoDetController.cepCursoSubDet.cepCecCursoDet.cepCecCursoCab.nomCurso }  #{cursoDetController.cepCursoSubDet.cepCecCursoDet.cepNivel.nombreNivel}"/> 
+                                      </li>
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Tipo de Desarrollo : "/>  
+                                            </div>
+                                             <div class="col-sm "> 
+                                                 <h:outputText value="#{cursoDetController.cepCursoSubDet.cepTipoDesarrollo.nomTipoDes}"/>  
+                                            </div> 
+                                        </div>
+                                       </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Modalidad : "/>  
+                                            </div>
+                                             <div class="col-sm "> 
+                                                 <h:outputText value="#{cursoDetController.cepCursoSubDet.cepEscalaTipomod.cepTipoModalidad.nomModalidad}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Duracion : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{cursoDetController.cepCursoSubDet.cepEscalaTipomod.numEscala} - #{cursoDetController.cepCursoSubDet.cepEscalaTipomod.nombreEscala}"/>  
+                                            </div> 
+                                        </div>
+                                       </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Horas Lectivas : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{cursoDetController.cepCursoSubDet.cepCecCursoDet.horasLectivas}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="# Clases : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{cursoDetController.cepCursoSubDet.numClases}"/>  
+                                            </div> 
+                                        </div>
+                                      </li> 
+                                      <li class="list-group-item">
+                                          <div class="row">  
+                                              <div class="col-sm-3 font-weight-bold" >
+                                                  <h:outputText value="Plan Actual: "/> 
+                                              </div>
+                                              <div class="col-sm">
+                                                  <h:outputText value="#{cursoDetController.cepCecPlan.detalles}"/>  
+                                              </div>
+                                          </div>  
+                                      </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                           <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Max. Alumnos : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{cursoDetController.cepCursoSubDet.maxAlum}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Min. Alumnos : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{cursoDetController.cepCursoSubDet.minAlum}"/>  
+                                            </div>  
+                                        </div> 
+                                       </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Pagos : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{cursoDetController.cepCursoSubDet.numCuotas}"/>  
+                                            </div> 
+                                        </div> 
+                                       </li> 
+                                      <li class="list-group-item">
+                                         <div class="row">  
+                                              <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Forma de Pagos : "/>  
+                                            </div>
+                                             <div class="col-sm">
+                                                 <h:outputText rendered="#{cursoDetController.cepCursoSubDet.formaPago==1}" value="Mensual"/>  
+                                                 <h:outputText rendered="#{cursoDetController.cepCursoSubDet.formaPago==2}" value="En el Transcurso del Curso"/> 
+                                                 <h:outputText rendered="#{cursoDetController.cepCursoSubDet.formaPago==0}" value="Antes del Inicio del Curso"/> 
+                                             </div> 
+                                          </div>  
+
+                                      </li>
+ 
+                                   </ul>
+                                
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                </div>
+                          </h:form>
+                        </div>
+                    </div>
+                      
+            </div>
+        </div> 
+         
+       
+        
+
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

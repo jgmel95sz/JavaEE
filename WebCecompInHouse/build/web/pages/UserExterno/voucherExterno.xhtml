@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+       <body>
+           
+     <ui:composition template="plantilla/plantilla.xhtml">
+        <ui:define name="top">
+
+        </ui:define>
+              
+        <ui:define name="content">
+                  
+                 <div class="container-fluid">
+                    <br></br>
+                    <br></br>
+
+                    <div class="row">
+                       <div class="col-lg-5 mx-auto d-block">
+                           <br></br>
+                           <img src="../../resources/images/voucher3.png" class="rounded img-fluid mx-auto d-block" alt="Cinque Terre" width="485" height="425" /> 
+                        <br></br>
+                        <br></br>
+                       </div>
+                        
+                        <div class="col-lg-5 mx-auto d-block">
+                            <div class="card">
+                                <div class="card-body">
+                                                 <h:form id="voucher"> 
+
+                                    
+                                           <div class="form-group">
+                                               <div align="center" class="font-weight-bold">
+                                                   <h5>
+                                                   <h:outputLabel  value="Datos del voucher" style="size:10px" />
+                                                   </h5>
+                                               </div> 
+                                           </div>
+
+                                        <div class="form-group">
+                                            <h:outputLabel  for="concepto" value="Concepto :"/><br></br>
+                                            <p:selectOneMenu   id="concepto"    value="#{matriculaController.idconcepto}"  filter="true" filterMatchMode="startsWith" style="width: 99%  ;color: #5f686f;box-shadow: inset 0px 0px 0px #8f8f8f" >
+                                               <f:selectItem  itemLabel="Elegir Concepto" itemValue="" ></f:selectItem>
+                                               <f:selectItems var="item"   value="#{matriculaController.doListarConceptos()}"  itemLabel="#{item.idConcepto} #{item.nombre}" itemValue="#{item.idConcepto}" />  
+                                               <p:column>
+                                                   <h:outputText value="#{item.nombre}" />
+                                               </p:column>
+                                            </p:selectOneMenu>
+                                        </div>
+
+
+                                       <div class="form-group">
+                                           <h:outputLabel  for="dni" value="Documento de Identidad :"/>
+                                           <h:inputText id="dni" value="#{matriculaController.dni}" a:class="form-control" a:type="number" a:placeholder="Ingresar Numero de Dni" required="true" />
+                                       </div>
+
+                                       <div class="form-group">
+                                           <h:outputLabel  for="secuencia" value="Secuencia :"/>
+                                           <h:inputText id="secuencia" value="#{matriculaController.secuencia}" a:class="form-control" a:type="number" a:placeholder="Enter secuencia" required="true" />
+                                       </div>
+                                       <div class="form-group">
+
+                                         <h:outputLabel for="fechav" value="Fecha :" /><br></br>
+                                         <p:calendar a:style="width: 100%;font-weight: inherit;color: #1f2021;box-shadow: inset 0 2px 2px #ffffff" id="fechav" value="#{matriculaController.fecha_pago}" label="button" required="true"  a:placeholder="Select Fecha" ></p:calendar>
+
+
+                                       </div>
+                                           <div class="form-group">
+                                             <h:outputLabel for="agencia" value="Agencia :"/>
+                                             <h:inputText id="agencia" value="#{matriculaController.cod_agencia}" a:class="form-control" a:type="number" a:placeholder="Enter agencia" required="true" />  
+                                           </div>     
+
+                                                     <p:commandLink action="#{matriculaController.doValidarVoucherForRegistroUsers()}" a:type="submit"  class="btn btn-primary" onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"  
+                                                       a:data-toggle="modal" a:data-target="#ValidezVoucher"   update="validVouc" > Validar Voucher </p:commandLink>
+
+                                     <ui:include src="../../DlgLoading.xhtml"/>
+
+                                        </h:form>
+                                    
+                                    
+                                </div>
+                            </div>
+                              <br></br>
+                        <br></br>  
+                        </div>
+                        
+                        
+                      
+                    </div>
+
+                </div>
+            
+            
+            
+                <!-- Modal para anuncio de valides -->
+
+                 <div class="modal fade" id="ValidezVoucher" data-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+                           <h:form id="validVouc">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4>
+                                
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <h:outputLabel rendered="#{matriculaController.valido == 1}"  > Voucher Valido</h:outputLabel>   
+                                <h:outputLabel rendered="#{matriculaController.valido == 2}"  > Voucher Valido pero Usuario ya Registrado </h:outputLabel>   
+                                <h:outputLabel rendered="#{matriculaController.valido == 0}"  > Voucher invalido</h:outputLabel>   
+                                <h:outputLabel rendered="#{matriculaController.valido == 3}"  > Voucher Valido <br></br>
+                                    Usuario ya Registrado<br></br> Generar Usuario y Contraseña</h:outputLabel>   
+
+                                <br></br>
+                                <h:panelGrid rendered="#{matriculaController.valido == 2}">
+                                     <div class="alert alert-warning" role="alert">
+                                        <strong>Ojo!</strong> Usuario y Contraseña son las mismas para Ceiduns y Cecomp
+                                      </div>
+                                </h:panelGrid> 
+                            </div>
+                                            
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+   
+                              
+                                <button type="button" class="btn btn-secondary"  data-dismiss="modal" >Salir</button>
+                                <p:link rendered="#{matriculaController.valido==0 or matriculaController.valido==2}"  value="Ok" a:type="button" a:class="btn btn-success" a:data-dismiss="modal" ></p:link>
+                                    
+                                <p:link rendered="#{matriculaController.valido==1}" outcome="registroExterno" value="Registrarse" a:type="button" a:class="btn btn-success"   >
+                                 
+                                </p:link>
+                                <h:commandLink rendered="#{matriculaController.valido==3}" action="#{usuarioController.doGenerarUsuarioContrasena()}" a:type="button" a:class="btn btn-success"></h:commandLink>
+                                
+                            </div>
+                           </h:form>
+                        </div>
+                    </div>
+                </div>
+
+        </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>

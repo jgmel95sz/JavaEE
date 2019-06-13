@@ -1,0 +1,888 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" >
+       <body>
+
+     <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+                
+            </ui:define>
+         
+        <ui:define name="content">
+
+            
+                    <div class="container-fluid">   
+                       <div class="card bg-secondary text-white font-weight-bold "  style="height: 50px" >
+                           <div class="card-body"  > <h4 style="font-size: 1rem"> Grupos Activos</h4> </div>
+                       </div>
+                      <h:form id="FormfilterGrupo">
+                               <p:tooltip />
+                               <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                               <br/>
+                                   
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p:selectOneMenu style="height: 32px;width: 100%"  id="grups"    value="#{usuarioController.id_curso_subdet}"  filter="true" filterMatchMode="startsWith" placeholder="Filtrar segun el Curso General">
+                                            <f:selectItem  itemLabel="Filtrar por Curso" itemValue="" ></f:selectItem>
+                                            <f:selectItem  itemLabel="Todos" itemValue="0" ></f:selectItem>
+                                            <f:selectItems var="curso"   value="#{cursoDetController.lstCursoDetTodos}"  itemLabel="#{curso.modEnsenanza==1 ? 'Curso '+= curso.cepCecCursoCab.nomCurso +=' ' +=curso.cepNivel.nomAbrevNivel : 'Taller '+= curso.cepCecCursoCab.nomCurso +=' ' +=curso.cepNivel.nomAbrevNivel}" itemValue="#{curso.idCursoDet}" />  
+                                            <p:column style="width: 100%">
+                                                <h:outputText value="#{curso.cepCecCursoCab.nomCurso} #{curso.cepNivel.nomAbrevNivel}" />
+                                            </p:column>
+                                 </p:selectOneMenu>
+                            </div>
+                            <div class="col-lg-2">
+                                  <p:commandLink style="height: 35px;"  
+                                                 update=":formGrupo :pagGrup"
+                                                 a:class="btn btn-secondary btn-sm" 
+                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
+                                                  actionListener="#{grupoCursoController.doFiltroBuscarGruposCursos()}"
+                                                   >
+                                  <i class="fas fa-search">  </i>  Filtrar
+                                  </p:commandLink>
+                            </div>
+                         </div>
+                        </h:form> 
+                        <br></br>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <h:form id="formGrupo">
+                                    <p:tooltip />
+                                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                  
+                                    <div class="table-responsive" align="center">
+                                        <table class="panel table table-hover">
+                                            <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                <tr class="text-center">
+                                                    <th>#</th>
+                                                    <th>Curso/Taller</th>
+                                                    <th>Desarrollo</th>
+                                                    <th>Modalidad</th>
+                                                    <th>Seccion</th>
+                                                    <th>Etapa</th>
+                                                    <th>Cronograma</th>
+                                                    <th>Ver Mas</th>
+                                                    <th>Matriculas</th>
+                                                    <th>Estado</th>
+                                                    <th>Eliminar</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody  style="color: #000000; background-color: white">
+                                                <p:repeat   value="#{grupoCursoController.lstGrupoCur}" var="item">
+                                                    <tr>
+                                                        <td class="text-center"><h:outputText value="#{item.idCurGrup}"/> </td>
+                                                        <td class="text-center">
+                                                            <h:outputText rendered="#{item.cepCecCursoSubdet.cepCecCursoDet.modEnsenanza==1}" value=" Curso #{item.cepCecCursoSubdet.cepCecCursoDet.cepCecCursoCab.nomCurso}  #{item.cepCecCursoSubdet.cepCecCursoDet.cepNivel.nomAbrevNivel}"/>
+                                                            <h:outputText  rendered="#{item.cepCecCursoSubdet.cepCecCursoDet.modEnsenanza==2}" value=" Taller #{item.cepCecCursoSubdet.cepCecCursoDet.cepCecCursoCab.nomCurso}  #{item.cepCecCursoSubdet.cepCecCursoDet.cepNivel.nomAbrevNivel}"/>
+
+                                                        </td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepCecCursoSubdet.cepTipoDesarrollo.nomTipoDes}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepCecCursoSubdet.cepEscalaTipomod.cepTipoModalidad.nomModalidad}"/></td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepCecGrupo.nomGrupo}"/></td>     
+                                                        <td class="text-center">
+                                                            <h:outputText rendered="#{grupoCursoController.doCapturarEtapa(item)=='En Proceso'}"   a:class="btn btn-success btn-sm"    a:style="color: white" value="#{grupoCursoController.name_etapa}"/> 
+                                                            <h:outputText rendered="#{grupoCursoController.name_etapa=='Fin del Grupo'}" a:class="btn btn-danger btn-sm"  a:style ="color: white" value="#{grupoCursoController.name_etapa}"/> 
+                                                            <h:outputText rendered="#{grupoCursoController.name_etapa=='Pre-Matricula'}" a:class="btn btn-secondary btn-sm"  a:style ="color: white " value="#{grupoCursoController.name_etapa}"/> 
+                                                            <h:outputText rendered="#{grupoCursoController.name_etapa!='Pre-Matricula' and grupoCursoController.name_etapa!='En Proceso' and grupoCursoController.doCapturarEtapa(item)!='Fin del Grupo' and grupoCursoController.name_etapa!='-----!'}" a:class="btn btn-warning btn-sm parpadea" a:style =" color: white "  value="#{grupoCursoController.name_etapa}"/> 
+                                                            <h:outputText rendered="#{grupoCursoController.name_etapa=='-----!'}" a:class="btn btn-danger btn-sm"  a:style ="color: white " value="#{grupoCursoController.name_etapa}"/> 
+
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                         <p:commandLink 
+                                                             a:class="btn btn-secondary btn-sm" update=":formTableCro :formCronoPagos :formCroFooter"
+                                                             a:data-toggle="modal" a:data-target="#modalCronoPagos" actionListener="#{grupoCursoController.doCapturarCronograma(item)}"
+                                                             onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                             <i class="fas fa-search"></i>Cronograma
+                                                         </p:commandLink>
+                                                        </td>     
+                                                        <td class="text-center">
+                                                          <p:commandLink rendered="#{grupoCursoController.doVerificarSiFaltanDatos(item)==0}"
+                                                             a:class="btn btn-primary btn-sm" update=":formVermasGrupo"
+                                                                  a:data-toggle="modal" a:data-target="#modalVermas" actionListener="#{grupoCursoController.doCapturarGrupo(item)}"
+                                                                  action="#{grupoCursoController.doCaputrarHorario(item)}"
+                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                             <i class="fas fa-edit"></i><span class="parpadea"  > Completar</span>
+                                                         </p:commandLink>
+                                                          <p:commandLink rendered="#{grupoCursoController.verificarSiFaltaDocente==1}"
+                                                             a:class="btn btn-secondary btn-sm" update=":formVermasGrupo"
+                                                                  a:data-toggle="modal" a:data-target="#modalVermas" actionListener="#{grupoCursoController.doCapturarGrupo(item)}"
+                                                                  action="#{grupoCursoController.doCaputrarHorario(item)}"
+                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                              <i class="fas fa-search"></i>
+                                                         </p:commandLink >  
+                                                        </td>
+                                                        <td class="text-center">
+                                                         <p:commandLink 
+                                                             a:class="btn btn-secondary btn-sm" 
+                                                             onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
+                                                             actionListener="#{notasController.doCapturarGrupoEnAdministrador(item)}"
+                                                             action="#{matriculaController.docapturarGrupoParaVerMatriculados(item)}">
+                                                             <i class="fas fa-search"></i> Matriculas
+                                                         </p:commandLink>
+                                                        </td>   
+                                                        <td class="text-center">
+                                                             <p:commandLink 
+                                                                class="btn btn-success btn-sm" 
+                                                                actionListener="#{grupoCursoController.doEstadoAcademico(item)}" a:data-toggle="modal" a:data-target="#modalAcademicoGrupo" update="formAcademicoGrupo"
+                                                                onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                                <i class="fas fa-edit"></i> Activo
+                                                            </p:commandLink>
+                                                        </td>
+                                                         <td class="text-center">
+                                                            <p:commandLink 
+                                                               
+                                                                a:class="btn btn-secondary btn-sm" 
+                                                                actionListener="#{grupoCursoController.doEstadoAcademico(item)}" a:data-toggle="modal" a:data-target="#modalEliminacionGrupo"
+                                                                onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" update=":formEliminacionGrupo"  >
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </p:commandLink>
+                                                         </td>
+                                                    </tr>
+                                                </p:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </h:form>
+                                 <!-- Center-aligned -->
+                            <h:form id="pagGrup">
+                            <ul class="pagination justify-content-center" style="margin:20px 0">
+                                <p:repeat  value="#{grupoCursoController.paginacionGrupo}" var="num">
+                                       <li class="page-item">
+                                           <p:commandLink a:class="page-link" value="#{num}" actionListener="#{grupoCursoController.doCapturarPaginaGrupo(num)}"
+                                                            onstart="PF('statusDialog').show();" 
+                                                           oncomplete="PF('statusDialog').hide();" update="formGrupo" >
+                                           </p:commandLink>
+                                       </li>
+                                 </p:repeat>    
+                                  </ul>
+                            </h:form>   
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+            
+            
+              <!-- Modal estado del grupo -->
+           
+                <div class="modal fade" id="modalAcademicoGrupo" data-backdrop="static">
+                    <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header bg-light">
+                                <h6 class="modal-title">Estado Academico</h6>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <h:form id="formAcademicoGrupo">
+                           <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="row" align="center" >
+                                  <div class="col-lg-12" >
+                                      <div class="alert alert-info alert-dismissible fade show">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <strong>Info!</strong> Si desactivara el grupo, ya no se podra ingresar notas
+                                       </div>
+                                    </div>
+                                </div>
+                                <div class="row" align="center" >
+                                    <div class="col-lg-12" >
+                                        <label class="switch">
+                                            <h:selectBooleanCheckbox value="#{grupoCursoController.estadoAcademico}" a:type="checkbox"/>
+                                         <span class="slider round"></span>
+                                        </label>
+                                     </div>
+                                </div>
+
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer bg-light">
+                                <p:commandLink value="Aceptar" class="btn btn-secondary" ajax="false" update=":FormfilterGrupo :formGrupo" 
+                                                       a:data-dismiss="modal" 
+                                                       actionListener="#{grupoCursoController.doFinalizarGrupo()}">
+                                                       <i class="fas fa-edit"></i>   
+                                                     
+                                </p:commandLink>
+                              <button type="button" class="btn btn-secondary"  data-dismiss="modal">Cancelar</button>
+
+                            </div>
+                            
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            
+            
+         
+            
+  <!-- Modal DE VER MAS DETALLES DEL GRUPO -->   
+        <div class="container">
+          
+            <div class="modal fade modal-scroll" id="modalVermas" data-backdrop="static">
+               
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                  <h:form id="formVermasGrupo">
+                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                  <ul class="list-group">
+                                      <li class="list-group-item active ">
+                                        <div class="row">
+                                              <div class="col-sm-4 font-weight-bold" >
+                                                  Horario del Grupo
+                                              </div>
+                                              <div class="col-sm">
+                                                  <p:commandLink rendered="#{usuarioController.acceso=='ADMINISTRADOR'}"
+                                                         a:class="btn btn-secondary btn-sm"  
+                                                         a:data-dismiss="modal" a:data-toggle="modal" 
+                                                         a:data-target="#modalHorarios" 
+                                                         update=":formHorarios"
+                                                         onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                         <i class="fas fa-edit"></i> 
+                                                </p:commandLink>
+                                              </div>
+                                           </div>   
+                                      </li>
+                                      <li class="list-group-item"> 
+                                            <div class="row">    
+                                             <div class="col-sm-3 font-weight-bold" >
+                                                 <h:outputText value="Dias : "/>  
+                                             </div>
+                                             <div class="col-sm">
+                                                 <h:outputText value="#{grupoCursoController.cepCecHorarios.cepHorarioDias.nomHorarioDias}"/>  
+                                             </div>
+                                            </div>
+                                       </li>
+                                        <li class="list-group-item"> 
+                                           <div class="row">
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Hora  Inicio : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecHorarios.horaIni}" >
+                                                   <f:convertDateTime pattern="HH:mm" />
+                                                 </h:outputText>  
+                                            </div> 
+
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Hora  Fin : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecHorarios.horaFin}">
+                                                      <f:convertDateTime pattern="HH:mm" />
+                                                 </h:outputText>
+                                                     
+                                            </div> 
+                                           </div>
+                                        </li>
+                                      <li class="list-group-item active ">
+                                          <div class="row">
+                                              <div class="col-sm-4 font-weight-bold" >
+                                                  Fecha Incio y Fin del Grupo
+                                              </div>
+                                              <div class="col-sm">
+                                                 <p:commandLink rendered="#{usuarioController.acceso=='ADMINISTRADOR'}"
+                                                                  a:class="btn btn-secondary btn-sm"  
+                                                                   a:data-dismiss="modal" a:data-toggle="modal" 
+                                                                   a:data-target="#modalFechas" 
+                                                                  update=":formFechas"
+                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                             <i class="fas fa-edit"></i> 
+                                                </p:commandLink>
+                                              </div>
+                                           </div>   
+                                      </li>
+                                        <li class="list-group-item"> 
+                                           <div class="row">
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Fecha de Inicio : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.fechaInicio}">
+                                                   <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                 </h:outputText>  
+                                            </div> 
+
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Fecha de Fin : "/>
+                                                      
+                                              
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.fechaFin}">
+                                                  <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                 </h:outputText>  
+                                            </div> 
+                                           </div>
+                                        </li>
+                                      
+                                    <li class="list-group-item active ">
+                                         Detalles Grupo
+                                      </li>
+                                       <li class="list-group-item"> 
+                                            <div class="row">    
+                                             <div class="col-sm-3 font-weight-bold" >
+                                                 <h:outputText value="Docente : "/>  
+                                             </div>
+                                             <div class="col-sm-7">
+                                               <h:outputText rendered="#{grupoCursoController.doFindDocenteEnGrupo()==1}" value="#{usuarioController.docenteActual.nombreCompleto}"/>  
+                                               <!-- si es 0 entonces el boton de agregar docente se aparece -->   
+                                               <p:commandLink rendered="#{grupoCursoController.doFindDocenteEnGrupo()==0}"
+                                                   a:class="btn btn-secondary btn-sm" ajax="true"  actionListener="#{grupoCursoController.doDeshabilitarBotonDocente()}"
+                                                   a:data-dismiss="modal" a:data-toggle="modal" 
+                                                   a:data-target="#ModalDocente2" 
+                                                   update="FormAgregarDocente2"
+                                                   onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                   <i class="fas fa-edit"></i> Asignar Docente
+                                               </p:commandLink>
+                                               
+                                             </div>
+                                                <div class="col-sm-2">
+                                                <p:commandLink rendered="#{grupoCursoController.doFindDocenteEnGrupo()==1}"
+                                                   a:class="btn btn-secondary btn-sm" ajax="true"  actionListener="#{grupoCursoController.doDeshabilitarBotonDocente()}"
+                                                   a:data-dismiss="modal" a:data-toggle="modal" 
+                                                   a:data-target="#ModalDocente2" 
+                                                   update="FormAgregarDocente2"
+                                                   onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                   <i class="fas fa-edit"></i>
+                                               </p:commandLink>
+                                                </div>
+                                            </div>
+                                       </li>
+                                      
+                                          
+                                    
+                                     <li class="list-group-item"> 
+                                      <div class="row">
+                                        <div class="col-sm-3 font-weight-bold" >
+                                            <h:outputText value="Ambiente : "/> 
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <h:outputText rendered="#{grupoCursoController.doBuscarLaboratorioEnGrupo()==1}" value="#{grupoCursoController.cepCecCurGrupDet.cepAulaClass.nomAula}"/> 
+                                            <p:commandLink rendered="#{grupoCursoController.doBuscarLaboratorioEnGrupo()==0}"
+                                                                  a:class="btn btn-danger btn-sm" ajax="true" 
+                                                                   a:data-dismiss="modal" a:data-toggle="modal" 
+                                                                   a:data-target="#modalLaboratorio" 
+                                                                  update=":formLaboratorio"
+                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                             <i class="fas fa-edit"></i> Asignar Laboratorio
+                                            </p:commandLink>
+                                        </div>
+                                        <div class="col-sm-2">
+                                          <p:commandLink rendered="#{grupoCursoController.doBuscarLaboratorioEnGrupo()==1}"
+                                                                  a:class="btn btn-secondary btn-sm" ajax="true" 
+                                                                   a:data-dismiss="modal" a:data-toggle="modal" 
+                                                                   a:data-target="#modalLaboratorio" 
+                                                                  update=":formLaboratorio"
+                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" >
+                                                             <i class="fas fa-edit"></i> 
+                                          </p:commandLink>
+                                        </div>
+                                        <div class="col-sm-2 font-weight-bold" >
+                                            <h:outputText value="Piso : "/> 
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:outputText value="#{grupoCursoController.cepCecCurGrupDet.cepAulaClass.piso}"/>  
+                                        </div>
+                                       </div>
+                                      </li> 
+                                   
+                                      <li class="list-group-item active ">
+                                          Detalles del Curso
+                                      </li>
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Modalidad : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.cepEscalaTipomod.cepTipoModalidad.nomModalidad}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Tiempo : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.cepEscalaTipomod.numEscala} - #{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.cepEscalaTipomod.nombreEscala}"/>  
+                                            </div> 
+                                        </div>
+                                       </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Horas Lectivas : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.cepCecCursoDet.horasLectivas}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="# Clases : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.numClases}"/>  
+                                            </div> 
+                                        </div>
+                                      </li> 
+                                     <li class="list-group-item">
+                                          <div class="row">  
+                                              <div class="col-sm-3 font-weight-bold" >
+                                                  <h:outputText value="Plan : "/> 
+                                              </div>
+                                              <div class="col-sm-7">
+                                                  <h:outputText value="#{grupoCursoController.cepCecPlan.detalles}"/>  
+                                              </div>
+                                              <div class="col-sm-2">
+                                               <p:commandLink
+                                                        actionListener="#{reportesController.doReportePlan(grupoCursoController.cepCecPlan)}" ajax="false"
+                                                      a:class="btn btn-primary btn-sm" >
+                                                     <i class="fas fa-download"></i> 
+                                               </p:commandLink>
+                                               </div>
+                                          </div>  
+                                      </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                           <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Max. Alumnos : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.maxAlum}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Min. Alumnos : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.minAlum}"/>  
+                                            </div>  
+                                        </div> 
+                                       </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Pagos : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.numCuotas}"/>  
+                                            </div> 
+                                           
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                  <h:outputText value="Inversion : "/> 
+                                              </div>
+                                              <div class="col-sm">
+                                                   <p:commandLink  a:class="btn btn-secondary btn-sm" ajax="true" 
+                                                                   action="#{cursoDetController.doIrCrearInversionDesdeGrupo(grupoCursoController.cepCecCurGrup.cepCecCursoSubdet)}" >
+                                                             <i class="fas fa-search"></i> Ver
+                                                   </p:commandLink>  
+                                              </div>
+                                            
+                                        </div> 
+                                       </li> 
+                                      <li class="list-group-item">
+                                         <div class="row">  
+                                              <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Forma de Pagos : "/>  
+                                            </div>
+                                             <div class="col-sm">
+                                                 <h:outputText rendered="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.formaPago==1}" value="Mensual"/>  
+                                                 <h:outputText rendered="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.formaPago==2}" value="Por cuotas"/> 
+                                                 <h:outputText rendered="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.formaPago==0}" value="Un solo pago (Matricula)"/> 
+                                             </div> 
+                                          </div>  
+
+                                      </li>
+                                      <li class="list-group-item active ">
+                                          Ayuda de filtros para Modulo de Pagos
+                                      </li>
+                                       <li class="list-group-item">
+                                         <div class="row">  
+                                              <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Filtro del concepto : "/>  
+                                            </div>
+                                             <div class="col-sm">
+                                                 <h:outputText value="#{grupoCursoController.nombreFiltro}"/> 
+                                             </div> 
+                                          </div>  
+
+                                      </li>
+ 
+                                   </ul>
+                                
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                </div>
+                          </h:form>
+                        </div>
+                    </div>
+                      
+            </div>
+        </div> 
+            
+            
+  
+
+        <!-- Modal ASIGNAR DOCENTE -->   
+                <div class="modal fade" id="ModalDocente2" data-backdrop="static">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" >
+                        <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal"  data-toggle="modal" 
+                                                                   data-target="#modalVermas">&times;</button>
+                                </div>
+                                <div class="container">
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                      <h:form id="FormAgregarDocente2">
+                                        <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                         <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#AnadirDocente"> Buscar Docente </button>
+                                         
+                                         <div id="AnadirDocente" class="collapse">
+                                               <p:panelGrid   columns="1" columnClasses="ui-grid-col-12"  layout="grid" styleClass="ui-panelgrid-blank">
+                                                    <h:outputLabel value="Ingresar DNI : "></h:outputLabel>
+                                                    <p:inputText  style="width: 100%" id="Docente" value="#{grupoCursoController.num_dni}" placeholder="Ingresar DNI" maxlength="8" />           
+                                                     <p:commandButton style="width: 100%" actionListener="#{grupoCursoController.doBuscarDocentePorDni()}" value="Buscar Docente" 
+                                                                      update="nDoce,botond" icon="ui-icon-search" 
+                                                                      onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" /> 
+                                                </p:panelGrid>  
+                                                    <br></br>
+                                                <p:panelGrid   columns="2" columnClasses="ui-grid-col-12,ui-grid-col-6"  layout="grid" styleClass="ui-panelgrid-blank">
+
+                                                        <p:outputLabel id="nDoce" value="#{grupoCursoController.nom_docente}" />
+
+                                                </p:panelGrid>  
+                                                       <p:panel id="botond" >
+                                                        <p:commandLink  rendered="#{usuarioController.enabled_docente==1}" action="#{grupoCursoController.doLimpiarDocente()}"  value="Agregar Docente a Lista" class="btn btn-secondary"
+                                                          update=":formDoc,:FormAgregarDocente2"  >
+                                                                <i class="fas fa-plus-circle"></i> Agregar                
+                                                          </p:commandLink>
+                                                         <p:commandLink  rendered="#{usuarioController.enabled_docente==0}" value="Agregar Docente a Lista" class="btn btn-secondary disabled"
+                                                                            >
+                                                                <i class="fas fa-plus-circle"></i> Agregar                
+                                                          </p:commandLink>
+                                                        </p:panel>
+                                           </div>
+                                          <br></br>
+                                  
+                                        </h:form> 
+                                        <h:form id="formDoc">
+                                             <br></br>
+                                          <p:panelGrid   columns="4" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-1,ui-grid-col-2"  layout="grid" styleClass="ui-panelgrid-blank">
+                                            <p:outputLabel  value="Docente" />
+                                            <p:selectOneMenu   id="SelectDocente"    value="#{grupoCursoController.id_docente}" filter="true" filterMatchMode="startsWith" style="width: 100%">
+                                                <f:selectItem itemLabel="Seleccionar Docente" itemValue="" />
+                                                <f:selectItems var="lstDocente"   value="#{grupoCursoController.doListarDocenteCursoGrupDet()}"  itemLabel="#{lstDocente.nombreDocente}" itemValue="#{lstDocente.idDir}" />                       
+                                                <c:choose>
+                                                    <c:when test="#{not empty grupoCursoController.num_dni}">        
+                                                        <f:selectItems var="lstDocente1" value="#{grupoCursoController.doListarDocente()}" itemLabel="#{lstDocente1.nombreCompleto}" itemValue="#{lstDocente1.idDir}" />
+                                                    </c:when>
+                                                </c:choose> 
+                                                <p:column>
+                                                    <h:outputText value="#{lstDocente.nombreDocente}" />
+                                                </p:column>
+                                                <p:ajax listener="#{grupoCursoController.doCargarDocente()}" />
+                                            </p:selectOneMenu>
+                                          
+                                            
+                                        </p:panelGrid> 
+                                      </h:form>
+                                    </div>
+
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <h:form>
+                                         <p:commandLink  value="Asignar Docente Seleccionado" class="btn btn-secondary"
+                                                       action="#{grupoCursoController.doGuardarDocentePostMatricula()}"
+                                                       update="formVermasGrupo"  a:data-dismiss="modal"  a:data-toggle="modal" 
+                                                                   a:data-target="#modalVermas" >
+                                               <i class="fas fa-plus-circle"></i> Agregar                
+                                         </p:commandLink>
+                                         
+                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"  data-toggle="modal" 
+                                                                   data-target="#modalVermas">No</button>
+                                         </h:form>
+                                    </div>
+                                </div>
+                           </div>
+                      </div>
+                 </div>
+            
+                
+                
+         <!-- MODAL ASIGNAR LABORATORIO -->   
+        <div class="container">
+          
+            <div class="modal fade" id="modalLaboratorio" data-backdrop="static">
+               
+                    <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header btn-danger">
+                                    <h6 class="modal-title">Asignar Laboratorio</h6>
+                                    <button type="button" class="close" data-dismiss="modal"  data-toggle="modal" 
+                                                                   data-target="#modalVermas">&times;</button>
+                                </div>
+                                <h:form id="formLaboratorio">
+                                <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                <p:panelGrid   columns="1" columnClasses="ui-grid-col-12"  layout="grid" styleClass="ui-panelgrid-blank">
+                                <p:outputLabel  value="Ambiente" />
+                                 <p:selectOneMenu style="height: 35px;width: 100%"  id="ambiente"    value="#{grupoCursoController.id_aula}"  filter="true" filterMatchMode="startsWith">
+                                            <f:selectItem  itemLabel="Elegir aula" itemValue="" ></f:selectItem>
+                                            <f:selectItems var="aulita"   value="#{grupoCursoController.doBuscarAulas()}"  itemLabel="#{aulita.nomAula}" itemValue="#{aulita.idAulClass}" />  
+                                            <p:column>
+                                                <h:outputText value="#{aulita.nomAula}" />
+                                            </p:column>
+                                            <p:ajax  listener="#{grupoCursoController.doCargarAmbiente()}" />
+                                 </p:selectOneMenu>   
+                                </p:panelGrid>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                             
+                                
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                     <p:commandLink  value="Agregar Laboratorio" class="btn btn-secondary"
+                                                       action="#{grupoCursoController.doModificarLaboratorio()}"
+                                                       update="formVermasGrupo"  a:data-dismiss="modal"  a:data-toggle="modal" 
+                                                                   a:data-target="#modalVermas" >
+                                               <i class="fas fa-plus-circle"></i> Agregar Laboratorio                
+                                         </p:commandLink>
+                                         
+                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"  data-toggle="modal" 
+                                                                   data-target="#modalVermas">No</button>
+                                </div>
+                             </h:form>
+                        </div>
+                    </div>
+                </div>
+           </div> 
+            
+                
+                
+              <!-- MODAL EDITAR FECHA -->   
+        <div class="container">
+          
+            <div class="modal fade" id="modalFechas" data-backdrop="static" style="overflow-y: scroll;">
+               
+                    <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header btn-danger">
+                                    <h6 class="modal-title">Editar Fecha Inicio y/o Fin</h6>
+                                    <button type="button" class="close" data-dismiss="modal"  data-toggle="modal" 
+                                                                   data-target="#modalVermas">&times;</button>
+                                </div>
+                                <h:form id="formFechas">
+                                <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                               
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                            <div class="form-group">
+                                                <h:outputLabel for="button" value="Fecha Inicio: " /><br></br>
+                                                <p:calendar id="button" value="#{grupoCursoController.fecha_inicio}" label="button" required="true" mindate="#{grupoCursoController.minFechaInicio}" >
+                                                    <f:ajax event="dateSelect" execute="@this" listener="#{grupoCursoController.onDateSelectGrupo}" render="popup" ></f:ajax>
+                                                </p:calendar>
+
+                                            </div> 
+                                            <div class="form-group">
+                                                <h:outputLabel for="popup" value="Fecha Fin : " /><br></br>
+                                                <p:calendar id="popup" value="#{grupoCursoController.fecha_fin}" label="Popup" required="true" mindate="#{grupoCursoController.minFechaFin}">
+                                                </p:calendar>
+
+                                            </div>
+                                      </div>
+                                
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                     <p:commandLink  value="Aceptar" class="btn btn-secondary"
+                                                       action="#{grupoCursoController.doModificarFechas()}"
+                                                       update="formVermasGrupo"  a:data-dismiss="modal"  a:data-toggle="modal" 
+                                                                   a:data-target="#modalVermas" >
+                                               <i class="fas fa-plus-circle"></i> Editar fechas                
+                                         </p:commandLink>
+                                         
+                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"  data-toggle="modal" 
+                                                                   data-target="#modalVermas">Cancelar</button>
+                                </div>
+                             </h:form>
+                        </div>
+                    </div>
+                </div>
+           </div>    
+       
+              
+              
+              
+        <!-- MODAL EDITAR horarios -->   
+        <div class="container">
+          
+            <div class="modal fade" id="modalHorarios" data-backdrop="static">
+               
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header btn-danger">
+                                    <h6 class="modal-title">Editar Horario</h6>
+                                    <button type="button" class="close" data-dismiss="modal"  data-toggle="modal" 
+                                                                   data-target="#modalVermas">&times;</button>
+                                </div>
+                                <h:form id="formHorarios">
+                                <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                               
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                     <p:panel >
+
+                                    <p:messages id="msgs2" />
+                                    <p:panelGrid   columns="3" columnClasses="ui-grid-col-5"  layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:commandButton icon="ui-icon-circle-plus" value="Crear nueva combinacion de Dias" type="button"   a:data-dismiss="modal"  a:data-toggle="modal" a:data-target="#modalDiasHorario"  />  
+                                    </p:panelGrid>
+                                    <br></br>
+                                    <p:panelGrid   columns="3" columnClasses="ui-grid-col-3,ui-grid-col-8,ui-grid-col-1"  layout="grid" styleClass="ui-panelgrid-blank">
+                                        <p:outputLabel for="horariodias" value="Dias de clase:" />
+                                        <p:selectOneMenu style="height: 35px;width: 100%"  id="horariodias"   value="#{grupoCursoController.id_horarios_dias}" required="true" filter="true" filterMatchMode="startsWith">
+                                            <f:selectItem  itemLabel="Elegir Dias" itemValue="" ></f:selectItem>
+                                            <f:selectItems var="item"   value="#{grupoCursoController.doBuscarHorarioDias()}"  itemLabel="#{item.nomHorarioDias}" itemValue="#{item.idHorarioDias}" />   
+                                            <p:column>
+                                                <h:outputText value="#{item.nomHorarioDias}" />
+                                            </p:column>
+                                            <p:ajax listener="#{grupoCursoController.doTraerFilaPorIdHorarioDias()}" />
+                                        </p:selectOneMenu>
+                                        <p:message for="horariodias"  display="tooltip" />  
+                                        
+                                        <p:outputLabel for="time" value="Hora Inicio: " />
+                                        <p:calendar id="time" value="#{grupoCursoController.hora_inicio}" pattern="HH:mm" timeOnly="true" label="time" required="true" >
+                                            <f:ajax event="dateSelect"  listener="#{grupoCursoController.onTimeSelectHorario}" render="time2" ></f:ajax>
+                                        </p:calendar>
+                                        <p:message for="time"  display="tooltip" />  
+
+                                        <p:outputLabel for="time2" value="Hora Fin: " />
+                                        <p:calendar id="time2" value="#{grupoCursoController.hora_fin}" pattern="HH:mm" timeOnly="true"  label="time2" 
+                                                    required="true" minHour="#{grupoCursoController.minHoraFinHorario}" minMinute="#{grupoCursoController.minMinuteFinHorario}">
+                                            <f:ajax event="dateSelect"  listener="#{grupoCursoController.onTimeSelectHorarioFin}" render="time2" ></f:ajax>
+
+                                        </p:calendar>
+                                        <p:message for="time2"  display="tooltip" />  
+                                    </p:panelGrid>    
+
+                                </p:panel> 
+              
+                                 
+                                
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                     <p:commandLink   class="btn btn-secondary"
+                                                     action="#{grupoCursoController.doModificarHorario()}"
+                                                       update="formVermasGrupo"  a:data-dismiss="modal"  a:data-toggle="modal" 
+                                                                   a:data-target="#modalVermas" >
+                                               <i class="fas fa-plus-circle"></i> Editar Horario                
+                                         </p:commandLink>
+                                         
+                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"  data-toggle="modal" 
+                                                                   data-target="#modalVermas">No</button>
+                                </div>
+                             </h:form>
+                        </div>
+                    </div>
+                </div>
+           </div>  
+             
+             
+                      
+        <!-- MODAL crear DIA HORARIO -->   
+            <h:form id="createFormHorarios">
+             <p:tooltip />
+             <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                <div class="modal fade" id="modalDiasHorario" data-backdrop="static">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header text-white bg-dark mb-3">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body ">
+                            <p:panelGrid   columns="3" columnClasses="ui-grid-col-2,ui-grid-col-7,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+
+                                <h:outputLabel for="diasSCM" value="Dias: " />
+                                <p:selectCheckboxMenu id="diasSCM" value="#{grupoCursoController.selectDias}" label="Dias" multiple="true"
+                                                      appendTo=""   filter="true" filterMatchMode="startsWith" style="width: 100%;height: 35px">
+                                        <f:selectItems value="#{grupoCursoController.dias}" />
+                                </p:selectCheckboxMenu>
+                                </p:panelGrid>  
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer ">
+                             <p:commandLink    a:data-dismiss="modal"  update=":formHorarios:horariodias,msgbox"
+                                                 a:class="btn btn-secondary btn" 
+                                                a:data-toggle="modal" 
+                                                     a:data-target="#modalHorarios"
+                                                actionListener="#{grupoCursoController.doCrearHorarioDias()}">
+                               <i class="fas fa-save"></i> Guardar
+                              </p:commandLink>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal" a:data-toggle="modal" 
+                                                     a:data-target="#modalHorarios">
+                              <i class="fas fa-undo"></i>
+                                       Cancelar
+                              </button>
+  
+                              
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </h:form>    
+              
+            <ui:include src="cronograma.xhtml"/>
+        
+           
+            <ui:include src="modalBorrarGrupo.xhtml"/>
+            <ui:include src="loading.xhtml"/>
+        </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>
+

@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <body>
+
+
+        <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="MenuExonerados.xhtml"></ui:include>
+            </ui:define>
+            <ui:define name="content"> 
+
+            <div class="container-fluid">
+                
+               <div class="card">
+                            <h:form id="formtitleExonerados">
+                                <div class="card-header card bg-danger text-white">
+                                    <h:outputText value="#{cursoDetController.nom_curso}"  />
+                                </div>
+                            </h:form>     
+                   
+                            <div class="card-body">
+                                    <h:form id="formExonerados">   
+                                        <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                        <div class="row">
+                                            <div class="col-lg-7">   
+                                                <div class="card">
+                                                    <div class="card-body">
+
+                                                        <br></br>
+                                                         <div class="row">
+                                                             
+                                                          
+                                                                    <p:calendar a:style="width: 100%;font-weight: inherit;color: #1f2021;box-shadow: inset 0 2px 2px #ffffff;height: 35px" label="button" a:placeholder=" Seleccionar Fecha Limite de validez del voucher ficticio a generar" id="fechalimite" value="#{cursoDetController.fechaLimite}"  mindate="fechaMin" required="true" />
+                                                         
+                                                        </div>
+                                                           <br></br>
+                                                        <div class="row">
+                                                          
+                                                            <h:selectOneMenu  id="selectTipoAlumno" value="#{cursoDetController.id_tipoAlumno}" required="true" a:class="custom-select mb-3">
+                                                                <f:selectItem itemLabel="Elegir Tipo de Alumno :" itemValue="0"  />              
+                                                                <f:selectItems var="item"  value="#{cursoDetController.doBuscarTodosTipoAlumnos()}"  itemLabel="#{item.nomTipAlumno}" itemValue="#{item.idTipAlumno}" />                          
+                                                                <f:ajax render=":formExonerados:userExonerado :formExonerados:userExonerado0 :formExonerados:paneltipoexo"  />
+                                                            </h:selectOneMenu> 
+                                                             
+                                                        </div> 
+                                                        <br></br>
+
+                                                           <div class="row">
+                                                                <div class="col-lg-8">
+                                                                    <h:panelGrid id="paneltipoexo">
+                                                                    <p:selectOneRadio  id="tipoexo"  value="#{cursoDetController.tipoExo}"  rendered="#{cursoDetController.id_tipoAlumno != 0 and cursoDetController.id_tipoAlumno ==3}" columns="2">
+                                                                       <f:selectItem itemLabel="Descuento Planilla" itemValue="1" />
+                                                                       <f:selectItem itemLabel="Beca" itemValue="2" />  
+                                                                       <f:ajax render=":formExonerados:userExonerado0" />
+                                                                    </p:selectOneRadio>
+                                                                   </h:panelGrid> 
+                                                                </div>
+                                                            </div>    
+                                                        <br></br>
+                                                        <p:panel id="userExonerado0">
+                                                            <p:panelGrid rendered="#{cursoDetController.id_tipoAlumno!= 3 or (cursoDetController.id_tipoAlumno==3 and cursoDetController.tipoExo != 0)}">
+                                                                
+                                                                <div class="row">
+                                                                    <div class="col-lg-8">
+                                                                        <h:inputText rendered="#{cursoDetController.id_tipoAlumno==3 and cursoDetController.tipoExo == 1}" value="#{cursoDetController.numResoulcion}" a:type="text" a:class="form-control" id="resol" a:placeholder="Ingrese # de resolucion" ></h:inputText>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <br></br>
+                                                                <div class="row">
+                                                                    <div class="col-lg-8">
+                                                                        <h:selectOneMenu  id="pagototalDesc"  value="#{cursoDetController.pagototal}"  rendered="#{ cursoDetController.id_tipoAlumno==3 and cursoDetController.tipoExo==1 and cursoDetController.num_cuotas != 1}"  required="true" a:class="custom-select mb-3">
+                                                                                <f:selectItem itemLabel="Pago por Total Curso" itemValue="1" />
+                                                                                <f:selectItem itemLabel="Pago por una Cuota/Mes" itemValue="2" /> 
+                                                                        </h:selectOneMenu> 
+                                                                    </div>
+                                                                </div>  
+                                                                
+                                                                <div class="row">
+                                                                    <div class="col-lg-8">
+                                                                        <h:selectOneMenu  id="pagototal"  value="#{cursoDetController.pagototal}"  rendered="#{cursoDetController.id_tipoAlumno == 1 or  cursoDetController.id_tipoAlumno == 2 or (cursoDetController.id_tipoAlumno==3 and cursoDetController.tipoExo==2) }"  required="true" a:class="custom-select mb-3">
+                                                                                <f:selectItem itemLabel="Beca Completa" itemValue="1" />
+                                                                                <f:selectItem itemLabel="Beca para 1 Pago/Mes" itemValue="2" /> 
+                                                                        </h:selectOneMenu> 
+                                                                    </div>
+                                                                </div>  
+                                                                 <br></br>
+                                                              <div class="row">
+                                                                
+                                                                <div class="col-lg-8">
+                                                                    <div class="input-group mb-3">
+                                                                        <br></br>
+                                                                        <h:inputText rendered="#{cursoDetController.id_tipoAlumno==1}" value="#{usuarioController.codigoEst}" a:type="number" a:class="form-control" id="codigoxa7" a:placeholder="Ingrese Codigo de Alumno" maxlength="10"></h:inputText>
+                                                                        <h:inputText rendered="#{cursoDetController.id_tipoAlumno==2}" value="#{usuarioController.dniEstGene}" a:type="number" a:class="form-control" id="codigoxa72" a:placeholder="Ingrese Numero de Documento" maxlength="10"></h:inputText>
+                                                                        <h:inputText rendered="#{cursoDetController.id_tipoAlumno==3}" value="#{usuarioController.idCardEstTrab}" a:type="number" a:class="form-control" id="codigoxa73" a:placeholder="Ingrese Numero de Documento" maxlength="12" ></h:inputText>
+                           
+                                                                        <p:outputLabel rendered="#{cursoDetController.id_tipoAlumno == 0}" value="No se ah seleccionado tipo de alumno "  a:class="alert alert-warning" style="width: 100%" />
+
+                                                                        <div class="input-group-append">
+                                                                            <p:commandLink rendered="#{cursoDetController.id_tipoAlumno==1}" action="#{usuarioController.doBuscarAlumnoUns()}" 
+                                                                                           onstart="PF('loading').show();" 
+                                                                                            oncomplete="PF('loading').hide();"
+                                                                                           a:class="btn btn-secondary " update=":formExonerados:userExonerado" >
+                                                                                <i class="fas fa-search"></i> 
+                                                                            </p:commandLink>
+                                                                            <p:commandLink rendered="#{cursoDetController.id_tipoAlumno==2 }" action="#{usuarioController.doBuscarPersona()}" 
+                                                                                        onstart="PF('loading').show();" 
+                                                                                            oncomplete="PF('loading').hide();"
+                                                                                           a:class="btn btn-secondary " update=":formExonerados:userExonerado">
+                                                                                <i class="fas fa-search"></i> 
+                                                                            </p:commandLink>
+                                                                            <p:commandLink rendered="#{cursoDetController.id_tipoAlumno==3}" action="#{usuarioController.doBuscarEstTrabajador()}" 
+                                                                                          onstart="PF('loading').show();" 
+                                                                                            oncomplete="PF('loading').hide();"
+                                                                                           a:class="btn btn-secondary " update=":formExonerados:userExonerado">
+                                                                                <i class="fas fa-search"></i> 
+                                                                            </p:commandLink>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>   
+                                                            </div>
+                                                                
+                                                               
+                                                          </p:panelGrid>        
+                                                        </p:panel>       
+                                                        <p:panel id="userExonerado">
+
+
+                                                            <p:panelGrid rendered="#{cursoDetController.id_tipoAlumno != 0}">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="mt-3">
+                                                                            <div class="input-group mb-3">
+                                                                                <div class="input-group-prepend">
+                                                                                    <!-- <img class="img-fluid" src="img_avatar1.png" alt="Card image" style="width:45px;height:37px" > -->
+                                                                                    <h:graphicImage rendered="#{usuarioController.sexo == 1}" class="img-fluid" a:src="../../../resources/images/masculino.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage>
+                                                                                    <h:graphicImage rendered="#{usuarioController.sexo == 2}"  class="img-fluid" a:src="../../../resources/images/femenino.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage>
+                                                                                    <h:graphicImage rendered="#{usuarioController.sexo == 3}"  class="img-fluid" a:src="../../../resources/images/userdesc.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage> 
+                                                                                    <h:graphicImage rendered="#{usuarioController.sexo == 11}"  class="img-fluid" a:src="../../../resources/images/userdesc.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage> 
+                                                                                    <h:graphicImage rendered="#{usuarioController.sexo == 13}"  class="img-fluid" a:src="../../../resources/images/userdesc.png" alt="Card image" style="width:45px;height:37px" ></h:graphicImage> 
+
+                                                                                </div>
+                                                                                <h:outputLabel rendered="#{usuarioController.sexo ==1 or usuarioController.sexo ==2}" class="form-control card-text" value="#{usuarioController.drtPersonanatural.nombreCompleto}" ></h:outputLabel> 
+                                                                                <h:outputLabel rendered="#{usuarioController.sexo == 3 }" class="form-control card-text" value="Persona no regisrada en la BD" ></h:outputLabel> 
+                                                                                <h:outputLabel rendered="#{usuarioController.sexo == 11 }" class="form-control card-text" value="Persona registrada como Alumno Uns" ></h:outputLabel> 
+                                                                                <h:outputLabel rendered="#{usuarioController.sexo == 13 }" class="form-control card-text" value="Persona registrada como Trabajador Uns" ></h:outputLabel> 
+
+
+                                                                                <div class="input-group-append">
+                                                                                    <p:commandLink rendered="#{usuarioController.sexo ==1 or usuarioController.sexo ==2}" type="submit" action="#{cursoDetController.doCrearBeca()}" 
+                                                                                                   onstart="PF('loading').show();" 
+                                                                                                     oncomplete="PF('loading').hide();"
+                                                                                                   a:class="btn btn-success"  update=":formExonerados:voucherFicticio ">
+                                                                                        <i class="fas fa-plus-circle"></i> 
+                                                                                    </p:commandLink>
+                                                                                    <p:commandLink rendered="#{usuarioController.sexo == 3 and cursoDetController.id_tipoAlumno==2}" type="submit" action="#{cursoDetController.doCrearBeca()}" 
+                                                                                                   onstart="PF('loading').show();" 
+                                                                                            oncomplete="PF('loading').hide();"
+                                                                                                   a:class="btn btn-success" update=":formExonerados:voucherFicticio">
+                                                                                        <i class="fas fa-plus-circle"></i> 
+                                                                                    </p:commandLink>
+                                                                                    <!--<button class="btn btn-success" type="submit">Go</button> -->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </p:panelGrid>
+                                                        </p:panel>
+                                                    </div>
+                                                </div>       
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card-deck">
+                                                    <div class="card bg-success">
+                                                        <div class="card-body">
+                                                            <p:panel id="voucherFicticio" >
+                                                                      
+                                                                <p:panelGrid  >
+                                                                    <div  align="center" >
+                                                                    <h:outputLabel rendered="#{cursoDetController.secuenciaExo.length()!=0}">
+                                                                        <h5><kbd>Voucher Ficticio</kbd></h5></h:outputLabel> 
+                                                                    </div>    
+                                                                <div class="form-group">
+                                                                    <h:outputLabel rendered="#{cursoDetController.secuenciaExo.length()==0}">Secuencia:</h:outputLabel> 
+                                                                    <h:outputLabel rendered="#{cursoDetController.secuenciaExo.length()!=0}" class="parpadea">Secuencia:</h:outputLabel> 
+                                                                    <h:outputLabel value="#{cursoDetController.secuenciaExo}" class="form-control" ></h:outputLabel> 
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <h:outputLabel rendered="#{cursoDetController.fechaExo.length()==0}">Fecha Pago:</h:outputLabel> 
+                                                                    <h:outputLabel rendered="#{cursoDetController.fechaExo.length()!=0}" class="parpadea"> Fecha Pago:</h:outputLabel> 
+                                                                    <h:outputLabel value="#{cursoDetController.fechaExo}" class="form-control"></h:outputLabel> 
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <h:outputLabel rendered="#{cursoDetController.fechaExo.length()==0}">Agencia:</h:outputLabel> 
+                                                                     <h:outputLabel rendered="#{cursoDetController.fechaExo.length()!=0}" class="parpadea">Agencia:</h:outputLabel> 
+
+                                                                    <h:outputLabel value="#{cursoDetController.agenciaExo}" class="form-control"></h:outputLabel> 
+                                                                </div>
+                                                                </p:panelGrid> 
+                                                           </p:panel>     
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+
+                                    </h:form>      
+
+                    </div>
+               </div>
+            </div>
+
+
+  
+          <p:dialog widgetVar="loading"
+                   modal="true"
+                   draggable="false"
+                   closable="false"
+                   appendTo="@(body)"
+                   resizable="false"                
+                   >
+             <div align="center" >
+                 <img src="../../../resources/images/cargandoloading.gif" alt=""/>
+                
+             </div>
+          
+         </p:dialog>
+
+            
+            
+            
+          
+  
+            </ui:define>
+          
+        </ui:composition>
+
+    </body>
+</html>
+

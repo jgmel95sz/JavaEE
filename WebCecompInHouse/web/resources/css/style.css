@@ -1,0 +1,426 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07-jul-2018, 18:33:40
+    Author     : Melvin
+*/
+
+/*
+    DEMO STYLE
+*/
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+   /* font-family: 'Poppins', sans-serif;*/
+    /*background: #fafafa;*/
+    background: #ececec40;
+}
+
+
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+i,
+span {
+    display: inline-block;
+}
+
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 230px;
+    max-width: 230px;
+    background: #fb5a5a;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+
+#sidebar.active .sidebar-header h3,
+#sidebar.active .CTAs {
+    display: none;
+}
+
+#sidebar.active .sidebar-header h4,
+#sidebar.active .CTAs {
+    display: none;
+}
+
+#sidebar.active .sidebar-header strong {
+    display: block;
+}
+
+#sidebar ul li a {
+    text-align: left;
+}
+
+#sidebar.active ul li a {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.65em;
+}
+
+#sidebar.active ul li a i {
+    margin-right: 0;
+    display: block;
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+#sidebar.active ul ul a {
+    padding: 10px !important;
+}
+
+
+
+#sidebar.active .dropdown-toggle::after {
+    top: auto;
+    bottom: 10px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+}
+
+#sidebar .sidebar-header {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    height: 190px;
+    background: #f54242;
+}
+
+
+/* Ancho del cuadro del logo cecomp */
+#sidebar.active .sidebar-header {
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    height: 70px;
+    background: #f54242;
+}
+
+#sidebar .sidebar-header strong {
+    display: none;
+    font-size: 1.8em;
+}
+
+#sidebar ul.components {
+    padding: 0px 0;
+    border-bottom: 1px solid #ef7474;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #fb5a5a;
+    background: #fff;
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #fb5a5a;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #f17c7c;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+#sidebar .sidebar-header h4 {
+    text-align: center;
+    font-size: 0.85rem;
+    padding-top: 90px;
+    padding-right: 30px;
+}
+
+
+#sidebar .sidebar-header i{
+    text-align: center;
+    font-size: 15px;
+    padding-top: 90px;
+    padding-right: 30px;
+}
+
+/* ---------------------------------------------------
+    MODIFICACION  SUBMENU
+----------------------------------------------------- */
+/* modificacion de boostrap - hace que se mueva el submenu a la derecha*/
+/*Se modifico porque nos daba error*/
+
+/*hace que se achique la letra*/
+*{
+   box-sizing: border-box;
+   font-size: 0.92rem;
+}
+
+
+/*MODIFICACION COLOR LETRA*/
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(21, 21, 21, 0.45);
+    
+}
+/* hace que se ponga negrita al seleccioanar*/
+.navbar-light .navbar-nav .nav-link:active, .navbar-light .navbar-nav .nav-link:hover {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
+
+/*MODIFICACION COLORES SUBMENU*/
+/* modificacion de boostrap - hace se vuelva medio celeston*/
+
+.btn-dark:hover {
+    color: #fff;
+    background-color: #04f3e8;
+    border-color: #04f3e8;
+}
+
+.btn-dark {
+    color: #fff;
+    background-color: #04f3e8;
+    border-color: #04f3e8;
+}
+
+.btn-dark.focus, .btn-dark:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 255, 243, 0.7);
+}
+
+.btn-dark:not(:disabled):not(.disabled).active, .btn-dark:not(:disabled):not(.disabled):active, .show>.btn-dark.dropdown-toggle {
+    color: #fff;
+    background-color: #04e2d7;
+    border-color: #f6f7f9;
+}
+
+.btn-dark:not(:disabled):not(.disabled).active:focus, .btn-dark:not(:disabled):not(.disabled):active:focus, .show>.btn-dark.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgb(10, 191, 182);
+}
+
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(15, 222, 255, 0.25);
+}
+
+/* ---------------------------------------------------
+    MODIFICACION  MENU
+----------------------------------------------------- */
+
+
+  #sidebar.active ul ul li {
+    font-size: 0.65em;
+}
+
+/* modificacion de boostrap _ hacee que no tenga distnacia entre cada boton del menu*/
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+
+/*COLORES MENU*/
+/* modificacion de boostrap - hace que el boton del menu sea rojo el que lo achica*/
+.btn-info {
+    color: #fff;
+    background-color: #f54242;
+    border-color: #f90000;
+}
+
+.btn-info:hover {
+    color: #fff;
+    background-color: #f90000;
+    border-color: #f90000;
+}
+
+.btn-info:not(:disabled):not(.disabled).active, .btn-info:not(:disabled):not(.disabled):active, .show>.btn-info.dropdown-toggle {
+    color: #fff;
+    background-color: #f90000;
+    border-color: #f90000;
+}
+
+.btn-info.focus, .btn-info:focus {
+    box-shadow: 0 0 0 0.2rem #f79595;
+}
+
+/*es el el borde donde que se pondra*/
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem #ffffff;
+}
+
+.btn-info:not(:disabled):not(.disabled).active:focus, .btn-info:not(:disabled):not(.disabled):active:focus, .show>.btn-info.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem #ffb3b3;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    font-size: 0.84rem;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        min-width: 80px;
+        max-width: 80px;
+        text-align: center;
+        margin-left: -80px !important;
+    }
+    .dropdown-toggle::after {
+        top: auto;
+        bottom: 10px;
+        right: 50%;
+        -webkit-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        transform: translateX(50%);
+    }
+    #sidebar.active {
+        margin-left: 0 !important;
+    }
+    #sidebar .sidebar-header h3,
+    #sidebar .CTAs {
+        display: none;
+    }
+    #sidebar .sidebar-header strong {
+        display: block;
+    }
+    #sidebar ul li a {
+        padding: 20px 10px;
+    }
+    #sidebar ul li a span {
+        font-size: 0.85em;
+    }
+    #sidebar ul li a i {
+        margin-right: 0;
+        display: block;
+    }
+    #sidebar ul ul a {
+        padding: 10px !important;
+    }
+    #sidebar ul li a i {
+        font-size: 1.3em;
+    }
+    #sidebar {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+    
+ /* ---------------------------------------------------
+    mejorando jgmel
+----------------------------------------------------- */
+    
+  #sidebar.active ul ul li {
+    font-size: 0.65em;
+}
+    
+}

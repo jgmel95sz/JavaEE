@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      
+      >
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <meta charset="UTF-8"></meta>
+        <title> <ui:insert name="titulo"> CECOMP-UNS </ui:insert> </title>
+        <!--===============================================================================================-->	
+                <a href="resources/images/icons/favicon.ico"></a>
+        <!--===============================================================================================-->
+                <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->
+                <link href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->
+                <link href="resources/fonts/iconic/css/material-design-iconic-font.min.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->
+                <link href="resources/vendor/animate/animate.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->	
+                <link href="resources/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->
+                <link href="resources/vendor/animsition/css/animsition.min.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->
+                <link href="resources/vendor/select2/select2.min.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->	
+                <link href="resources/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->
+                <link href="resources/css/util.css" rel="stylesheet" type="text/css"/>
+                <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
+        <!--===============================================================================================-->
+    </h:head>
+    <h:body>
+      
+        	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+                            
+                            <h:form class="login100-form "> <!--= validate-form-->
+					<span class="login100-form-title p-b-26">
+                                            <img src="resources/images/home.png" alt=""/>
+                                        </span>
+					<span class="login100-form-title p-b-48">
+					</span>
+                                        
+					<div class="wrap-input100 validate-input" >
+                                                <div class="dropdown">
+                                                    <button class="btn btn-danger dropdown-toggle login100-form-btn" style="background: #ff1818;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                      Acceso Alumno
+                                                    </button>
+                                                    <div class="dropdown-menu login100-form" aria-labelledby="dropdownMenuButton" >
+                                                        <h:commandLink class="dropdown-item" value="Alumno UNS" action="loginEstudianteUns"></h:commandLink>
+                                                        <h:commandLink class="dropdown-item" value="Publico General" action="loginEstudianteGeneral"></h:commandLink>
+                                                        <h:commandLink class="dropdown-item" value="Trabajador UNS" action="loginEstudianteTrebajador"></h:commandLink>
+                                                  </div>
+                                                 </div>
+                                        </div>
+                                
+                                              <div class="wrap-input100 validate-input" >
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-danger dropdown-toggle login100-form-btn" style="background: #ff1818;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                              Acceso Administrativo
+                                                            </button>
+                                                            <div class="dropdown-menu login100-form" aria-labelledby="dropdownMenuButton" >
+                                                                <h:commandLink class="dropdown-item" value="Administrador" action="loginAdmin"></h:commandLink>
+                                                                <h:commandLink class="dropdown-item" value="Mantenimiento" action="loginMantenimiento"></h:commandLink>
+                                                          </div>
+                                                         </div>
+                                                </div>
+                                              <div class="wrap-input100 validate-input" >
+                                                            <h:commandLink class="btn btn-danger login100-form-btn" value="Acceso Docente" action="loginindexdocente" style="background: #ff1818;"></h:commandLink>
+                                                </div>   
+
+					<div class="text-center p-t-115">
+						<span class="txt1">
+                                                    	 WebCecomp @MSZ vs.1.6
+						</span>
+
+						
+					</div>
+					
+
+				
+				</h:form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+        
+<!--===============================================================================================-->
+	<script src="resources/vendor/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
+<!--===============================================================================================-->
+        <script src="resources/vendor/animsition/js/animsition.min.js" type="text/javascript"></script>
+<!--===============================================================================================-->
+        <script src="resources/js/popper.min.js" type="text/javascript"></script>
+        <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
+<!--===============================================================================================-->
+        <script src="resources/vendor/select2/select2.min.js" type="text/javascript"></script>
+<!--===============================================================================================-->
+        <script src="resources/vendor/daterangepicker/moment.min.js" type="text/javascript"></script>
+        <script src="resources/vendor/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<!--===============================================================================================-->
+        <script src="resources/vendor/countdowntime/countdowntime.js" type="text/javascript"></script>
+<!--===============================================================================================-->
+        <script src="resources/js/main.js" type="text/javascript"></script>
+        
+        
+    </h:body>
+</html>
+

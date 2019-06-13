@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+       <body>
+           
+     <ui:composition template="../plantilla/Plantilla.xhtml">
+            <ui:define name="top">
+                 <ui:include src="MenuNotas.xhtml"></ui:include>
+                 <ui:include src="DlgCarga.xhtml"/>
+            </ui:define>
+       
+          <ui:define name="content">
+        
+                    
+                  <div class="container-fluid">   
+                  <div class="card bg-secondary text-white font-weight-bold "  style="height: 50px" >
+                     <div class="card-body"  > <h4 style="font-size: 1rem"> Notas </h4> </div>
+                  </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <h:form id="formGrupoNotas">
+                                    <p:tooltip />
+                                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                   
+                                    <div class="table-responsive" align="center">
+                                        <table class="panel table table-hover">
+                                            <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                <tr class="text-center">
+                                                    <th>#</th>
+                                                    <th>Nombres Completos</th>
+                                                    <th>Nota 1</th>
+                                                    <th>Nota 2</th>
+                                                    <th>Nota 3</th>
+                                                    <th>Nota 4</th> 
+                                                    <th>Subsanacion</th>
+                                                    <th>Nota Final</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  style="color: #000000; background-color: white">
+                                                <ui:repeat   value="#{notasController.lstnotas}" var="item" varStatus="i">
+                                                    <tr>
+                                                        <td class="text-center"><h:outputText value="#{i.index+1}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepCecMatriAlu.drtPersonanatural.nombreCompleto}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.nota1}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.nota2}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.nota3}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.nota4}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.notaSubsanacion}"/> </td>
+                                                        <td class="text-center">
+                                                            <h:outputText value="#{item.notaFinal}">
+                                                                <f:convertNumber pattern="#00" />
+                                                            </h:outputText> 
+                                                        </td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div> 
+    
+              
+      <!-- Modal insertar notas -->   
+        <div class="container-fluid">
+            
+            <div class="modal fade modal-scroll" id="modalInsertarNotas" data-backdrop="static" >
+                    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 65%">
+                      
+                        <div class="modal-content">
+                         <h:form id="formInsertarNotas" a:name="insertNotas" >   
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                      
+                        <p:tooltip />
+                        <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+
+                                            
+
+                                                <div class="table-responsive" align="center">
+                                                    <table class="panel table table-hover">
+                                                        <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th style="max-width: 10rem;">Nombres Completos</th>
+                                                                <th style="max-width: 5rem">Nota 1</th>
+                                                                <th style="max-width: 5rem">Nota 2</th>
+                                                                <th style="max-width: 5rem">Nota 3</th>
+                                                                <th style="max-width: 5rem">Nota 4</th>
+                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody  style="color: #000000; background-color: white">
+                                                            <ui:repeat   class="notas" value="#{notasController.lstnotas}" var="item">
+                                                                <tr>    
+                                                                    <td> <h:outputText  value="#{item.cepCecMatriAlu.idMatriAlu}"/> </td>
+                                                                    <td> <h:outputText value="#{item.cepCecMatriAlu.drtPersonanatural.nombreCompleto}"/> </td>
+                                                                    <td> <p:inputText onkeyup="return rangoNotas(this)" a:type="number" a:max="20" a:min="0" a:style="max-width: 5rem;" value="#{item.nota1}" >
+                                                                         </p:inputText>
+                                                                    </td>
+                                                                    <td><p:inputText onkeyup="return rangoNotas(this)" a:type="number" a:max="20" a:min="0" a:style="max-width: 5rem;" value="#{item.nota2}" /> </td>
+                                                                    <td><p:inputText onkeyup="return rangoNotas(this)" a:type="number" a:max="20" a:min="0" a:style="max-width: 5rem;" value="#{item.nota3}"/> </td>
+                                                                    <td><p:inputText onkeyup="return rangoNotas(this)" a:type="number" a:max="20" a:min="0" a:style="max-width: 5rem;" value="#{item.nota4}"/> </td>
+                                                                </tr>
+                                                            </ui:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                  
+                                     <p:commandLink 
+                                       class="btn btn-success" 
+                                       actionListener="#{notasController.doActualizarNotas()}" 
+                                       onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                       update=":formGrupoNotas" a:data-dismiss="modal" > 
+                                       <i class="fas fa-save"></i> 
+                                    </p:commandLink>
+                                   
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                </div>
+                           </h:form>
+                        </div>
+                   
+                    </div>
+                      
+            </div>
+         
+        </div>     
+  
+      
+      
+       <!-- Modal insertar notas de subsanacion -->   
+        <div class="container-fluid">
+            
+            <div class="modal fade modal-scroll" id="modalInsertarSubNotas" data-backdrop="static" >
+                    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 40%">
+                      
+                        <div class="modal-content">
+                         <h:form id="formInsertarSubNotas">   
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                      
+                        <p:tooltip />
+                        <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+
+                                            
+
+                                                <div class="table-responsive" align="center">
+                                                    <table class="panel table table-hover">
+                                                        <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th style="max-width: 10rem;">Nombres Completos</th>
+                                                                <th style="max-width: 5rem">Subsanacion</th>
+                                                                
+                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody  style="color: #000000; background-color: white">
+                                                            <ui:repeat   class="notas" value="#{notasController.lstnotas}" var="item">
+                                                                <tr>    
+                                                                    <td> <h:outputText  value="#{item.cepCecMatriAlu.idMatriAlu}"/> </td>
+                                                                    <td> <h:outputText value="#{item.cepCecMatriAlu.drtPersonanatural.nombreCompleto}"/> </td>
+                                                                    <td> <p:inputText onkeyup="return rangoNotas(this)" a:type="number" a:max="20" a:min="0" a:style="max-width: 5rem;" value="#{item.notaSubsanacion}" >
+                                                                         </p:inputText>
+                                                                    </td>
+                                                                </tr>
+                                                            </ui:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                  
+                                     <p:commandLink 
+                                       class="btn btn-success" 
+                                       actionListener="#{notasController.doActualizarSubsanacionNota()}" 
+                                       onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                       update=":formGrupoNotas" a:data-dismiss="modal" > 
+                                       <i class="fas fa-save"></i> 
+                                     </p:commandLink>
+                                   
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                </div>
+                           </h:form>
+                        </div>
+                   
+                    </div>
+                      
+            </div>
+         
+        </div>     
+  
+   <ui:include src="DlgCarga.xhtml"/>
+
+          </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>

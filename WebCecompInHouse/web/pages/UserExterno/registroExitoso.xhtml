@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+       <body>
+           
+     <ui:composition template="plantilla/plantilla.xhtml">
+            <ui:define name="top">
+
+            </ui:define>
+              
+        <ui:define name="content">
+       <div class="container h-100">
+           <h:form id="registroExistosa">
+           <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-md-5">
+                <div class="alert alert-success">
+                    <strong>Registro Exitoso!</strong>  a continuacion los Datos de Acceso.
+               </div>
+             <div class="card" style="width: 100%">
+                 <h:graphicImage rendered="#{usuarioController.drtPersonanatural.sexo == 'M'}" class="card-img-top" a:src="../../resources/images/masculino.png" alt="Card image" style="width:100%" ></h:graphicImage>
+                 <h:graphicImage rendered="#{usuarioController.drtPersonanatural.sexo == 'F'}"  class="card-img-top" a:src=" ../../resources/images/femenino.png" alt="Card image" style="width:100%" ></h:graphicImage>
+
+                      
+                    <div class="card-body">
+                        <h:outputLabel class="card-title h5" value="#{usuarioController.drtPersonanatural.nombre}" ></h:outputLabel> 
+                        <br></br>
+                        <h:outputLabel class="card-text" style="color: #615c5c; font-family: 'Poppins'; font-size: 1.1em;font-weight: 300;line-height: 1.7em"
+                                       value="Usuario :  #{usuarioController.drtPersonanatural.numeroPndid}"  >
+                        </h:outputLabel>
+                        <br></br>
+                        <h:outputLabel class="card-text" style="color: #615c5c; font-family: 'Poppins'; font-size: 1.1em;font-weight: 300;line-height: 1.7em"
+                                       value="Contraseña :  #{usuarioController.drtPersonanatural.numeroPndid}"  >
+                        </h:outputLabel>
+                        
+                          <br></br>
+                          <br></br>
+                          <h:link class="btn btn-primary"  outcome="ventanaPrincipal" >Iniciar Sesion</h:link>
+                    </div>
+                   </div>
+                  
+
+          </div>   
+         </div>
+          </h:form>     
+        </div>
+
+        </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>

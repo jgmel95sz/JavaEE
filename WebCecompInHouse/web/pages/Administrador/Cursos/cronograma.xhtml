@@ -1,0 +1,438 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+       <body>
+
+     <ui:composition>
+            
+   
+                
+    <!-- Modal ventana de cronograma de pagos -->   
+        <div class="container">
+            <div class="modal fade modal-scroll" id="modalCronoPagos" data-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 85%">
+                        <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                   
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                <h:form id="formCronoPagos">
+                                  <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                  <h:commandButton disabled="#{grupoCursoController.numpago==-99 ? 'true' : 'false'}" value="#{grupoCursoController.descripcion}" type="button" class="btn btn-primary" a:data-toggle="collapse" a:data-target="#nuevoCro"  >
+                                      
+                                  </h:commandButton>
+                                        <!--   <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#nuevoCro">Añadir Cronograma de pago</button>-->
+                                          <div id="nuevoCro" class="collapse">
+                                              <br></br>
+                                              <div class="row">
+                                                  <div class="col-sm-12">
+                                                      <div class="alert alert-info" >
+                                                          <h:outputLabel value="#{grupoCursoController.descripcion_cronograma}  #{grupoCursoController.cepCecCronogramaDet.cepCecCronogramaCab.cepCecCurGrup.cepCecCursoSubdet.numCuotas}"></h:outputLabel>
+                                                      </div>
+                                                      <div class="alert alert-warning" >
+                                                           <strong>Advetencia! </strong>
+                                                          <h:outputLabel value=" Al añadir un nuevo pago, ya no podra añadir pagos extemporaneos del pago anterior"></h:outputLabel>
+                                                      </div>
+                                                     
+                                                  </div>
+                                              </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                          <h:outputLabel for="FechaI" >Fecha Inicio: </h:outputLabel><br></br>
+                                                          <p:calendar id="FechaI" value="#{grupoCursoController.fecha_ini_cro}" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div> 
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                        <h:outputLabel for="HoraI" >Hora Inicio: </h:outputLabel><br></br>
+                                                        <p:calendar id="HoraI" value="#{grupoCursoController.hora_ini_cro}" pattern="HH:mm" timeOnly="true" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div>
+                                                 </div>    
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                          <h:outputLabel for="FechaF" >Fecha Fin </h:outputLabel><br></br>
+                                                          <p:calendar id="FechaF" value="#{grupoCursoController.fecha_fin_cro}" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div> 
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                        <h:outputLabel for="Horaf" >Hora Fin </h:outputLabel><br></br>
+                                                        <p:calendar id="Horaf" value="#{grupoCursoController.hora_fin_cro}" pattern="HH:mm" timeOnly="true" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                              <div class="row">
+                                                  <div class="col-sm-4">
+                                                      <p:commandButton value="Agregar Cronograma" action="#{grupoCursoController.doCrearCronoPagos()}" update=":formCronoPagos :formTableCro :formCroFooter" icon="fa fa-plus-circle"  ></p:commandButton>
+                                                  </div>
+                                              </div>
+                                            </div>  
+                                          
+                                   </h:form>
+                                    <br></br>                                              
+                                        
+                                   <h:form id="formTableCro">
+                                              <p:tooltip />
+                                              <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                              <br/>
+                                              <div class="table-responsive" align="center">
+                                                  <table class="panel table table-hover">
+                                                      <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                          <tr class="text-center">
+                                                              <th>#</th>
+                                                              <th>Fecha Inicio</th>
+                                                              <th>Hora Inicio</th>
+                                                              <th>Fecha Fin</th>
+                                                              <th>Hora Fin</th>
+                                                              <th>Descripcion </th>
+                                                              <th>Editar </th>
+                                                              <th>Borrar</th>
+                                                              <th>Extemporaneo </th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody  style="color: #000000; background-color: white">
+                                                          <ui:repeat   value="#{grupoCursoController.lstTipoCronograma}" var="item">
+                                                              <tr>
+                                                                  <td class="text-center">
+                                                                      <h:outputText rendered="#{item.tipo!=3}"  value="#{item.id}"/> 
+                                                                      <h:outputText rendered="#{item.tipo==3}"  value="#{item.id}" a:style="color: #0023d0;font-style: oblique"/>
+                                                                  </td>
+                                                                  <td class="text-center">
+                                                                      <h:outputText rendered="#{item.tipo!=3}" value="#{item.fi}" >
+                                                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                                      </h:outputText> 
+                                                                      <h:outputText rendered="#{item.tipo==3}" value="#{item.fi}" a:style="color: #0023d0;font-style: oblique">
+                                                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                                      </h:outputText> 
+                                                                  </td>
+                                                                  <td class="text-center">
+                                                                      <h:outputText rendered="#{item.tipo!=3}" value="#{item.hi}">
+                                                                        <f:convertDateTime pattern="HH:mm" />
+                                                                      </h:outputText>
+                                                                      <h:outputText rendered="#{item.tipo==3}" value="#{item.hi}" a:style="color: #0023d0;font-style: oblique">
+                                                                         <f:convertDateTime pattern="HH:mm" />
+                                                                      </h:outputText>
+                                                                  </td>
+                                                                  <td class="text-center">
+                                                                      <h:outputText rendered="#{item.tipo!=3}" value="#{item.ff}">
+                                                                       <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                                      </h:outputText> 
+                                                                      <h:outputText rendered="#{item.tipo==3}" value="#{item.ff}" a:style="color: #0023d0;font-style: oblique">
+                                                                         <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                                      </h:outputText>
+                                                                  </td>
+                                                                  <td class="text-center">
+                                                                      <h:outputText rendered="#{item.tipo!=3}" value="#{item.hf}">
+                                                                         <f:convertDateTime pattern="HH:mm" />
+                                                                      </h:outputText> 
+                                                                      <h:outputText rendered="#{item.tipo==3}" value="#{item.hf}" a:style="color: #0023d0;font-style: oblique">
+                                                                         <f:convertDateTime pattern="HH:mm" />
+                                                                      </h:outputText>
+                                                                  </td>
+                                                                  <td class="text-center">
+                                                                      <h:outputText rendered="#{item.tipo!=3}" value="#{item.descripcion}"/> 
+                                                                      <h:outputText rendered="#{item.tipo==3}" value="#{item.descripcion}" a:style="color: #0023d0;font-style: oblique"/>
+                                                                  </td>
+                                                                  <td class="text-center">
+                                                                  <p:commandLink  rendered="#{grupoCursoController.doDeshabilitarEditCronograma(item)==0}" a:data-toggle="modal" a:data-target="#ModalEditCronograma" a:data-dismiss="modal" update="formEditCronograma"
+                                                                                  title="Editar"  a:class="btn btn-secondary btn-sm" action="#{grupoCursoController.doCapturarTipoCronograma(item)}"
+                                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();">
+                                                                        <i class="fas fa-edit"></i> 
+                                                                  </p:commandLink>
+                                                                  <p:commandLink  rendered="#{grupoCursoController.habilitarEditCro==1 }" 
+                                                                                  title="Editar"  a:class="btn btn-secondary btn-sm disabled" >
+                                                                        <i class="fas fa-archive"></i> 
+                                                                  </p:commandLink>
+                                                                      <p:commandLink  rendered="#{grupoCursoController.habilitarEditCro==2}" a:data-toggle="modal" a:data-target="#ModalFinalizarCronograma" a:data-dismiss="modal" update="formFinalizarCronograma"
+                                                                                      action="#{grupoCursoController.doCapturarTipoCronograma(item)}"
+                                                                                  title="Finalizar Cronograma"  a:class="btn btn-danger btn-sm" 
+                                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();">
+                                                                        <i class="fas fa-edit"></i> Finalizar Ahora!
+                                                                  </p:commandLink>    
+                                                                  </td>
+                                                                  <td class="text-center">
+                                                                      <p:commandLink rendered="#{grupoCursoController.habilitarEditCro==0 and item.tipo!=1}" a:data-toggle="modal" a:data-target="#modalEliminacion" update="formEliminacion"
+                                                                                  title="Borrar"  a:class="btn btn-secondary btn-sm" action="#{grupoCursoController.doCapturarTipoCronograma(item)}"
+                                                                                  onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();">
+                                                                        <i class="fas fa-trash-alt"></i> 
+                                                                  </p:commandLink>
+                                                                      
+                                                                      <p:commandLink  rendered="#{grupoCursoController.habilitarEditCro==1 or item.tipo==1}" 
+                                                                                  title="Borrar"  a:class="btn btn-secondary btn-sm disabled" >
+                                                                        <i class="fas fa-trash-alt"></i> 
+                                                                  </p:commandLink>    
+                                                                  </td>
+                                                                  <td class="text-center">
+                                                                      <p:commandLink  rendered="#{item.tipo!=3 and grupoCursoController.doDesahabilitarCrearExtemporaneo()==0 and item.numpago==grupoCursoController.ultimeCrono}" a:data-toggle="modal" a:data-target="#ModalExtemporaneo" a:data-dismiss="modal" update="formExtemporaneo"
+                                                                                  title="Añadir Extemporaneo"  a:class="btn btn-secondary btn-sm" action="#{grupoCursoController.doCapturarTipoCronograma(item)}">
+                                                                        <i class="fas fa-plus-circle"></i> 
+                                                                  </p:commandLink>
+                                                                  </td>
+                                                                  
+                                                              </tr>
+                                                          </ui:repeat>
+                                                      </tbody>
+                                                  </table>
+                                              </div>
+                                          </h:form>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <h:form id="formCroFooter">
+                                    <p:commandLink  update=":formGrupo :pagGrup" rendered="#{grupoCursoController.cronoActualizado==1}"
+                                                       type="button" a:class="btn btn-secondary" a:data-dismiss="modal"  a:data-toggle="modal" a:data-target="#modalCronoPagos"
+                                                       onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
+                                                       actionListener="#{grupoCursoController.doActualizaGrupos()}">
+                                                       <i class="fas fa-edit"></i> Salir                
+                                    </p:commandLink>
+                                     <button jsf:rendered="#{grupoCursoController.cronoActualizado==0}" type="button" class="btn btn-secondary" data-dismiss="modal"  data-toggle="modal" data-target="#modalCronoPagos">Salir</button>
+
+                                    </h:form>    
+                                </div>
+                        </div>
+                    </div>
+            </div>
+        </div> 
+         
+             
+      <!-- finalizar cronogrmaa-->   
+                <div class="modal fade" id="ModalFinalizarCronograma" data-backdrop="static">
+                    <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#modalCronoPagos">&times;</button>
+                                </div>
+                                <h:form id="formFinalizarCronograma">
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                       
+                                              <br></br>
+                                              <div class="row">
+                                                  <div class="col-sm-12">
+                                                      <div class="alert alert-success" >
+                                                          <strong>Dato! </strong> <h:outputLabel value="   Fecha y Hora fin de -   #{grupoCursoController.tipoCronograma.descripcion} , Quieres finalizar ahora?" ></h:outputLabel>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                          <h:outputLabel for="FechaF" >Fecha Fin:</h:outputLabel><br></br>
+                                                          <p:calendar id="FechaF" value="#{grupoCursoController.cepCecCronogramaDet.fechaFinCro}" a:style="width: 100%" disabled="true"></p:calendar>
+                                                      </div>
+                                                    </div> 
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                        <h:outputLabel for="Horaf" >Hora Fin: </h:outputLabel><br></br>
+                                                        <p:calendar id="Horaf" value="#{grupoCursoController.cepCecCronogramaDet.horaFinCro}" pattern="HH:mm" disabled="true" timeOnly="true" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <p:commandLink value="Finalizar" class="btn btn-secondary" update=":formTableCro :formCronoPagos :formCroFooter"
+                                                       a:data-dismiss="modal" a:data-toggle="modal" a:data-target="#modalCronoPagos"  ajax="true"
+                                                       actionListener="#{grupoCursoController.doFinalizarCronograma()}">
+                                                       <i class="fas fa-edit"></i>                 
+                                         </p:commandLink>
+                                        
+                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#modalCronoPagos">Cancelar</button>
+                                    </div>
+                               </h:form> 
+                        </div>
+                    </div>
+                </div>
+                   
+    
+      <!-- Modal Editar cronogrmaa-->   
+                <div class="modal fade" id="ModalEditCronograma" data-backdrop="static">
+                    <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#modalCronoPagos">&times;</button>
+                                </div>
+                                <h:form id="formEditCronograma">
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                       
+                                              <br></br>
+                                              <div class="row">
+                                                  <div class="col-sm-12">
+                                                      <div class="alert alert-success" >
+                                                          <strong>Dato! </strong> <h:outputLabel value="   Estas editando  #{grupoCursoController.tipoCronograma.descripcion}"></h:outputLabel>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                          <h:outputLabel for="FechaI" >Fecha Inicio: </h:outputLabel><br></br>
+                                                          <p:calendar id="FechaI" value="#{grupoCursoController.cepCecCronogramaDet.fechaIniCro}" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div> 
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                        <h:outputLabel for="HoraI" >Hora Inicio: </h:outputLabel><br></br>
+                                                        <p:calendar id="HoraI" value="#{grupoCursoController.cepCecCronogramaDet.horaIniCro}" pattern="HH:mm" timeOnly="true" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div>
+                                                 </div>    
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                          <h:outputLabel for="FechaF" >Fecha Fin:</h:outputLabel><br></br>
+                                                          <p:calendar id="FechaF" value="#{grupoCursoController.cepCecCronogramaDet.fechaFinCro}" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div> 
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                        <h:outputLabel for="Horaf" >Hora Fin: </h:outputLabel><br></br>
+                                                        <p:calendar id="Horaf" value="#{grupoCursoController.cepCecCronogramaDet.horaFinCro}" pattern="HH:mm" timeOnly="true" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <p:commandLink value="Modificar" class="btn btn-secondary" update=":formTableCro :formCronoPagos :formCroFooter"
+                                                       a:data-dismiss="modal" a:data-toggle="modal" a:data-target="#modalCronoPagos"  ajax="true"
+                                                       actionListener="#{grupoCursoController.doModificarCronograma()}">
+                                                       <i class="fas fa-plus-circle"></i> Modificar                
+                                         </p:commandLink>
+                                        
+                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#modalCronoPagos">No</button>
+                                    </div>
+                               </h:form> 
+                        </div>
+                    </div>
+                </div>
+                
+      
+      <!-- Modal Agregar Extemporaneo-->   
+                <div class="modal fade" id="ModalExtemporaneo" data-backdrop="static">
+                    <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#modalCronoPagos">&times;</button>
+                                </div>
+                                <h:form id="formExtemporaneo">
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                       
+                                              <br></br>
+                                              <div class="row">
+                                                  <div class="col-sm-12">
+                                                      <div class="alert alert-success" >
+                                                          <strong>Dato! </strong> <h:outputLabel value="Estas Alargando  #{grupoCursoController.tipoCronograma.descripcion}"></h:outputLabel>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                          <h:outputLabel for="FechaI" >Fecha Inicio: </h:outputLabel><br></br>
+                                                          <p:calendar id="FechaI" value="#{grupoCursoController.fecha_ini_cro}" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div> 
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                        <h:outputLabel for="HoraI" >Hora Inicio: </h:outputLabel><br></br>
+                                                        <p:calendar id="HoraI" value="#{grupoCursoController.hora_ini_cro}" pattern="HH:mm" timeOnly="true" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div>
+                                                 </div>    
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                          <h:outputLabel for="FechaF" >Fecha Fin:</h:outputLabel><br></br>
+                                                          <p:calendar id="FechaF" value="#{grupoCursoController.fecha_fin_cro}" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div> 
+                                                    <div class="col-sm-6">
+                                                      <div class="form-group">
+                                                        <h:outputLabel for="Horaf" >Hora Fin: </h:outputLabel><br></br>
+                                                        <p:calendar id="Horaf" value="#{grupoCursoController.hora_fin_cro}" pattern="HH:mm" timeOnly="true" a:style="width: 100%"></p:calendar>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                         <p:commandLink value="Crear Extemporaneo" class="btn btn-secondary" update=":formTableCro :formCronoPagos :formCroFooter"
+                                                       a:data-dismiss="modal" a:data-toggle="modal" a:data-target="#modalCronoPagos"  ajax="true"
+                                                       actionListener="#{grupoCursoController.doCrearExtemporaneo()}">
+                                                       <i class="fas fa-plus-circle"></i> Crear Extemporaneo                
+                                         </p:commandLink>
+                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#modalCronoPagos">No</button>
+                                    </div>
+                               </h:form> 
+                        </div>
+                    </div>
+                </div>
+      
+      
+      
+          <!-- Modal Confirmacion de Eliminacion -->
+           
+                <div class="modal fade" id="modalEliminacion" data-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header bg-danger">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <h:form id="formEliminacion">
+                           <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                <!-- Modal body -->
+                            <div class="modal-body">
+                                Estas Seguro que desea Eliminar registro?
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer bg-danger">
+                                 <button type="button" class="btn btn-secondary"  data-dismiss="modal">No</button>
+                                 <p:commandLink value="Si" class="btn btn-secondary" update=":formCronoPagos :formTableCro :formCroFooter" 
+                                                       a:data-dismiss="modal" 
+                                                       actionListener="#{grupoCursoController.doOcultarCronograma()}">
+                                                       <i class="fas fa-trash-alt"></i> Si  
+                                                     
+                                </p:commandLink>
+                            </div>
+                            
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+     </ui:composition>
+           
+      </body>
+
+</html>

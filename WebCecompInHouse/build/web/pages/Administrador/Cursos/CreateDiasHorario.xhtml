@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:composition>
+
+        
+        
+        <h:form id="createFormHorarios">
+             <p:tooltip />
+             <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                <div class="modal fade" id="modalDiasHorario" data-backdrop="static">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header text-white bg-dark mb-3">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body ">
+                            <p:panelGrid   columns="3" columnClasses="ui-grid-col-2,ui-grid-col-7,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+
+                                <h:outputLabel for="diasSCM" value="Dias: " />
+                                <p:selectCheckboxMenu id="diasSCM" value="#{grupoCursoController.selectDias}" label="Dias" multiple="true"
+                                                      appendTo=""   filter="true" filterMatchMode="startsWith" style="width: 100%;height: 35px">
+                                        <f:selectItems value="#{grupoCursoController.dias}" />
+                                </p:selectCheckboxMenu>
+                                </p:panelGrid>  
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer ">
+                             <p:commandLink   t:data-dismiss="modal"  update=":formCreateGrupo:horariodias,msgbox"
+                                                t:class="btn btn-secondary btn" 
+                                                actionListener="#{grupoCursoController.doCrearHorarioDias()}">
+                               <i class="fas fa-save"></i> Guardar
+                              </p:commandLink>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                              <i class="fas fa-undo"></i>
+                                       Cancelar
+                              </button>
+  
+                              
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </h:form> 
+        
+        
+        </ui:composition>
+</html>
+

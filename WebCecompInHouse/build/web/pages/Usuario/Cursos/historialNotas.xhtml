@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+       <body>
+
+     <ui:composition template="./../plantilla/plantilla.xhtml">
+        <ui:define name="top">
+
+        </ui:define>
+              
+        <ui:define name="content">
+                 <div class="container-fluid">   
+                  <div class="card bg-secondary text-white font-weight-bold "  style="height: 50px" >
+                     <div class="card-body"  > <h4 style="font-size: 1rem"> Notas </h4> </div>
+                  </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <h:form id="formGrupoNotasHistorial">
+                                    <p:tooltip />
+                                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                   
+                                    <div class="table-responsive" align="center">
+                                        <table class="panel table table-hover">
+                                            <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                <tr class="text-center">
+                                                    <th>#</th>
+                                                    <th>Curso</th>
+                                                    <th>Nota 1</th>
+                                                    <th>Nota 2</th>
+                                                    <th>Nota 3</th>
+                                                    <th>Nota 4</th> 
+                                                    <th>Subsanacion</th>
+                                                    <th>Nota Final</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  style="color: #000000; background-color: white">
+                                                <ui:repeat   value="#{notasController.listarHistorialNotasCursosMatriculados()}" var="item" varStatus="i">
+                                                    <tr>
+                                                        <td class="text-center"><h:outputText value="#{i.index+1}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepCecMatriAlu.cepCecCurGrup.cepCecCursoSubdet.cepCecCursoDet.cepCecCursoCab.nomCurso} #{item.cepCecMatriAlu.cepCecCurGrup.cepCecCursoSubdet.cepCecCursoDet.cepNivel.nombreNivel}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.nota1}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.nota2}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.nota3}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.nota4}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.notaSubsanacion}"/> </td>
+                                                        <td class="text-center">
+                                                            <h:outputText value="#{item.notaFinal}">
+                                                                <f:convertNumber pattern="#00" />
+                                                            </h:outputText> 
+                                                        </td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div> 
+        
+        </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>

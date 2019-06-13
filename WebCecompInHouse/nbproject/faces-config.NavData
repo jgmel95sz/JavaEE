@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="pages/Docente/notas/notas.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/Exonerados.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="pages/Docente/plantilla/pie.xhtml" x="1650" y="750" zoom="true"/>
+        <Node id="pages/Docente/plantilla/encabezado.xhtml" x="1400" y="1200" zoom="true"/>
+        <Node id="pages/Administrador/plantilla/pie.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CreateDiasHorario.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="pages/Usuario/plantilla/menu.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="pages/UserExterno/plantilla/pie.xhtml" x="900" y="1500" zoom="true"/>
+        <Node id="pages/UserExterno/plantilla/encabezado.xhtml" x="650" y="1650" zoom="true"/>
+        <Node id="pages/Docente/notas/MenuNotas.xhtml" x="1400" y="1050" zoom="true"/>
+        <Node id="pages/Docente/plantilla/menu.xhtml" x="1900" y="600" zoom="true"/>
+        <Node id="loginAdministrador.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="pages/Usuario/Cursos/voucher.xhtml" x="1900" y="900" zoom="true"/>
+        <Node id="pages/Docente/notas/misCursos.xhtml" x="400" y="1650" zoom="true"/>
+        <Node id="pages/Usuario/plantilla/pie.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="pages/Administrador/Matricula/MenuMatricula.xhtml" x="1650" y="900" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CursosDetallados.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="pages/Administrador/RegistroCurso.xhtml" x="1900" y="450" zoom="true"/>
+        <Node id="pages/Administrador/DetCurso.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="loginEstudianteUns.xhtml" x="2400" y="300" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/ModalConfirmacion.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="index.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="loginDocente.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="pages/UserExterno/registroAlu.xhtml" x="150" y="1650" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CreateCurso.xhtml" x="900" y="900" zoom="true"/>
+        <Node id="*" x="2400" y="600" zoom="true"/>
+        <Node id="pages/UserExterno/plantilla/Plantilla.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="pages/Docente/Datos/DatosPersonales.xhtml" x="900" y="1350" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CreatePlan.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="pages/UserExterno/voucherExterno.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="pages/Administrador/Matricula/Matriculas.xhtml" x="2900" y="300" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CreateGrupo.xhtml" x="2400" y="150" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/GruposHistoricos.xhtml" x="150" y="1950" zoom="true"/>
+        <Node id="plantilla/vistaIzquierda.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="pages/Usuario/Cursos/DlgCarga.xhtml" x="1150" y="1200" zoom="true"/>
+        <Node id="pages/Usuario/plantilla/encabezado.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="pages/Usuario/Cursos/misNotas.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/dlgCarga.xhtml" x="650" y="1200" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CreateDuracion.xhtml" x="150" y="1350" zoom="true"/>
+        <Node id="pages/Administrador/Matricula/Pagos.xhtml" x="2650" y="450" zoom="true"/>
+        <Node id="pages/Usuario/Datos/DatosPersonales.xhtml" x="2900" y="150" zoom="true"/>
+        <Node id="pages/Administrador/homeAdmin.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CrearInversionCurso.xhtml" x="1650" y="600" zoom="true"/>
+        <Node id="pages/UserExterno/plantilla/menu.xhtml" x="150" y="1500" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/MediaBecas.xhtml" x="2150" y="600" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/MenuConfiguracion.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="pages/Docente/plantilla/Plantilla.xhtml" x="650" y="1350" zoom="true"/>
+        <Node id="pages/UserExterno/registroExitoso.xhtml" x="1150" y="1050" zoom="true"/>
+        <Node id="pages/Administrador/plantilla/menu.xhtml" x="650" y="1050" zoom="true"/>
+        <Node id="DlgLoading.xhtml" x="1650" y="1050" zoom="true"/>
+        <Node id="pages/Usuario/Cursos/CursosEnProceso.xhtml" x="1400" y="900" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CrearDetallesCurso.xhtml" x="2150" y="300" zoom="true"/>
+        <Node id="loginEstudianteTrabajador.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="Pages/Usuario/homeAlumno.xhtml" x="1400" y="600" zoom="true"/>
+        <Node id="pages/Usuario/Cursos/MatriculaCurso.xhtml" x="1900" y="750" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/dlgCrearPlan.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="pages/Usuario/plantilla/Plantilla.xhtml" x="650" y="1500" zoom="true"/>
+        <Node id="pages/Administrador/duracion.xhtml" x="1400" y="750" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/Grupos.xhtml" x="1150" y="900" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/CursosGenerales.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="loginEstudianteGeneral.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/loading.xhtml" x="2650" y="300" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/verPlan.xhtml" x="2400" y="450" zoom="true"/>
+        <Node id="pages/Administrador/Matricula/Notas.xhtml" x="2150" y="750" zoom="true"/>
+        <Node id="pages/Administrador/Cursos/dlgAgregarDocente.xhtml" x="2150" y="150" zoom="true"/>
+        <Node id="pages/Administrador/plantilla/Plantilla.xhtml" x="400" y="1350" zoom="true"/>
+        <Node id="pages/Administrador/plantilla/encabezado.xhtml" x="1150" y="300" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

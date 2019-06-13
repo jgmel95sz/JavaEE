@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    
+    
+    
+    <navigation-rule>
+         <from-view-id>/*</from-view-id>
+         
+          <navigation-case>
+               <from-outcome>ventanaPrincipal</from-outcome>
+               <to-view-id>index.xhtml</to-view-id>
+           </navigation-case>
+     
+           <navigation-case>
+               <from-outcome>validarVoucherExterno</from-outcome>
+               <to-view-id>/pages/UserExterno/voucherExterno.xhtml</to-view-id>
+           </navigation-case>
+     
+            <navigation-case>
+               <from-outcome>registroExterno</from-outcome>
+               <to-view-id>/pages/UserExterno/registroAlu.xhtml</to-view-id>
+           </navigation-case>
+     
+         <navigation-case>
+            <from-outcome>mynotas</from-outcome>
+            <to-view-id>/pages/Usuario/Cursos/misNotas.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>myhistorialnotas</from-outcome>
+            <to-view-id>/pages/Usuario/Cursos/historialNotas.xhtml</to-view-id>
+        </navigation-case>
+        
+         <navigation-case>
+            <from-outcome>docenteGrupos</from-outcome>
+            <to-view-id>/pages/Docente/notas/misCursos.xhtml</to-view-id>
+        </navigation-case>
+         
+        <navigation-case>
+            <from-outcome>misGrupos</from-outcome>
+            <to-view-id>/pages/Usuario/Cursos/CursosEnProceso.xhtml</to-view-id>
+        </navigation-case>
+        
+         <navigation-case>
+            <from-outcome>irListarGrupo</from-outcome>
+            <to-view-id>/pages/Administrador/Cursos/Grupos.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>irMatriculaCurso</from-outcome>
+            <to-view-id>/pages/Usuario/Cursos/MatriculaCurso.xhtml</to-view-id>
+        </navigation-case>
+        
+   
+        
+        <navigation-case>
+            <from-outcome>irToMisCursosActivos</from-outcome>
+            <to-view-id>/pages/Usuario/Cursos/CursosEnProceso.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>irToMiHistorialCurso</from-outcome>
+            <to-view-id>/pages/Usuario/Cursos/CursosHistorial.xhtml</to-view-id>
+        </navigation-case>
+            
+        
+            
+    
+        
+        
+       <navigation-case>
+        <from-outcome>irValidarVoucher</from-outcome>
+            <to-view-id>/pages/Usuario/Cursos/voucher.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>loginMantenimiento</from-outcome>
+            <to-view-id>/loginMantenimiento.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>loginEstudianteUns</from-outcome>
+            <to-view-id>/loginEstudianteUns.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginEstudianteGeneral</from-outcome>
+            <to-view-id>/loginEstudianteGeneral.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginEstudianteTrebajador</from-outcome>
+            <to-view-id>/loginEstudianteTrabajador.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginindexdocente</from-outcome>
+            <to-view-id>/loginDocente.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginAdmin</from-outcome>
+            <to-view-id>/loginAdministrador.xhtml</to-view-id>
+        </navigation-case>
+   </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/loginEstudianteUns.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>loginInicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginEstudianteTrebajador</from-outcome>
+            <to-view-id>/loginEstudianteTrabajador.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/loginEstudianteGeneral.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>loginInicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginEstudianteTrabajador</from-outcome>
+            <to-view-id>/loginEstudianteTrabajador.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/loginEstudianteTrabajador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>loginInicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginEstudianteGeneral</from-outcome>
+            <to-view-id>/loginEstudianteGeneral.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginEstudianteUns</from-outcome>
+            <to-view-id>/loginEstudianteUns.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/Pages/Usuario/homeAlumno.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>case1</from-outcome>
+            <to-view-id>/plantilla/vistaIzquierda.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/loginAdministrador.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>loginInicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/Administrador/homeAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarcurso</from-outcome>
+            <to-view-id>/pages/Administrador/RegistroCurso.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>duracionlink</from-outcome>
+            <to-view-id>/pages/Administrador/duracion.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>irCursoDet</from-outcome>
+            <to-view-id>/pages/Administrador/DetCurso.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/Administrador/duracion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>homeAdmin</from-outcome>
+            <to-view-id>/pages/Administrador/homeAdmin.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

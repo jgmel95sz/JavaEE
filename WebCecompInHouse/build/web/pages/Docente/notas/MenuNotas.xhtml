@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <body>
+
+
+        <ui:composition >
+            <!-- Nav pills -->
+
+            <ul class="nav navbar-nav ml-auto">
+                <h:form id="menuNotas">
+                    <li class="nav-item">
+                        <p:commandLink class="nav-link" a:data-toggle="modal"
+                                       onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                       a:data-target="#modalInsertarNotas">
+                            <f:ajax render=":formInsertarNotas" ></f:ajax>
+                             <i class="fas fa-sign-in-alt"></i>
+                                Insertar Notas
+                        </p:commandLink>
+                    </li>   
+                 </h:form>    
+                <h:form id="menuNotasSu">
+                    <li class="nav-item">
+                        <p:commandLink class="nav-link" a:data-toggle="modal" 
+                                       onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                       a:data-target="#modalInsertarSubNotas">
+                            <f:ajax render=":formInsertarSubNotas" ></f:ajax>
+                             <i class="fas fa-sign-in-alt"></i>
+                                Insertar Notas de Subsanacion
+                        </p:commandLink>
+                    </li>   
+                </h:form>  
+            </ul>  
+        </ui:composition>
+
+    </body>
+
+</html>
+
+

@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <body>
+
+        <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="MenuConfiguracion.xhtml"></ui:include>
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="ui-fluid">
+                    <h:form id="DuracionForm">
+                        <p:tooltip />
+                        <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+
+                        <div class="card">
+                            <div class="card-header card bg-danger text-white">
+
+                                Duracion
+
+                            </div>
+                            <div class="card-body">
+                                <a href="#newInverAlumno" class="btn btn-danger" data-toggle="collapse">Nueva Duracion</a>
+
+                                <div id="newInverAlumno" class="collapse"><span class="border border-danger"></span>
+
+                                <p:panel  id="panelDuracion" >
+
+                                    <p:panelGrid   columns="3" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+
+                                        <p:outputLabel for="tipoDesa" value="Tipo de Desarrollo:"/>
+                                        <p:selectOneMenu  id="tipoDesa" style="width: 100%;height: 34px" value="#{cursoDetController.id_Modalidad}" required="true"  requiredMessage="Error! No se selecciono Tipo de Desarollo" >
+                                            <f:selectItem itemValue="" itemLabel="Elegir" />
+                                            <f:selectItems var="itemmod"   value="#{cursoDetController.doBuscarTipoModalidad()}"  itemLabel="#{itemmod.nomModalidad}" itemValue="#{itemmod.idModalidad}" />                                         
+                                        </p:selectOneMenu>
+                                        <p:message for="tipoDesa" display="tooltip" />  
+
+
+                                        <p:outputLabel for="tipoEscala" value="Tipo de Escala :"/>
+                                        <p:selectOneMenu id="tipoEscala"  style="width: 100%;height: 34px" value="#{cursoDetController.nomEscala}" required="true" requiredMessage="Error! No se selecciono Escala">
+                                            <f:selectItem itemValue="" itemLabel="Elegir" />
+                                            <f:selectItem   itemLabel="Dias"  itemValue="Dias"/>         
+                                            <f:selectItem itemLabel="Semanas"  itemValue="Semanas"/>
+                                            <f:selectItem   itemLabel="Meses"  itemValue="Meses"/>                             
+                                        </p:selectOneMenu> 
+                                        <p:message for="tipoEscala"  display="tooltip" />  
+
+
+
+                                        <p:outputLabel for="canti" value="Cantidad:" />
+                                        <p:inputText id="canti" value="#{cursoDetController.numEscala}" required="true" requiredMessage="Error! No se ingreso dato correcto" >
+                                        </p:inputText>
+                                        <p:message for="canti"  display="tooltip" />  
+
+
+
+                                        <p:commandButton value="Agregar" action="#{cursoDetController.doAsignarModEscala()}" update=":DuracionForm:msgbox,DTEscalaModalidad,panelDuracion" >
+                                        </p:commandButton>
+
+                                    </p:panelGrid>
+                                </p:panel>
+                                
+                                </div> 
+                                <br></br>
+                                <hr></hr>
+                                <br></br>
+
+
+                                    <p:dataTable id="DTEscalaModalidad" value="#{cursoDetController.lstTodoEscala}" var="item"  rows="10" rowKey="#{item.idEscala}" draggableColumns="true"
+                                                 editable="true" scrollable="true"  scrollWidth="100%"  selectionMode="single" selection="#{cursoDetController.cepEscalaTipomod}"
+                                                 rowIndexVar="rowIndex"  paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                            
+                                                  rowsPerPageTemplate="5,10,15" >
+
+                                        <p:ajax event="rowEdit" listener="#{cursoDetController.doModificarEscala(item)}" immediate="true"  process="@this" update="DTEscalaModalidad,:DuracionForm:msgbox"/>
+                                        <p:ajax event="rowEditCancel" listener="#{cursoDetController.onRowCancel}" update=":DuracionForm:msgbox" />
+
+                                        <p:column  style="width: 10%;text-align: center" headerText="#">
+                                             <h:outputText value="#{rowIndex+1}" />  
+                                        </p:column>
+                                        <p:column  style="width: 30%;text-align: center" headerText="Modalidad">
+                                            <p:cellEditor>
+                                                <f:facet name="output"><h:outputText value="#{item.cepTipoModalidad.nomModalidad}" /></f:facet>
+                                                <f:facet name="input">
+                                                    <p:selectOneMenu   value="#{item.cepTipoModalidad.idModalidad}">
+                                                        <f:selectItems var="itemmod2"   value="#{cursoDetController.doBuscarTipoModalidad()}"  itemLabel="#{itemmod2.nomModalidad}" itemValue="#{itemmod2.idModalidad}" />                       
+                                                    </p:selectOneMenu>
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column   style="width: 15%;text-align: center" headerText="Cantidad">
+                                            <p:cellEditor >
+                                                <f:facet name="output"><h:outputText value="#{item.numEscala}"  /></f:facet>
+                                                <f:facet name="input"><p:inputText  value="#{item.numEscala}" style="width:100% " >
+
+                                                    </p:inputText></f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column  style="width: 25%;text-align: center" headerText="Escala">
+                                            <p:cellEditor >
+                                                <f:facet name="output"><h:outputText value="#{item.nombreEscala}" /></f:facet>
+                                                <f:facet name="input">
+                                                    <p:selectOneMenu  value="#{item.nombreEscala}">          
+                                                        <f:selectItem   itemLabel="Dias"  itemValue="Dias"/>         
+                                                        <f:selectItem itemLabel="Semanas"  itemValue="Semanas"/>
+                                                        <f:selectItem   itemLabel="Meses"  itemValue="Meses"/>
+                                                    </p:selectOneMenu> 
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+
+
+
+                                        <p:column  style="width:10%;text-align: center" headerText="Editar">
+                                            <p:rowEditor rendered="#{cursoDetController.doValidarEscalaEnpProceso(item.idEscala)==0}" />  
+                                        </p:column>
+
+                                        <p:column style="width:10%;text-align: center" headerText="Borrar">
+                                            <p:commandButton rendered="#{cursoDetController.doValidarEscalaEnpProceso(item.idEscala)==0}" style="width:50%;text-align: center"   icon="ui-icon-trash" a:data-toggle="modal" a:data-target="#myModal" 
+                                                             action="#{cursoDetController.doCapturarDuracion(item)}" >
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="paginatorTopLeft">
+                                            <p:commandButton type="button" icon="fa fa-sync" />
+                                        </f:facet>
+
+                                        <f:facet name="paginatorBottomRight">
+                                            <p:commandButton type="button" icon="fa fa-cloud-upload" />
+                                        </f:facet>
+
+                                    </p:dataTable>   
+
+                                
+                                
+                            </div>
+                        </div>
+                         </h:form>
+                </div>   
+               
+        <p:dialog widgetVar="loading"
+                   modal="true"
+                   draggable="false"
+                   closable="false"
+                   appendTo="@(body)"
+                   resizable="false"                
+                   >
+             <div align="center" >
+                 <img src="../../../resources/images/cargandoloading.gif" alt=""/>
+             </div>
+             
+         </p:dialog>
+
+                <ui:include src="ModalConfirmacion.xhtml"></ui:include>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+
+</html>
+

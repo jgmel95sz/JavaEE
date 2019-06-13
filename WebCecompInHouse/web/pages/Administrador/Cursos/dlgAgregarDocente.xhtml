@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <body>
+
+
+        <ui:composition>
+            
+            
+                <div class="modal fade" id="ModalDocente" data-backdrop="static">
+                    <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <h:form id="FormAgregarDocente">
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <p:panelGrid   columns="1" columnClasses="ui-grid-col-12"  layout="grid" styleClass="ui-panelgrid-blank">
+                                        <h:outputLabel value="Ingresar DNI : "></h:outputLabel>
+                                        <p:inputText  style="width: 100%" id="Docente" value="#{grupoCursoController.num_dni}" placeholder="Ingresar DNI" maxlength="8" />           
+                                         <p:commandButton style="width: 40%" actionListener="#{grupoCursoController.doBuscarDocentePorDni()}" value="Buscar Docente" 
+                                                          update=":FormAgregarDocente" icon="ui-icon-search" /> 
+                                        </p:panelGrid>  
+                                        <br></br>
+                                        <p:panelGrid   columns="2" columnClasses="ui-grid-col-12,ui-grid-col-6"  layout="grid" styleClass="ui-panelgrid-blank">
+                                            
+                                            <p:outputLabel id="nDoce" value="#{grupoCursoController.nom_docente}" />
+                                            
+                                        </p:panelGrid>  
+                                    </div>
+
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <p:commandLink rendered="#{usuarioController.enabled_docente==1}" value="Agregar Docente a Lista" class="btn btn-secondary"
+                                                          update=":formCreateGrupo" a:data-dismiss="modal" >
+                                               <i class="fas fa-plus-circle"></i> Agregar                
+                                         </p:commandLink>
+                                        <p:commandLink rendered="#{usuarioController.enabled_docente==0}" value="Agregar Docente a Lista" class="btn btn-secondary disabled"
+                                                           a:data-dismiss="modal" >
+                                               <i class="fas fa-plus-circle"></i> Agregar                
+                                         </p:commandLink>
+                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    </div>
+                               </h:form> 
+                        </div>
+                    </div>
+                </div>
+            
+           
+           
+
+          
+        </ui:composition>
+
+    </body>
+</html>
+

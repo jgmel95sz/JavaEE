@@ -1,0 +1,415 @@
+#pagina{
+    font-size: 10px;
+    width: 100%;
+    margin: 5px auto;
+    
+}
+#encabezado{
+    float: left;
+    width: 100%;
+    margin: 5px auto;
+    background-color: #c2dfef;
+    color: white;
+}
+#cuerpo{
+    float: left;
+    width: 100%;
+    background-color: #FFFFFF;
+    height: 100%;
+}
+#contenido{
+    margin-left: 13em;
+    background-color: #FFFFFF;
+    /* height: 200px; */
+    padding: 2px 0px 2px 50px;
+}
+#izquierda{
+    float: left;
+    width: 15em;
+    margin-left: 0%;
+    background-color: #FFFCC5;
+    padding: 0px 0px 0px 0px;
+    height: 435px;
+}
+#pie{
+    float: left;
+    width: 100%;
+    background-color: #710700;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 0.5em;
+    font-size: 10px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.errores {
+    color: red;
+    font-weight: bold;
+}
+.texto_blanco {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+	font-style: normal;
+	width: 0px;
+}
+.fondo_login {
+	font-size: 2px;
+	/*background-color:#E6F7FF; */
+}
+.label2 {
+	font-family: Verdana, Tahoma, Arial;
+	font-size: 12px;
+	color: #043764;
+	font-weight: bold;
+}
+#contenedor{ 
+   width: 100%; 
+   margin: 0 0 0 0px; 
+} 
+#menu{ 
+   background-color: #710700; 
+   color: #FFFFFF; 
+   font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;
+   font-size:10px; 
+   font-weight: bold;
+   padding: 0 0 0 0px; 
+} 
+#menuIzquierda{ 
+   background-color: #710700; 
+   color: #FFFFFF; 
+   width: 16em;
+   font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;
+   font-size:9px; 
+   font-weight: bold;
+   padding: 0 0 0 0px; 
+} 
+#mensaje{ 
+   background-color: #FFFFFF; 
+   color: #710700; 
+   font-size:10px; 
+   font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;
+   font-weight: bold; 
+   margin: 0 0 0 0px;
+   height: 20px;
+} 
+#mensajederecha{
+   width: 50%; 
+   float: right; 
+   padding: 0px 0px 0px 0px;
+   text-align: right;
+}
+#mensajeizquierda{
+    float: left;
+    width: 50%;
+    margin-left: 0%;
+    padding: 0px 0px 0px 0px;
+}
+#cabecera{ 
+   margin: 0 0 0 0px; 
+   height: 60px;
+   background-color: #FFFFFF;
+   font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;
+} 
+#cabizquierda{
+    float: left;
+    margin-left: 0%;
+    padding: 0px 0px 0px 0px;
+    width: 180px;
+}
+#cabderecha{
+   width: 150px;
+   background-color: #FFFFFF;
+   text-align: right;
+   font-weight: bold;
+   padding: 30px 0px 0px 0px;
+   float: right; 
+}
+#cabeceraletra1{
+    height: 20px;
+    width: 1000px;
+    background-color: #FFFFFF;
+    font-size: 11px; 
+    font-weight: bold; 
+    color: #710700; 
+    padding: 0px 20px 0px 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, sans-serif; 
+    font-style: normal;
+}
+#cabeceraletra2{
+    height: 20px;
+    width: 1000px;
+    font-weight: bold; 
+    font-size: 11px; 
+    font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; 
+    color: #25476D;
+}
+#lateral{ 
+   width: 160px; 
+   background-color: #999999; 
+   float: right; 
+} 
+#lateral ul{ 
+   margin : 0 0 0 0px; 
+   padding: 0 0 0 0px; 
+   list-style: none; 
+} 
+#lateral li{ 
+   background-color: #ffffcc; 
+   margin: 0 0 0 0px;
+   padding: 0 0 0 0px;
+   font-weight: bold; 
+} 
+#lateral a{ 
+   color: #3333cc; 
+   text-decoration: none; 
+} 
+#imagenIzquierda{
+    background-color: #FFFFFF;
+    font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;
+    margin: 5px 5px 5px 5px;
+    /*padding: 10px 10px 10px 10px;*/
+    width: 14em;
+    vertical-align: baseline;
+    text-align: center;
+}
+#imagenTrabajando{
+    background-color: #FFFFFF;
+    font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;
+    margin: 5px 5px 5px 5px;
+    /*padding: 10px 10px 10px 10px;*/
+    width: 100%;
+    vertical-align: baseline;
+    text-align: center;
+    color: #25476D;
+}
+#textoCuerpo {
+	font-family:  Verdana, Tahoma, Arial;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+	font-style: normal;
+	width: 0px;
+}
+#textoMensaje {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #710700;
+	text-decoration: none;
+	font-style: normal;
+	width: 0px;
+}
+hr{
+   height: 3px;
+   border: 0;
+   color: #666;
+   background-color: #A33333;
+   display: block;
+}
+#barraBlanca{
+    border-style: solid;
+    width: 1200px;
+    height: 20%;    
+}
+#logotipo{
+    float: left;
+    width: 48%;
+    height: 100%;
+    border-style: solid;
+}
+#loginPral{
+    float: right;
+    width: 50%;
+    height: 100%;
+    border-style: solid;
+}
+#capapral{
+    position: absolute;
+    height: 60%; 
+    width: 800px;
+    left: 50%;
+    margin-left: -400px;
+}
+#barraBlanca2{
+
+    border-style: solid;
+    width: 1200px;
+    height: 20%;
+    overflow: hidden;
+}
+.teclado{
+  
+}
+.teclado .keypad-close{
+    width: 68px; 
+    color:#710700;
+}
+.teclado .keypad-back{
+    width: 68px;
+}
+.teclado .keypad-clear{
+    width: 96px;
+}
+.teclado .keypad-shift{
+    width: 52px;
+    color: #710700;
+}
+.teclado .keypad-close:after{
+    content: "  X";
+}
+.teclado .keypad-back:before{
+    content: "◄ ";
+}
+.teclado .keypad-shift:before{
+    content: "▲";
+    /*background-image: url("images/shift1.jpg");
+    background-size: 50%;*/
+}
+.lcabeza{
+    position: absolute;
+    font-size: 11px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;
+    margin: 10px;
+    height: 580px;
+            padding: 0.2em 0em;
+            border: 0px none;
+            overflow: hidden !important;
+}
+.lpie{
+    /*background-color: #3333cc !important;*/
+    border: none;
+}
+#menuDocente{
+    width:180px;
+    height:483px;
+    border:none;
+    font-family: tahoma;
+    font-size:11px;
+    font-weight: bold;
+    padding:0px;
+}
+.ui-fileupload-buttonbar {
+    margin: 0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+    border: none;
+}
+.ui-fileupload {
+    margin: 0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+    display: inline-block;
+    border: none;
+}
+.ui-fileupload-content {
+    display: none;  
+}
+#submenudisplay{
+    display: none;
+}
+.commandBtn{
+    background: #940906;
+    border-color: #23a38f;
+    border-style: none;
+    color: white;
+    height: 40px;
+    width: 130px;
+    font-family: tahoma;
+    font-size: 12px;
+    position: relative;
+    
+}
+.commandBtn2{
+    background: #940906;
+    border-color: #23a38f;
+    border-style: none;
+    color: white;
+    height: 30px;
+    width: 160px;
+    font-family: tahoma;
+    font-size: 12px;
+    text-align: left;
+
+}
+.commandBtnLogin{
+    background: #940906;
+    border-color: #23a38f;
+    border-style: none;
+    color: white;
+    height: 40px;
+}
+.calenderClass input {
+width: 140px;
+}
+body {
+    background-color: #ffffff;
+    font-size: 11px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;
+    margin: 0px;
+    border: none;
+}
+.ui-accordion .ui-accordion-content{
+      border: 0px;
+      margin-left:  -10px;
+      margin-right: 0px;
+      padding: 0;
+      top: -5px;
+      border-spacing: 0;
+ }
+.rowGris {
+    background-color: lightgray !important;
+    background-image: none !important;
+    color: #000000 !important;
+}
+.lvineta{
+    vertical-align: top;
+    font-weight: bold;
+}
+
+.ui-wizard {
+	margin:0;
+	padding:0;
+        font-size: 10px;
+}
+
+.ui-wizard-content {
+	margin:3px 0;
+        font-size: 12px;
+}
+
+.ui-wizard-step-title {
+    font-size: 10px;
+    margin:0 3px 0 0;
+    padding:0.4em;
+    float:left;
+}
+
+.textoJustificado{
+    text-align: justify;
+    font-size: 11px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    padding: 0;
+
+}
+.textoJustificadoRojo{
+    text-align: justify;
+    font-size: 11px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: red;
+}
+.textoJustificadoRojoS{
+    font-size: 12px; 
+    color: red; 
+    font-weight: bold; 
+    font-style: inherit; 
+    text-decoration: underline
+}
+
+.panelGridCenter td,.panelGridCenter tr {
+    text-align: center;
+}

@@ -1,0 +1,368 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+       <body>
+           
+     <ui:composition template="../plantilla/Plantilla.xhtml">
+            <ui:define name="top">
+
+            </ui:define>
+       
+           <ui:define name="content">
+        
+               <div class="container-fluid">   
+                  <div class="card bg-secondary text-white font-weight-bold " style="height: 50px" >
+                     <div class="card-body"  > <h5 style="font-size: 1rem">  Mis Cursos/Talleres en proceso</h5> </div>
+                  </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <h:form id="formGrupo">
+                                    <p:tooltip />
+                                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                   
+                                    <div class="table-responsive" align="center">
+                                        <table class="panel table table-hover">
+                                            <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                <tr class="text-center">
+                                                    <th>#</th>
+                                                    <th>Curso/Taller General</th>
+                                                    <th>Desarrollo</th>
+                                                    <th>Modalidad</th>
+                                                    <th>Seccion</th>
+                                                    <th>Horarios</th> 
+                                                    <th>Detalles</th>
+                                                    <th>Notas</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody  style="color: #000000; background-color: white">
+                                                <ui:repeat   value="#{notasController.listarGruposAsignadoPorDocente()}" var="item" varStatus="i">
+                                                    <tr>
+                                                        <td class="text-center"><h:outputText value="#{i.index+1}"/> </td>
+                                                        <td class="text-center"><h:outputText  value="#{item.cepCecCurGrup.cepCecCursoSubdet.cepCecCursoDet.cepCecCursoCab.nomCurso}  #{item.cepCecCurGrup.cepCecCursoSubdet.cepCecCursoDet.cepNivel.nomAbrevNivel}"/></td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepCecCurGrup.cepCecCursoSubdet.cepTipoDesarrollo.nomTipoDes}"/> </td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepCecCurGrup.cepCecCursoSubdet.cepEscalaTipomod.cepTipoModalidad.nomModalidad}"/></td>
+                                                        <td class="text-center"><h:outputText value="#{item.cepCecCurGrup.cepCecGrupo.nomGrupo}"/></td>     
+                                               
+                                                        <td class="text-center">
+                                                         <p:commandLink 
+                                                             a:class="btn btn-secondary btn-sm" update=":formHorario"
+                                                             onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                                             a:data-toggle="modal" a:data-target="#modalHorario" actionListener="#{grupoCursoController.doCaputrarHorario(item.cepCecCurGrup)}">
+                                                             <i class="fas fa-search"></i> 
+                                                         </p:commandLink>
+                                                        </td>       
+                                            
+                                                        <td class="text-center">
+                                                         <p:commandLink 
+                                                             a:class="btn btn-primary btn-sm" update=":formVermasGrupo"
+                                                             onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                                             a:data-toggle="modal" a:data-target="#modalVermas" actionListener="#{grupoCursoController.doCapturarGrupo(item.cepCecCurGrup)}">
+                                                             <i class="fas fa-search"></i> 
+                                                         </p:commandLink>
+                                                        </td>
+                                                        
+                                                        <td class="text-center">
+                                                         <p:commandLink 
+                                                             a:class="btn btn-success btn-sm" 
+                                                             onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+                                                             actionListener="#{notasController.doCapturarGrupo(item.cepCecCurGrup)}"
+                                                             action="#{notasController.redirecciontoNotas()}" > 
+                                                             <i class="fas fa-sign-in-alt"></i> 
+                                                         </p:commandLink>
+                                                        </td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div> 
+              
+      
+                        
+                  
+       <!-- Modal DE VER MAS DETALLES DEL GRUPO -->   
+        <div class="container">
+          
+            <div class="modal fade" id="modalVermas" data-backdrop="static">
+               
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                  <h:form id="formVermasGrupo">
+                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                  <ul class="list-group">
+                          
+                                      <li class="list-group-item active ">
+                                          <div class="row">
+                                              <div class="col-sm font-weight-bold" >
+                                                  Fecha Incio y Fin del Grupo
+                                              </div>
+                                             
+                                           </div>   
+                                      </li>
+                                        <li class="list-group-item"> 
+                                           <div class="row">
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Fecha de Inicio : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.fechaInicio}">
+                                                   <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                 </h:outputText>  
+                                            </div> 
+
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Fecha de Fin : "/>
+                                                      
+                                              
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.fechaFin}">
+                                                  <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                 </h:outputText>  
+                                            </div> 
+                                           </div>
+                                        </li>
+                                      
+                                    <li class="list-group-item active ">
+                                         Detalles Grupo
+                                      </li>
+                                       <li class="list-group-item"> 
+                                            <div class="row">    
+                                             <div class="col-sm-3 font-weight-bold" >
+                                                 <h:outputText value="Docente : "/>  
+                                             </div>
+                                             <div class="col-sm-7">
+                                               <h:outputText rendered="#{grupoCursoController.doFindDocenteEnGrupo()==1}" value="#{usuarioController.docenteActual.nombreCompleto}"/>  
+                                                </div>
+                                            </div>
+                                       </li>
+                                      
+                                          
+                                    
+                                     <li class="list-group-item"> 
+                                      <div class="row">
+                                        <div class="col-sm-3 font-weight-bold" >
+                                            <h:outputText value="Ambiente : "/> 
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:outputText rendered="#{grupoCursoController.doBuscarLaboratorioEnGrupo()==1}" value="#{grupoCursoController.cepCecCurGrupDet.cepAulaClass.nomAula}"/> 
+                                        </div>
+                                       
+                                        <div class="col-sm-2 font-weight-bold" >
+                                            <h:outputText value="Piso : "/> 
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:outputText value="#{grupoCursoController.cepCecCurGrupDet.cepAulaClass.piso}"/>  
+                                        </div>
+                                       </div>
+                                      </li> 
+                                   
+                                      <li class="list-group-item active ">
+                                          Detalles del Curso
+                                      </li>
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Modalidad : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.cepEscalaTipomod.cepTipoModalidad.nomModalidad}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Tiempo : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.cepEscalaTipomod.numEscala} - #{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.cepEscalaTipomod.nombreEscala}"/>  
+                                            </div> 
+                                        </div>
+                                       </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Horas Lectivas : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.cepCecCursoDet.horasLectivas}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="# Clases : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.numClases}"/>  
+                                            </div> 
+                                        </div>
+                                      </li> 
+                                     <li class="list-group-item">
+                                          <div class="row">  
+                                              <div class="col-sm-3 font-weight-bold" >
+                                                  <h:outputText value="Plan : "/> 
+                                              </div>
+                                              <div class="col-sm-7">
+                                                  <h:outputText value="#{grupoCursoController.cepCecPlan.detalles}"/>  
+                                              </div>
+                                              <div class="col-sm-2">
+                                               <p:commandLink
+                                                        actionListener="#{reportesController.doReportePlan(grupoCursoController.cepCecPlan)}" ajax="false"
+                                                      a:class="btn btn-primary btn-sm" >
+                                                     <i class="fas fa-download"></i> 
+                                               </p:commandLink>
+                                               </div>
+                                          </div>  
+                                      </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                           <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Max. Alumnos : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.maxAlum}"/>  
+                                            </div> 
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Min. Alumnos : "/>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.minAlum}"/>  
+                                            </div>  
+                                        </div> 
+                                       </li> 
+                                      <li class="list-group-item">
+                                       <div class="row">
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Pagos : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.numCuotas}"/>  
+                                            </div> 
+                                           
+                                            
+                                        </div> 
+                                       </li> 
+                                      <li class="list-group-item">
+                                         <div class="row">  
+                                              <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Forma de Pagos : "/>  
+                                            </div>
+                                             <div class="col-sm">
+                                                 <h:outputText rendered="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.formaPago==1}" value="Mensual"/>  
+                                                 <h:outputText rendered="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.formaPago==2}" value="Por cuotas"/> 
+                                                 <h:outputText rendered="#{grupoCursoController.cepCecCurGrup.cepCecCursoSubdet.formaPago==0}" value="Un solo pago"/> 
+                                             </div> 
+                                          </div>  
+
+                                      </li>
+ 
+                                   </ul>
+                                
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                </div>
+                          </h:form>
+                        </div>
+                    </div>
+                      
+            </div>
+        </div> 
+            
+         
+ <!-- Modal horario -->   
+        <div class="container">
+          
+            <div class="modal fade" id="modalHorario" data-backdrop="static">
+               
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                  <h:form id="formHorario">
+                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                  <ul class="list-group">
+                                      <li class="list-group-item active ">
+                                          Horario
+                                      </li>
+                                      <li class="list-group-item"> 
+                                            <div class="row">    
+                                             <div class="col-sm-3 font-weight-bold" >
+                                                 <h:outputText value="Dias : "/>  
+                                             </div>
+                                             <div class="col-sm">
+                                                 <h:outputText value="#{grupoCursoController.cepCecHorarios.cepHorarioDias.nomHorarioDias}"/>  
+                                             </div>
+                                            </div>
+                                       </li>
+                                        <li class="list-group-item"> 
+                                           <div class="row">
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Hora  Inicio : ">
+                                                  
+                                                </h:outputText>  
+                                            </div>
+                                             <div class="col-sm-3">
+                                                 <h:outputText value="#{grupoCursoController.cepCecHorarios.horaIni}">
+                                                   <f:convertDateTime pattern="HH:mm" />
+                                                 </h:outputText>  
+                                            </div> 
+
+                                            <div class="col-sm-3 font-weight-bold">
+                                                <h:outputText value="Hora  Fin : "/>  
+                                            </div>
+                                             <div class="col-sm ">
+                                                 <h:outputText value="#{grupoCursoController.cepCecHorarios.horaFin}">
+                                                   <f:convertDateTime pattern="HH:mm" />
+                                                 </h:outputText>  
+                                            </div> 
+                                           </div>
+                                        </li>
+                                   </ul>
+                                
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                </div>
+                          </h:form>
+                        </div>
+                    </div>
+                      
+            </div>
+        </div> 
+            
+       <ui:include src="DlgCarga.xhtml"/>
+            
+          </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>

@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <body>
+
+        <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+
+            </ui:define>
+
+            <ui:define name="content">
+
+                <div class="container-fluid">
+                    <br></br>
+                    <br></br>
+
+                    <div class="row">
+                       <div class="col-lg-5 mx-auto d-block">
+                                <img src="../../../resources/images/voucher3.png" class="rounded img-fluid mx-auto d-block" alt="Cinque Terre" width="485" height="425" /> 
+                        <br></br>
+                        <br></br>
+                       </div>
+                        
+                        <div class="col-lg-6 mx-auto d-block">
+                            
+                         <h:form id="voucher"> 
+                         
+                         <br></br>
+                          <br></br>
+                                <div class="form-group">
+                                    <div align="center" class="font-weight-bold">
+                                        <h5>
+                                        <h:outputLabel  value="Datos del voucher" style="size:10px" />
+                                        </h5>
+                                    </div> 
+                                </div>
+                        
+
+                            <div class="form-group">
+                               <h:outputLabel  for="secuencia" value="Secuencia :"/>
+                               <h:inputText id="secuencia" value="#{matriculaController.secuencia}" a:class="form-control" a:type="number" a:placeholder="Enter secuencia" required="true" a:style="border: 1px solid #ffffff;background: #00000026"/>
+                            </div>
+                            <div class="form-group">
+                             
+                              <h:outputLabel for="fechav" value="Fecha :" />
+                              <p:calendar id="fechav" value="#{matriculaController.fecha_pago}" label="button" required="true" a:class="form-control saperoko saperoko2" a:placeholder="Select Fecha" a:style="width: 100%;
+                                            box-shadow: inset 0 2px 2px #d5d5d5;
+                                            border: 1px solid #d5d5d5;
+                                            font-weight: normal;
+                                            background: #d5d5d5;
+                                            padding: 2px">
+                              </p:calendar>
+                               <p:message for="fechav" id="msgFechaInicio" display="icon" />
+                            </div>
+                                <div class="form-group">
+                                  <h:outputLabel for="agencia" value="Agencia :"/>
+                                  <h:inputText id="agencia" value="#{matriculaController.cod_agencia}" a:class="form-control" a:type="number" a:placeholder="Enter agencia" required="true" a:style="border: 1px solid #ffffff;background: #00000026"/>  
+                                </div>     
+  
+                          <p:commandLink action="#{matriculaController.doValidarVoucher()}" a:type="submit"  
+                                         a:class="btn btn-primary" onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"  
+                                         a:data-toggle="modal" a:data-target="#ValidezVoucher"  
+                                         update=":validVouc" > Validar Voucher </p:commandLink>
+                         
+                          </h:form>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                  <!-- Modal para anuncio de valides -->
+
+                 <div class="modal fade" id="ValidezVoucher" data-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+                           <h:form id="validVouc">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4>
+                                
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <h:outputLabel rendered="#{matriculaController.valido == 1}"  > Registro Exitoso</h:outputLabel>   
+                                <h:outputLabel rendered="#{matriculaController.valido == 0}"  > Voucher invalido</h:outputLabel>   
+                            </div>
+                                            
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">                              
+                                <p:link rendered="#{matriculaController.valido==0}"  value="Aceptar" a:type="button" a:class="btn btn-success" a:data-dismiss="modal" >
+                                 
+                                </p:link>    
+                                <p:link rendered="#{matriculaController.valido==1}"  value="Aceptar" a:type="button" a:class="btn btn-success" outcome="misGrupos"  >
+                                 
+                                </p:link>
+                               
+                            </div>
+                           </h:form>
+                        </div>
+                    </div>
+                </div>
+                
+            <ui:include src="DlgCarga.xhtml"/>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+
+</html>
+
+

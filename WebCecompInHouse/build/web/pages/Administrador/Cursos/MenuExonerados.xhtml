@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+
+
+        <ui:composition >
+
+
+            <!-- Nav pills -->
+
+            <ul class="nav navbar-nav ml-auto">
+              
+                  <h:form id="subemnu">
+                    <li class="nav-item">
+                        <h:commandLink value="Crear nuevo Voucher Ficticio" class="nav-link" action="#{cursoDetController.redireccionAhExonerados()}"   ></h:commandLink> 
+                    </li>
+                </h:form> 
+                <h:form id="crearCurso">
+                <li class="nav-item">
+                    <h:commandLink value="Listar Exonerados" class="nav-link" action="#{cursoDetController.redireccionAhListExonerados()}" ></h:commandLink>
+                </li>
+                </h:form>  
+                
+                  
+            </ul>  
+
+
+
+
+
+        </ui:composition>
+
+    </body>
+
+</html>
+
+

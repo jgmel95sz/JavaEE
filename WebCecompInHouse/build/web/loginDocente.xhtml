@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:p="http://primefaces.org/ui"
+            
+        xmlns:jsf="http://xmlns.jcp.org/jsf">
+       <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <meta charset="UTF-8"></meta>
+        <title> <ui:insert name="titulo"> LOGIN DOCENTE - CECOMP </ui:insert> </title>
+        <!--===============================================================================================-->	
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/personalizado.css" rel="stylesheet" type="text/css"/>
+        <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
+         <script src="resources/vendor/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
+       
+           <!--===============================================================================================-->
+        
+        <!--===============================================================================================-->
+    </h:head>
+    <h:body id="LoginForm">
+
+            <div class="container">
+                
+               
+                <div class="login-form">
+                  
+                    <div class="main-div">
+                        <img  class="img-fluid" src="resources/images/logeo_docente.png" alt=""/>
+                        <div class="panel">
+                            
+                        </div>
+                        <br></br>
+                        <br></br>
+                        <h:form id="Login">
+
+                            <div class="form-group">
+                                <h:inputText class="form-control"  a:type="text" id="codigo"  value="#{usuarioController.userDocente}"  a:placeholder="Usuario"></h:inputText>
+                            </div>
+                            <div class="form-group">
+                                <h:inputText class="form-control"  a:type="number" id="id"  value="#{usuarioController.idCardDocen}"  a:placeholder="ID Card"></h:inputText>
+                            </div>
+                            <div class="form-group">
+                                <h:inputText class="form-control"  a:type="password" id="inputPassword"  value="#{usuarioController.passDocente}"  a:placeholder="Password"></h:inputText>
+                            </div>
+                          
+                            <h:commandLink a:class="btn btn-primary"  action="#{usuarioController.doLoginDocente()}">Login</h:commandLink>
+                             <div class="forgot">
+                                 <p:commandLink id="cmdManual"
+                                           ajax="false" 
+                                           value="Descargar manual"
+                                           actionListener="#{reportesController.doDescagarManualDocente}">
+                                <p:fileDownload value="#{reportesController.bsc_file}" />
+
+                               </p:commandLink>
+                                 
+                            </div>
+                            
+                        </h:form>
+                        
+                    </div>
+                            
+                            
+                </div>
+            </div>
+
+    </h:body>
+</html>
+
+
+

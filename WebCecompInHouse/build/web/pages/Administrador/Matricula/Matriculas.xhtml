@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+       <body>
+
+     <ui:composition template="./../plantilla/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="MenuMatricula.xhtml"></ui:include>
+            </ui:define>
+              
+        <ui:define name="content">
+              
+             <div class="container-fluid">   
+                  <div class="card bg-secondary text-white font-weight-bold " style="height: 50px" >
+                     <div class="card-body"  > <h5 style="font-size: 1rem">  Alumnos Matriculados</h5> </div>
+                  </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <h:form id="formMatriculados">
+                                    <p:tooltip />
+                                    <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                   
+                                    <div class="table-responsive" align="center">
+                                        <table class="panel table table-hover paginationTable">
+                                            <thead class="panel-heading" style="background-color: #eeeeee; color: #004276; ">
+                                                <tr class="text-center">
+                                                    <th>#</th>
+                                                    <th>Nombres</th>
+                                                    <th>Tipo Alumno</th>
+                                                    <th>Condicion Matricula</th>
+                                                    <th>Datos Personales</th>
+                                                    <th>Eliminar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  style="color: #000000; background-color: white">
+                                                <ui:repeat   value="#{matriculaController.doListarMatriculadosPorGrupo()}" var="item" varStatus="i">
+                                                    <tr>
+                                                        <td class="text-center"><h:outputText value="#{i.index+1}"/> </td>
+                                                        <td class="text-center"><h:outputText  value="#{item.cepCecMatriAlu.drtPersonanatural.nombreCompleto}"/></td>
+                                                        <td class="text-center">
+                                                            <h:outputText rendered="#{item.cepCecMatriAlu.tipoAlumno==1}" value="Estudiante UNS"/>
+                                                            <h:outputText rendered="#{item.cepCecMatriAlu.tipoAlumno==2}" value="Publico General"/> 
+                                                            <h:outputText rendered="#{item.cepCecMatriAlu.tipoAlumno==3}" value="Trabajador UNS"/> 
+                                                        </td>
+                                                         <td class="text-center">
+                                                             <h:outputText rendered="#{item.condicionAlu==1}" value="Normal"/>
+                                                             <h:outputText rendered="#{item.condicionAlu==2 and item.isPagototal==false}" value="1/2 Beca"/> 
+                                                             <h:outputText rendered="#{item.condicionAlu==2 and item.isPagototal==true}" value="1/2 Beca Completa (Todo el Curso)"/> 
+                                                             <h:outputText rendered="#{item.condicionAlu==7 and item.isPagototal==true}" value="Beca Completa (Todo el Curso)"/> 
+                                                             <h:outputText rendered="#{item.condicionAlu==7 and item.isPagototal==false}" value="Beca"/> 
+                                                             <h:outputText rendered="#{item.condicionAlu==8 and item.isPagototal==false}" value="Desc. Planilla "/> 
+                                                             <h:outputText rendered="#{item.condicionAlu==8 and item.isPagototal==true}" value="Desc. Planilla (Todo el Curso)"/> 
+                                                         </td>
+                                                        <td class="text-center">
+                                                            <p:commandLink actionListener="#{matriculaController.doCapturarMatriculaEnAdministrador(item.cepCecMatriAlu)}" 
+                                                                           a:class="btn btn-secondary btn-sm" update=":formDetallesAlumno"
+                                                                           onstart="PF('statusDialog').show();" 
+                                                                           oncomplete="PF('statusDialog').hide();"
+                                                                           a:data-toggle="modal" a:data-target="#modalDetallesAlumno" >
+                                                                  <i class="fas fa-search"></i> 
+                                                            </p:commandLink>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p:commandLink action="#{matriculaController.doCapturarMatriculaEnAdministrador(item.cepCecMatriAlu)}" 
+                                                                            onstart="PF('statusDialog').show();" 
+                                                                           oncomplete="PF('statusDialog').hide();"
+                                                                           a:class="btn btn-secondary btn-sm" update=":formEliminacionMatri" 
+                                                                           a:data-toggle="modal" a:data-target="#modalEliminacionMatri" >
+                                                                  <i class="fas fa-trash-alt"></i> 
+                                                            </p:commandLink>
+                                                        </td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div> 
+              
+      <!-- Modal DE VER MAS DETALLES DEL ALUMNO -->   
+        <div class="container">
+          
+            <div class="modal fade" id="modalDetallesAlumno" data-backdrop="static">
+               
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <h:form id="formDetallesAlumno">
+                                <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                  <ul class="list-group">
+                                      <li class="list-group-item active ">
+                                          Detalles del Alumno
+                                      </li>
+                                        <li class="list-group-item"> 
+                                          
+                                            <div class="row">
+                                                <div class="col-sm-3 font-weight-bold" >
+                                                    <h:outputText value="Nombres Completos : "/>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <h:outputText value="#{matriculaController.drtMatriculado.nombreCompleto}" />
+                                                </div>
+                                            </div>
+                                              
+                                          </li>  
+                                       <li class="list-group-item"> 
+                                          
+                                            <div class="row">
+                                                <div class="col-sm-3 font-weight-bold" >
+                                                    <h:outputText value="Direccion : "/>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <h:outputText value="#{matriculaController.drtMatriculado.direccion}" />
+                                                </div>
+                                            </div>
+                                          </li>  
+                                      <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-sm-3 font-weight-bold" >
+                                                    <h:outputText value="Dni : "/>
+                                                </div>
+                                                <div class="col-sm ">
+                                                    <h:outputText value="#{matriculaController.drtMatriculado.numeroPndid}" />
+                                                </div>
+                                                <div class="col-sm-3 font-weight-bold" >
+                                                    <h:outputText value="Fecha Naci.: "/>
+                                                </div>
+                                                <div class="col-sm ">
+                                                    <h:outputText value="#{matriculaController.drtMatriculado.fechaNac}" />
+                                                </div>
+                                            </div>
+                                         </li>
+                                      <li class="list-group-item">
+                                           <div class="row">
+                                            <div class="col-sm-3 font-weight-bold" >
+                                                <h:outputText value="Email : "/>  
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <h:outputText value="#{matriculaController.drtMatriculado.emailPrin}"/>  
+                                            </div> 
+
+                                           </div>
+                                        </li>
+                                      
+                                    
+                                     <li class="list-group-item"> 
+                                      <div class="row">
+                                        <div class="col-sm-3 font-weight-bold" >
+                                            <h:outputText value="Celular : "/> 
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:outputText value="#{matriculaController.drtMatriculado.celularPrin}"/>  
+                                        </div>
+                                    
+                                        <div class="col-sm-2 font-weight-bold" >
+                                            <h:outputText value="Telefono : "/> 
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:outputText value="#{matriculaController.drtMatriculado.telefonoPrin}"/>  
+                                        </div>
+                                       </div>
+                                      </li> 
+                                      
+                                     
+                                     
+                                   </ul>
+                                
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                </div>
+                          </h:form>
+                        </div>
+                    </div>
+                      
+            </div>
+        </div> 
+      
+      
+  <!-- Modal Confirmacion de Eliminacion matri -->
+           
+                <div class="modal fade" id="modalEliminacionMatri" data-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" style="max-width: 40%">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header bg-danger">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <h:form id="formEliminacionMatri">
+                           <p:growl id="msgbox" showDetail="true" showSummary="false"/>
+                                <!-- Modal body -->
+                            <div class="modal-body">
+                                * Estas Seguro que desea Eliminar Matricula? <br></br><br></br>
+                                <div class="alert alert-warning">
+                                    <strong>Warning! </strong><h:outputLabel value="  Se anulará el pago de matricula (Primer pago)" />  
+                                </div>
+                            </div>
+      
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer bg-danger">
+                                 <button type="button" class="btn btn-secondary"  data-dismiss="modal">No</button>
+                                <p:commandLink value="Si" class="btn btn-secondary"  
+                                                       a:data-dismiss="modal" 
+                                                       action="#{matriculaController.doEliminarMatricula()}" update=":formMatriculados">
+                                                       <i class="fas fa-trash-alt"></i> Si  
+                                                     
+                                </p:commandLink>
+                            </div>
+                            
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            
+        
+       
+   
+       
+             <ui:include src="dlgCarga.xhtml"/>
+             
+      
+             
+        
+        </ui:define>
+        
+     </ui:composition>
+           
+      </body>
+
+</html>
+

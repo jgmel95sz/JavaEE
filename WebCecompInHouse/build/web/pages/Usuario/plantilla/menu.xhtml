@@ -1,0 +1,120 @@
+
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    
+     <!-- Sidebar  -->
+      
+     <nav id="sidebar">
+            
+             
+            
+           <div class="sidebar-header" >
+                
+                 <h3> 
+                    <img src="../../../resources/images/LogoMenuNormal.png" alt="" align="left"/> 
+                 </h3>
+                  
+               
+               <h4>
+                 <i class="fas fa-user-circle "></i>
+
+                 <h:outputLabel  value="#{usuarioController.nomAccedido}"></h:outputLabel> 
+                 
+               </h4>
+                   
+                <strong>
+                    <img src="../../../resources/images/LogoMenuMini.png" alt="left"/>
+                </strong>
+            </div>
+               
+           
+         
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#InfomracionSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-home"></i>
+                        Informacion
+                    </a>
+                    <ul class="collapse list-unstyled" id="InfomracionSubmenu">
+                        <li>
+                            <h:form> 
+                                <h:commandLink  action="#{usuarioController.logeadoAlumno()}">
+                                    Datos Personales
+                                </h:commandLink>
+                            </h:form> 
+                            
+                        </li>
+                       
+                        
+                    </ul>
+                </li>
+                <li>
+                   
+                    <a href="#cursosSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        Mis Cursos
+                    </a>
+                    <ul class="collapse list-unstyled" id="cursosSubmenu">
+                        <li>
+                            <h:link outcome="irToMisCursosActivos" > En proceso </h:link>
+                            
+                        </li>
+                       <li>
+                            <h:link outcome="irToMiHistorialCurso" > Historial </h:link>
+                            
+                        </li>
+                        
+                    </ul>
+                </li>
+                <li>
+                   
+                 <h:link  outcome="irMatriculaCurso" > <i class="fas fa-copy"></i>Matricula</h:link>
+                 
+                   
+                </li>
+                <li>
+                    <a href="#notassubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        Notas 
+                    </a>
+                     <ul class="collapse list-unstyled" id="notassubmenu">
+                        <li>
+                            <h:link outcome="mynotas" > Cursos Activos </h:link>
+                            
+                        </li>
+                       <li>
+                            <h:link outcome="myhistorialnotas" > Historial </h:link>
+                        </li>
+                        
+                    </ul>
+                </li>
+            </ul>
+            
+            <ul class="list-unstyled components">
+                
+                 <li>
+                     <h:form>
+                     <p:commandLink ajax="false"  action="#{usuarioController.doLogoutAdmin()}">
+                      <i class="fas fa-copy"></i> Logout
+                     </p:commandLink>
+                     </h:form>
+                   
+                </li>
+            </ul>
+
+           
+        </nav>
+
+    
+    
+    
+    
+</ui:composition>
+
+
